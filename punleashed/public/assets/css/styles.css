@@ -1,0 +1,28 @@
+.margin-top-15 {
+  margin-top:15px;
+}
+
+.margin-top-10 {
+  margin-top:10px;
+}
+
+.panel-title{
+	color: #1485ee;
+}
+
+.panel-heading{
+	background: white !important;
+}
+
+.accent-color{
+	color: #1485ee;
+}
+
+.navbar-brand{
+	font-weight: bold; 
+	color: #1485ee !important;
+}
+
+.panel-footer{
+	background: #1485ee !important;
+}
