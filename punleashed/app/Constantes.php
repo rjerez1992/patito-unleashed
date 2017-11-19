@@ -32,9 +32,10 @@ class Constantes extends Model
     }
 
     /* Ruta a la imagen por defecto del sistema */
-    public static function ImagenDefecto(){
-        //TODO: Poner una imagen ticketter.png dentro de /img/
-        return 'ticketter.png';
+    public static function ImagenDefecto(){    
+        //TODO:Agregar una imagen t.png  a /img/  
+        //Todas las  imagenes que se suban deberiamos guardarlas ahi 
+        return 't.png';
     }
 
     public static function NuevaInstitucion(){

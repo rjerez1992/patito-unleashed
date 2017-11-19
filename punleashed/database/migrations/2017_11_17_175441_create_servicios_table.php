@@ -20,8 +20,8 @@ class CreateServiciosTable extends Migration
             $table->string('letra')->default(Constantes::NoEspecificado());
             $table->string('horario')->default(Constantes::NoEspecificado());
             $table->time('tiempo_espera');
-            $table->integer('numero_actual')->unsigned();
-            $table->integer('numero_disponible')->unsigned();       
+            $table->integer('numero_actual');
+            $table->integer('numero_disponible');       
 
             $table->integer('sucursal_id')->unsigned();
             $table->foreign('sucursal_id')
