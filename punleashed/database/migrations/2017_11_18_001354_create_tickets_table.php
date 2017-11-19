@@ -1,5 +1,6 @@
 <?php
 
+use App\Constantes;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -18,6 +19,7 @@ class CreateTicketsTable extends Migration
             $table->date('fecha');
             $table->time('hora');
             $table->integer('numero');
+            $table->string('estado')->default(Constantes::NuevoTicket());
            
             $table->integer('servicio_id')->unsigned();
             $table->foreign('servicio_id')

@@ -29,6 +29,7 @@ class Cuenta extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /* Creo que no se está utilizando
     public static function Redirigir($default){
         if (Auth::user()!=NULL){
             $tipo = Auth::user()->tipo;
@@ -49,5 +50,22 @@ class Cuenta extends Authenticatable
             }
         } 
         return $default;
+    }*/
+
+    public function usuario(){
+        if ($this->tipo == Constantes::Cliente()){
+            return $this->hasOne('App\Cliente');
+        }
+        if ($this->tipo == Constantes::Operario()){
+            return $this->hasOne('App\Operario');
+        }
+        if ($this->tipo == Constantes::Manager()){
+            return $this->hasOne('App\Manager');
+        }
+        if ($this->tipo == Constantes::Admin()){
+            return $this->hasOne('App\Admin');
+        }
+        return null;
     }
+
 }

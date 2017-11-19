@@ -33,8 +33,8 @@ class Constantes extends Model
 
     /* Ruta a la imagen por defecto del sistema */
     public static function ImagenDefecto(){
-        //TODO: Poner imagen y especificar ruta.
-        return '/';
+        //TODO: Poner una imagen ticketter.png dentro de /img/
+        return 'ticketter.png';
     }
 
     public static function NuevaInstitucion(){
@@ -51,6 +51,18 @@ class Constantes extends Model
 
     public static function CubiculoVacio(){
         return 'Desocupado';
+    }
+
+    public static function NuevoTicket(){
+        return 'Pendiente';
+    }
+
+    public static function TicketAtendido(){
+        return 'Atendido';
+    }
+
+    public static function TicketCancelado(){
+        return 'Cancelado';
     }
 
     public static function Textual($value){
