@@ -17,6 +17,12 @@ Route::get('/', function () {
 
 Route::get('/cliente/tickets', 'ClienteController@tickets');
 
+Route::get('/cliente/profile','ClienteController@profile');
+
+Route::get('/cliente/institucion','ClienteController@institucion');
+
+Route::get('/cliente/sucursal','ClienteController@sucursal');
+
 Route::get('/operario/servicio', 'OperarioController@servicio');
 
 Route::get('/manager/dashboard', 'ManagerController@dashboard');
