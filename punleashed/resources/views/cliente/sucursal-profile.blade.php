@@ -13,10 +13,9 @@
 
     <div class="container">
         <ol class="breadcrumb">
-            <li><a><span>Inicio </span></a></li>
-            <li><a><span>Instituciones </span></a></li>
-            <li><a><span>{{ $nameInstitucion }}</span></a></li>
-            <li><a><span>{{ $nameSucursal }}</span></a></li>
+            <li><a href="/"><span>Inicio </span></a></li>
+            <li><a href="/cliente/institucion"><span>{{ $nameInstitucion }}</span></a></li>
+            <li><span>{{ $nameSucursal }}</span></li>
         </ol>
         <div class="row row-title">
             <div class="col-md-2 col-sm-2 col-xs-12"><img class="img-circle center-block" src="{{ $imageSucursal }}" width="100" height="100"></div>

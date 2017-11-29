@@ -13,9 +13,9 @@
 
     <div class="container">
         <ol class="breadcrumb">
-            <li><a><span>Inicio </span></a></li>
-            <li><a><span>Mi Cuenta</span></a></li>
-            <li><a><span>Mis Tickets</span></a></li>
+            <li><a href="/"><span>Inicio </span></a></li>
+            <li><a href="/cliente/profile"><span>Mi Cuenta</span></a></li>
+            <li><span>Mis Tickets</span></li>
         </ol>
         <div class="row row-title">
             <div class="col-md-2 col-sm-2 col-xs-12"><img class="img-circle center-block" src="{{ $imageSucursal }}" width="80" height="80"></div>
@@ -94,6 +94,28 @@
                 <h4 class="ticket-heading-number"><i class="fa fa-book fa-fw icon-ticket-list"></i><strong> Historial de Tickets</strong></h4></div>
             <div class="panel-body">
                 <div class="row visible-xs-block visible-sm-block visible-md-block visible-lg-block row-eq-height">
+                    
+                    @foreach ($tickets as $ticket)
+                        <div class="col-md-4 col-sm-6 col-xs-12 column-less-padding">
+                            <div class="panel panel-success panel-success-ticket">
+                                <div class="panel-heading"><i class="fa fa-ticket fa-fw"></i><strong class="text-uppercase"> {{$ticket->numero}}</strong><strong> - {{$ticket->estado}}</strong></div>
+                                <div class="panel-body body-success-ticket">
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-3 col-xs-3"><img class="img-circle" src="{{ $imageSucursal }}" width="55" height="55"></div>
+                                        <div class="col-md-9 col-sm-9 col-xs-9">
+                                            <div class="row">
+                                                <div class="col-md-12 col-sm-12 col-xs-12"><strong>{{$ticket->servicio->sucursal->nombre}}</strong></div>
+                                                <div class="col-md-12 col-sm-12 col-xs-12"><span>{{$ticket->servicio->nombre}}</span></div>
+                                                <div class="col-md-12 col-sm-12 col-xs-12"><i class="fa fa-calendar fa-fw"></i><span>{{$ticket->fecha}} </span></div>
+                                                <div class="col-md-12 col-sm-12 col-xs-12"><i class="fa fa-clock-o fa-fw"></i><span>{{$ticket->hora}} </span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+
                     <div class="col-md-4 col-sm-6 col-xs-12 column-less-padding">
                         <div class="panel panel-success panel-success-ticket">
                             <div class="panel-heading"><i class="fa fa-ticket fa-fw"></i><strong class="text-uppercase"> A150</strong><strong> - Atendido</strong></div>
