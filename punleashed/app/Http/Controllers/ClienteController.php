@@ -14,12 +14,11 @@ class ClienteController extends Controller
         {
             $cuenta = Auth::user();
             $cliente = $cuenta->usuario;
-                $imageCliente='https://pbs.twimg.com/profile_images/468879197025226752/MJ5hJowM.png';
-            //Siempre es necesario verificar que no sea nulo (por seguridad)
             if ($cliente && $cuenta->tipo==Constantes::Cliente())
             {
                 $reputacionCliente='6.5';
-                return view('cliente/user-profile',compact('cuenta','cliente','reputacionCliente','imageCliente'));
+                $sucursalesFrecuentes=collect([]);
+                return view('cliente/user-profile',compact('cuenta','cliente','sucursalesFrecuentes','reputacionCliente'));
             }
         }
         return redirect('/');
@@ -31,7 +30,6 @@ class ClienteController extends Controller
         {
             $cuenta = Auth::user();
             $cliente = $cuenta->usuario;
-            //Siempre es necesario verificar que no sea nulo (por seguridad)
             if ($cliente && $cuenta->tipo==Constantes::Cliente())
             {
                 $nameInstitucion='Santander Chile S.A.';
@@ -50,7 +48,6 @@ class ClienteController extends Controller
         {
             $cuenta = Auth::user();
             $cliente = $cuenta->usuario;
-            //Siempre es necesario verificar que no sea nulo (por seguridad)
             if ($cliente && $cuenta->tipo==Constantes::Cliente())
             {
                 $nameInstitucion='Santander Chile S.A.';
@@ -71,12 +68,11 @@ class ClienteController extends Controller
         {
             $cuenta = Auth::user();
             $cliente = $cuenta->usuario;
-            $tickets = $cliente->tickets();
-            //Siempre es necesario verificar que no sea nulo (por seguridad)
             if ($cliente && $cuenta->tipo==Constantes::Cliente())
             {
-                $imageSucursal='https://pbs.twimg.com/profile_images/468879197025226752/MJ5hJowM.png';
-                return view('cliente/tickets-box',compact('cliente','imageSucursal','tickets'));
+                $ticketsActivos = collect([]);
+                $historialTickets = collect([]);
+                return view('cliente/tickets-box',compact('cliente','ticketsActivos','historialTickets'));
             }
         }
         return redirect('/');

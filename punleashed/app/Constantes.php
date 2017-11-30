@@ -66,6 +66,10 @@ class Constantes extends Model
         return 'Cancelado';
     }
 
+    public static function TicketInasistente(){
+        return 'Inasistente';
+    }
+
     public static function Textual($value){
     	if ($value == '0'){
     		return 'Cliente';
