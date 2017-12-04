@@ -70,6 +70,14 @@ class Constantes extends Model
         return 'Inasistente';
     }
 
+    public static function Mensaje($key){
+        $mensaje = array(
+            'cuenta_creada_exito' => 'El usuario ha sido creado de manera exitosa',
+            'cuenta_eliminada_exito' => 'El usuario ha sido eliminado de manera exitosa',
+            );
+        return $mensaje[$key];
+    }
+
     public static function Textual($value){
     	if ($value == '0'){
     		return 'Cliente';

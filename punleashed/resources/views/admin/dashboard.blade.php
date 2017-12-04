@@ -9,10 +9,7 @@
 @endsection
 
 @php
-	$cuenta = Auth::user();
-	$admin = $cuenta->usuario;	
 @endphp
-
 
 @section('content')
 
@@ -20,38 +17,37 @@
 
 	<div class="projects-horizontal">
         <div class="container">
-            <div class="intro">
-                <h1 class="text-center accent-color" style="margin-bottom: 10px !important; padidng: 0px !important;">Dashboard de {{$admin->nombre}}</h3>
-                <p class="text-center">Desde este dashboard puedes acceder a las funcionalidades mas utilizadas de tu cuenta de administrador. Ademas puedes leer estadisticas relevantes de manera sencilla.</p>
+            <div class="intro" style="margin-bottom: 20px;">
+                <h1 class="accent-color" style="margin-bottom: 10px !important; padidng: 0px !important;">Dashboard de Administración</h3><hr/>
+                <p class="">Desde este dashboard puedes acceder a las funcionalidades mas utilizadas de tu cuenta de administrador. Ademas puedes leer estadisticas relevantes de manera sencilla.</p>
             </div>
-            <div class="row projects">     
-            	<a href="#">       
+            <div class="row projects">              
                 <div class="col-sm-6 item">
                     <div class="row">
                         <div class="col-md-5">
-                            <img class="img-responsive" src="/assets/img/newppl.jpg">
+                            <div class="thumb" style="background-image: url('/assets/img/instituciones.jpg')"></div>
                         </div>
                         <div class="col-md-7">
-                            <h3 class="name accent-color">Ver instituciones </h3>
+                            <a href="#"><h3 class="name accent-color">Ver instituciones </h3></a>
                             <p class="description">Desde esta seccion puede crear y monitorear instituciones dentro del sistema</p>
-                        </div>
-                    </div>
-                </div></a>
-                <div class="col-sm-6 item">
-                    <div class="row">
-                        <div class="col-md-5">
-                            <a href="#"><img class="img-responsive" src="assets/img/building.jpg"></a>
-                        </div>
-                        <div class="col-md-7">
-                            <h3 class="name accent-color">Ver usuarios </h3>
-                            <p class="description">Desde esta seccion puede agregar managers y gestionar distintos tipos de usuarios del sistema</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-6 item">
                     <div class="row">
                         <div class="col-md-5">
-                            <a href="#"><img class="img-responsive" src="assets/img/building.jpg"></a>
+                            <div class="thumb" style="background-image: url('/assets/img/usuarios.jpg')"></div>
+                        </div>
+                        <div class="col-md-7">
+                            <a href="/admin/lista/clientes"><h3 class="name accent-color">Ver usuarios </h3></a>
+                            <p class="description">Desde esta seccion puede agregar managers y gestionar distintos tipos de usuarios del sistema</p>
+                        </div>
+                    </div>
+                </div>                       
+                <div class="col-sm-6 item">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="thumb" style="background-image: url('/assets/img/n-institucion.jpg')"></div>
                         </div>
                         <div class="col-md-7">
                             <h3 class="name accent-color">Agregar institucion</h3>
@@ -62,7 +58,7 @@
                 <div class="col-sm-6 item">
                     <div class="row">
                         <div class="col-md-5">
-                            <a href="#"><img class="img-responsive" src="assets/img/building.jpg"></a>
+                            <div class="thumb" style="background-image: url('/assets/img/admin.png')"></div>
                         </div>
                         <div class="col-md-7">
                             <h3 class="name accent-color">Crear administrador</h3>
@@ -87,10 +83,10 @@
                                             <p class="description">Cubiculos: </p>
                                         </div>
                                         <div class="col-md-5 col-sm-5 col-xs-6">
-                                            <p class="text-center description">{{App\Institucion::count()}} </p>
-                                            <p class="text-center description">{{App\Sucursal::count()}} </p>
-                                            <p class="text-center description">{{App\Servicio::count()}} </p>
-                                            <p class="text-center description">{{App\Cubiculo::count()}} </p>
+                                            <p class="text-center description">{{$total_instituciones}} </p>
+                                            <p class="text-center description">{{$total_sucursales}} </p>
+                                            <p class="text-center description">{{$total_servicios}} </p>
+                                            <p class="text-center description">{{$total_cubiculos}} </p>
                                         </div>
                                     </div>
                                 </div>
@@ -103,10 +99,10 @@
                                             <p class="description">Tickets: </p>
                                         </div>
                                         <div class="col-md-5 col-sm-5 col-xs-6">
-                                            <p class="text-center description">{{App\Manager::count()}} </p>
-                                            <p class="text-center description">{{App\Operario::count()}} </p>
-                                            <p class="text-center description">{{App\Cliente::count()}} </p>
-                                            <p class="text-center description">{{App\Ticket::count()}} </p>
+                                            <p class="text-center description">{{$total_managers}} </p>
+                                            <p class="text-center description">{{$total_operarios}} </p>
+                                            <p class="text-center description">{{$total_clientes}} </p>
+                                            <p class="text-center description">{{$total_tickets}} </p>
                                         </div>
                                     </div>
                                 </div>
@@ -131,10 +127,10 @@
                                             <p class="description">Cubiculos: </p>
                                         </div>
                                         <div class="col-md-5 col-sm-5 col-xs-6">
-                                            <p class="text-center description">000 </p>
-                                            <p class="text-center description">000 </p>
-                                            <p class="text-center description">000 </p>
-                                            <p class="text-center description">000 </p>
+                                            <p class="text-center description">{{$semana_instituciones}} </p>
+                                            <p class="text-center description">{{$semana_sucursales}} </p>
+                                            <p class="text-center description">{{$semana_servicios}} </p>
+                                            <p class="text-center description">{{$semana_cubiculos}} </p>
                                         </div>
                                     </div>
                                 </div>
@@ -147,13 +143,14 @@
                                             <p class="description">Tickets: </p>
                                         </div>
                                         <div class="col-md-5 col-sm-5 col-xs-6">
-                                            <p class="text-center description">000 </p>
-                                            <p class="text-center description">000 </p>
-                                            <p class="text-center description">000 </p>
-                                            <p class="text-center description">000 </p>
+                                            <p class="text-center description">{{$semana_managers}} </p>
+                                            <p class="text-center description">{{$semana_operarios}} </p>
+                                            <p class="text-center description">{{$semana_clientes}} </p>
+                                            <p class="text-center description">{{$semana_tickets}} </p>
                                         </div>
                                     </div>
                                 </div>
+                                <!-- TODO: Graficos -->
                             </div>
                         </div>
                     </div>

@@ -27,7 +27,23 @@ Route::get('/operario/servicio', 'OperarioController@servicio');
 
 Route::get('/manager/dashboard', 'ManagerController@dashboard');
 
-Route::get('/admin/dashboard', 'AdminController@dashboard');
+/*
+ * Rutas de administracion
+ */
+Route::middleware("filtro:".App\Constantes::Admin())->group(function () {
+    Route::get('/admin/dashboard', 'AdminController@dashboard');
+
+    /* CRUD */
+    Route::get('/admin/agregar/{tipoUsuario}', 'AdminController@agregar');
+    Route::post('/admin/agregar/{tipoUsuario}/crear', 'AdminController@crear');
+
+    Route::get('/admin/lista/{tipoUsuario}', 'AdminController@usuarios');    
+
+    Route::get('/admin/editar/{tipoUsuario}/{id}', 'AdminController@preEdicion');
+    Route::post('/admin/editar/{tipoUsuario}/editar', 'AdminController@editar');
+
+    Route::post('/admin/eliminar/{tipoUsuario}', 'AdminController@eliminar');
+});
 
 /*
  * Rutas de login/registro re-nombradas y con redireccion

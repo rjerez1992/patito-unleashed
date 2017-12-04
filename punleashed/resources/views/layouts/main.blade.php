@@ -13,13 +13,15 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
     <!-- Estilo general de todo el sitio -->
     <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+    
+    <!-- Las necesito aca para cargar los modales on load -->
+    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
 @yield('styles')
 </head>
 
 <body>
 @yield('content')
-    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
 @yield('scripts')
 </body>
