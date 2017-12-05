@@ -95,6 +95,7 @@ class AdminController extends Controller
 	 * Muestra el FORMULARIO para agregar un usuario
 	 */
     public function agregar($tipoUsuario){ 
+        $previousURL = url()->previous();
     	$adminActive = "";
     	$managerActive = "";
     	$operarioActive = "";
@@ -126,6 +127,7 @@ class AdminController extends Controller
         	'operarioActive' => $operarioActive, 
         	'clienteActive' => $clienteActive,	
         	'instituciones' => $instituciones,
+            'previousURL' => $previousURL,
     	);
 
     	return view('admin/agregar-usuarios')->with($data);
@@ -227,12 +229,66 @@ class AdminController extends Controller
 		}
 
 		$cuenta = $usuario->cuenta;
-		$cuenta->usuario->delete();
+		//$cuenta->usuario->delete();
 		$cuenta->delete();
 
     	//Entrega un mensaje de vuelta
 		Session::flash('msg', Constantes::Mensaje('cuenta_eliminada_exito'));
 		Session::flash('status-ok', true);
     	return back();
+    }
+
+    public function preEdicion($tipoUsuario, $id){
+
+        $usuario = NULL;
+
+        $adminActive = "";
+        $managerActive = "";
+        $operarioActive = "";
+        $clienteActive = "";
+        $instituciones = NULL;
+
+        if ($tipoUsuario == 'admins'){
+            $usuario = Admin::find($id);
+            $adminActive = "active";
+        }
+        else if ($tipoUsuario == 'managers'){
+            $managerActive = "active";
+            $usuario = Manager::find($id);
+            $instituciones = Institucion::all();
+        }
+        else if ($tipoUsuario == 'operarios'){
+            $operarioActive = "active";
+            $usuario = Operario::find($id);
+            $instituciones = Institucion::all();
+        }
+        else if ($tipoUsuario == 'clientes'){
+            $clienteActive = "active";
+            $usuario = Cliente::find($id);
+        }
+        else{
+            //En caso  que el tipo  de  usuario sea incorrecto
+            abort(404);
+        }
+
+        //En caso que no se encuentre el usuario con ese id
+        if ($usuario == NULL){
+            abort(404);
+        }
+
+        $cuenta = $usuario->cuenta;
+
+        $data = array(
+                'tipoUsuario' => $tipoUsuario,
+                'usuario' => $usuario,
+                'cuenta' => $cuenta,      
+                'adminActive' => $adminActive,      
+                'managerActive' => $managerActive, 
+                'operarioActive' => $operarioActive, 
+                'clienteActive' => $clienteActive,
+                'instituciones' =>  $instituciones,
+            );
+
+        return view('admin/editar-usuarios')->with($data);
     }
 }

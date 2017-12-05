@@ -61,7 +61,7 @@
                             <div class="thumb" style="background-image: url('/assets/img/admin.png')"></div>
                         </div>
                         <div class="col-md-7">
-                            <h3 class="name accent-color">Crear administrador</h3>
+                            <a href="/admin/agregar/admins"><h3 class="name accent-color">Crear administrador</h3></a>
                             <p class="description">¿Necesitas ayuda manejando el sistema? Ingresa aqui para crear nuevos administradores</p>
                         </div>
                     </div>

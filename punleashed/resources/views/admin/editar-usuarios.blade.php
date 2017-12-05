@@ -38,15 +38,9 @@
     @endif
 
     <div class="container">
-        <h1 style="color: #1485ee;">Agregar nuevo<a href="/admin/lista/clientes" class="btn btn-danger pull-right" type="button"><i class="fa fa-remove"></i><span class="hidden-xs"> Cancelar </span></a></h1>
+        <h1 style="color: #1485ee;">Edicion de usuarios<a href="/admin/lista/clientes" class="btn btn-danger pull-right" type="button"><i class="fa fa-remove"></i><span class="hidden-xs"> Cancelar </span></a></h1>
         <hr style="margin-top: 0px; margin-bottom: 15px;">
         <div>
-            <ul class="nav nav-tabs nav-justified">
-                <li class="{{$clienteActive}}"><a href="/admin/agregar/clientes">Cliente </a></li>
-                <li class="{{$operarioActive}}"><a href="/admin/agregar/operarios">Operario</a></li>
-                <li class="{{$managerActive}}"><a href="/admin/agregar/managers">Manager</a></li>
-                <li class="{{$adminActive}}"><a href="/admin/agregar/admins">Administrador</a></li>
-            </ul>
             <div class="tab-content">
                 <div class="tab-pane fade in active" role="tabpanel" id="tab-1">
                     <div class="col-lg-6 col-md-6 col-sm-12">
@@ -58,7 +52,7 @@
 
                         <div class="form-group {{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="username" class="control-label">Nombre de usuario: </label>
-                            <input id="username" name="username" class="form-control" type="text" required autofocus placeholder="Patricio774">
+                            <input id="username" name="username" class="form-control" type="text" required autofocus placeholder="Patricio774" value="{{$cuenta->username}}">
                             @if ($errors->has('username'))
                                     <span class="help-block">
                                         <strong>{{ str_replace("username","nombre de usuario",$errors->first('username')) }}</strong>
@@ -66,8 +60,11 @@
                             @endif
                         </div>
     
+                        <!--<h3>Cambiar contraseña</h3>-->
+                        <hr>
+
                         <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="control-label">Contraseña: </label>
+                            <label for="password" class="control-label">Nueva contraseña: </label>
                             <input id="password" class="form-control" type="password" name="password" required>
                             @if ($errors->has('password'))
                                     <span class="help-block">
@@ -77,13 +74,15 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="password-confirm" class="control-label">Repetir contraseña: </label>
+                            <label for="password-confirm" class="control-label">Repetir nueva contraseña: </label>
                             <input id="password-confirm" class="form-control" type="password" name="password_confirmation" required>
                         </div>
 
+                        <hr>
+
                         <div class="form-group {{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="control-label margin-top-15">Nombre completo: </label>
-                            <input id="name" class="form-control" type="text" name="name" required autofocus placeholder="Patricio Castro">
+                            <label for="name" class="control-label">Nombre completo: </label>
+                            <input id="name" class="form-control" type="text" name="name" required autofocus placeholder="Patricio Castro" value="{{$usuario->nombre}}">
                             @if ($errors->has('name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('name') }}</strong>
@@ -91,10 +90,11 @@
                             @endif
                         </div>
 
+
                         @if(!$adminActive)
                         <div class="form-group {{ $errors->has('rut') ? ' has-error' : '' }}">
                             <label for="rut" class="control-label">RUT: </label>
-                            <input id="rut" name="rut" class="form-control" type="text" required placeholder="123456785">
+                            <input id="rut" name="rut" class="form-control" type="text" required placeholder="123456785" value="{{$usuario->rut}}">
                             @if ($errors->has('rut'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('rut') }}</strong>
@@ -104,6 +104,7 @@
                         @endif
 
                         @if($operarioActive)
+                        <hr>
                         <!-- Select para servicios --> 
                         <div class="form-group {{ $errors->has('servicio') ? ' has-error' : '' }}">
                             <label for="servicio" class="control-label">Servicio asociado: </label>
@@ -111,7 +112,7 @@
                                 @foreach($instituciones as $institucion)
                                 <optgroup label="{{$institucion->nombre}}">     
                                     @foreach($institucion->servicios as $servicio)                       
-                                    <option value="{{$servicio->id}}">{{$servicio->nombre}}</option>
+                                    <option value="{{$servicio->id}}" @if($servicio->id==$usuario->servicio_id) selected @endif>{{$servicio->nombre}}</option>
                                     @endforeach
                                 </optgroup>
                                 @endforeach
@@ -125,12 +126,13 @@
                         @endif
 
                         @if($managerActive)
+                        <hr>
                         <!-- Select para instituciones  --> 
                         <div class="form-group {{ $errors->has('institucion') ? ' has-error' : '' }}">
                             <label for="institucion" class="control-label">Institucion asociada: </label>
                             <select class="form-control" name="institucion" id="institucion">
                                 @foreach($instituciones as $institucion)
-                                <option value="{{$institucion->id}}">{{$institucion->nombre}}</option>
+                                <option value="{{$institucion->id}}" @if($institucion->id==$usuario->institucion_id) selected @endif>{{$institucion->nombre}}</option>
                                 @endforeach
                             </select>
                             @if ($errors->has('institucion'))
@@ -142,7 +144,7 @@
                         @endif
     
                         <div class="form-group" style="margin-bottom: 0px;">
-                            <button class="btn btn-info" style="margin-bottom: 0px;" type="submit"><i class="fa fa-plus"></i> Agregar registro en {{$tipoUsuario}} </button>
+                            <button class="btn btn-info margin-top-15" style="margin-bottom: 0px;" type="submit"><i class="fa fa-pencil"></i> Guardar cambios de {{$tipoUsuario}} </button>
                         </div>
                     </form>                 
                     </div>
@@ -154,35 +156,12 @@
 
                     <div class="panel panel-default" style="margin-top: 30px;">  
                         <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa fa-info"></i> Los {{$tipoUsuario}}</h3></div>                    
-                        <div class="panel-body">                       
-                        @if($tipoUsuario=='clientes')
-                            <div class="thumb-tall" style="background-image: url('/assets/img/usuarios.jpg')"></div>
-
-                            Los clientes son la parte mas escenecial en el  funcionamiento de Ticketter. Los usuarios tienen la capacidad  de buscar buscar instituciones,  buscar sucursales y pedir tickets.
-                            <br><br>                           
-                            En caso  que un cliente se comporte de manera indebida, el sistema restringirá la cantidad de tickets que puede  obtener hasta un minimo  de uno. Lo mismo aplica de manera  contraría. Un cliente con buen comportamiento tendrá una cantidad maxima de tickets mayor al promedio.
-                        @elseif($tipoUsuario=='operarios')
-                            <div class="thumb-tall" style="background-image: url('/assets/img/cajero.jpg')"></div>
-
-                            Los operarios son los que hacen que todo el sistema de  Ticketter funcione. Los operarios son los encargados de controlar los distintos cubiculos dispuestos por la sucursal  a la que pertenecen.
-                            <br><br>
-                            Los operarios son gestionados por los managers de cada  institucion, y tienen la responsabilidad de mover la cola de  clientes y entregar feedback de cada atencion realizada.
-                        @elseif($tipoUsuario=='managers')
-                            <div class="thumb-tall" style="background-image: url('/assets/img/manager.jpg')"></div>
-
-                            Los managers, gestores de la informacion existente en la plataforma Ticketter. Estos son los encargados de gestionar casi la totalidad de los aspectos de la plataforma.
-                            <br><br>
-                            Es tarea de  los managers gestionar sus propias instituciones. Cada  manger está relacionado con una  institucion. Ademas, debe gestionar las  sucursales, servicios, cubiculos y operarios correspondientes.
-                        @elseif($tipoUsuario=='admins')
-                            <div class="thumb-tall" style="background-image: url('/assets/img/admins.jpg')"></div>
-
-                            Los administradores puede gestionar a todos los usuarios y sucursales del sistema. Se debe tener cuidado  con las cuentas de  administrador entregadas, ya que se puede acceder a practicamente cualquier  sección del sistema.
-
-                            Es tarea de los administradores monitorear la plataforma. Detectar problemas  y entregar solucion a los clientes o comunica al  area  de asistencia adecuada para la pronta  correción de ellos.
-                        @endif
-
-
+                        <h3 class="panel-title"><i class="fa fa-warning"></i> Edicion de usuarios</h3></div>                    
+                        <div class="panel-body"> 
+                        <div class="thumb-tall" style="background-image: url('/assets/img/negocio1.jpeg')"></div>
+                        Es importante mantener cuidado al  modificar los distintos usuarios del  sistema. A nadie le gusta que le cambien su informacion personal de un momento para otro. Notifica a los usuarios cuando  cambies sus datos por algun motivo.
+                        <br><br>
+                        Recuerda que un cambio repentino  en el usuario  o contraseña podría dejar al  usuario  respectivo  sin acceso  a la plataforma.
                         </div>
                         <div class="panel-footer"></div>
                    </div>
@@ -191,9 +170,3 @@
         </div>
     </div> 
 @endsection
-
-
-  
-
- 
-
