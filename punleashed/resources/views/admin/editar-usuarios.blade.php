@@ -38,7 +38,10 @@
     @endif
 
     <div class="container">
-        <h1 style="color: #1485ee;">Edicion de usuarios<a href="/admin/lista/clientes" class="btn btn-danger pull-right" type="button"><i class="fa fa-remove"></i><span class="hidden-xs"> Cancelar </span></a></h1>
+        <h1 style="color: #1485ee;">Edicion de usuarios
+        @if(!Session::get('status-ok'))<a href="/admin/lista/clientes" class="btn btn-danger pull-right" type="button"><i class="fa fa-remove"></i><span class="hidden-xs"> Cancelar </span></a>
+        @else <a href="/admin/lista/clientes" class="btn btn-info pull-right" type="button"><i class="fa fa-arrow-left"></i><span class="hidden-xs"> Volver atras </span></a>@endif
+        </h1>
         <hr style="margin-top: 0px; margin-bottom: 15px;">
         <div>
             <div class="tab-content">
@@ -47,8 +50,10 @@
 
                     <div class="panel panel-default" style="margin-top: 30px;">                        
                         <div class="panel-body">
-                        <form method="POST" action="/admin/agregar/{{$tipoUsuario}}/crear">
+                        <form method="POST" action="/admin/editar/{{$tipoUsuario}}/editar">
                         {{ csrf_field() }}
+
+                        <input type="hidden" name="usuarioId" id="usuarioId" value="{{$usuario->id}}">
 
                         <div class="form-group {{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="username" class="control-label">Nombre de usuario: </label>
@@ -65,7 +70,7 @@
 
                         <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="control-label">Nueva contraseña: </label>
-                            <input id="password" class="form-control" type="password" name="password" required>
+                            <input id="password" class="form-control" type="password" name="password">
                             @if ($errors->has('password'))
                                     <span class="help-block">
                                         <strong>{{str_replace('password','contraseña',$errors->first('password')) }}</strong>
@@ -75,7 +80,7 @@
 
                         <div class="form-group">
                             <label for="password-confirm" class="control-label">Repetir nueva contraseña: </label>
-                            <input id="password-confirm" class="form-control" type="password" name="password_confirmation" required>
+                            <input id="password-confirm" class="form-control" type="password" name="password_confirmation">
                         </div>
 
                         <hr>

@@ -291,4 +291,68 @@ class AdminController extends Controller
 
         return view('admin/editar-usuarios')->with($data);
     }
+
+    public function editar(Request $request, $tipoUsuario){
+    	//TODO: FIX: Debería primero validar el ID, luego buscar la cuenta y el usuario. En caso que el rut y el username del request sean distintos al anterior, validarlos nuevamente. Sino dejar pasar, porque ahora está dejando pasar ruts y usernames repetidos.
+    	//Valida las entradas
+    	$this->validate($request, [
+	        'username' => 'required|string|max:255',
+            'password' => 'nullable|string|min:6|confirmed',
+            'name' => 'required|string|max:255',    
+            'usuarioId' => 'required|numeric', 
+	    ]);  
+
+    	//Valida el rut para los no-administradores
+	    if($tipoUsuario!='admins'){
+	    	$this->validate($request, [	          
+	            'rut' => 'required|numeric', //Debería ser unique
+		    ]); 
+	    }  
+
+    	//Busca el usuario con el id ingresado
+    	$usuario = NULL;
+
+    	if ($tipoUsuario == 'admins'){
+            $usuario = Admin::find($request->usuarioId);
+        }
+        else if ($tipoUsuario == 'managers'){
+            $usuario = Manager::find($request->usuarioId);
+        }
+        else if ($tipoUsuario == 'operarios'){
+            $usuario = Operario::find($request->usuarioId);
+        }
+        else if ($tipoUsuario == 'clientes'){
+            $usuario = Cliente::find($request->usuarioId);
+        }
+        else{
+            //En caso  que el tipo  de  usuario sea incorrecto
+            abort(404);
+        }
+
+        //Si no encuentra el usuario
+        if ($usuario==NULL){abort(404);}
+
+	    //Busca la cuenta asociada y actualzia
+	    $cuenta = $usuario->cuenta;
+
+	    $cuenta->username = $request->username;
+	    if($request->password != NULL && $request->password != ""){ 
+	    	$cuenta->password = bcrypt($request->password);
+	    }
+    	$cuenta->save();
+
+    	//Luego actualiza los datos de usuario
+    	$usuario->nombre = $request->name;
+
+    	if($request->has('rut')){ $usuario->rut = $request->rut; }
+    	if($request->has('institucion')){ $usuario->institucion_id = $request->institucion; }
+    	if($request->has('servicio')){ $usuario->servicio_id = $request->servicio; }
+
+    	$usuario->save();
+
+		//Entrega un mensaje de vuelta
+		Session::flash('msg', Constantes::Mensaje('cuenta_editada_exito'));
+		Session::flash('status-ok', true);
+    	return back();
+    }
 }
