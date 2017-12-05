@@ -18,10 +18,10 @@
             <li><span>Mis Tickets</span></li>
         </ol>
         <div class="row row-title">
-            <div class="col-md-2 col-sm-2 col-xs-12"><img class="img-circle center-block" src="" width="80" height="80"></div>
-            <div class="col-md-10 col-sm-10 col-xs-12">
-                <h3 class="text-left visible-sm-block visible-md-block visible-lg-block">Mis Tickets</h3>
-                <h3 class="text-center visible-xs-block">Mis Tickets</h3></div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                
+                <h3 class="text-left visible-sm-block visible-md-block visible-lg-block"><i class="fa fa-ticket"></i> Mis Tickets</h3>
+                <h3 class="text-center visible-xs-block"><i class="fa fa-ticket"></i> Mis Tickets</h3></div>
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">

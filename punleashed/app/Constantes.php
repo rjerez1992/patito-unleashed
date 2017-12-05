@@ -38,6 +38,10 @@ class Constantes extends Model
         return 't.png';
     }
 
+    public static function ImagenClienteDefecto(){
+        return 'img/cliente-perfil.jpg';
+    }
+
     public static function NuevaInstitucion(){
         return 'Nueva institucion';
     }

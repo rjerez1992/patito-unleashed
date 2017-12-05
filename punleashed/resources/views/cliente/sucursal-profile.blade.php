@@ -50,6 +50,52 @@
                 <h4 class="ticket-heading-number"><i class="fa fa-bank fa-fw icon-ticket-list"></i><strong>Servicios</strong></h4></div>
             <div class="panel-body">
                 <div class="row visible-xs-block visible-sm-block visible-md-block visible-lg-block row-eq-height">
+                    
+                    @if($servicios->isEmpty())
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                                    <p>No existen servicios disponibles para esta sucursal. Estamos trabajando en ello.</p>
+                                </div>
+                            </div>
+                    @else
+                        @foreach($servicios as $servicio)
+                        <div class="col-md-4 col-sm-6 col-xs-12 column-less-padding">
+                            <div class="panel panel-info panel-info-ticket">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12 col-xs-12"><strong>{{$servicio->nombre}}</strong></div>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6 col-xs-6 info-service">
+                                            <div class="alert alert-danger text-center alert-info-ticket center-block" role="alert">
+                                                <div class="col-md-12 col-sm-12 col-xs-12"><i class="fa fa-flag fa-fw"></i><strong>Actual</strong></div>
+                                                <div class="col-md-12 col-sm-12 col-xs-12"><strong>{{$servicio->letra}}{{$servicio->numero_actual}} </strong></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-6 info-service">
+                                            <div class="alert alert-info text-center alert-info-ticket center-block" role="alert">
+                                                <div class="col-md-12 col-sm-12 col-xs-12"><i class="fa fa-clock-o fa-fw"></i><strong>Espera</strong></div>
+                                                <div class="col-md-12 col-sm-12 col-xs-12"><strong>{{$servicio->tiempo_espera}} minutos</strong></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @if (Auth::user()!=NULL)
+                                    <div class="panel-footer">
+                                        <button class="btn btn-primary btn-block btn-sm center-block" type="button" data-target="#modal-create-ticket" data-toggle="modal"><i class="fa fa-ticket fa-fw"></i>Solicitar Ticket</button>
+                                    </div>
+                                @else
+                                    <div class="panel-footer">
+                                        <p class="text-center" style="color: white;">Debes estar logueado para solicitar un ticket.</p>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>                        
+                        @endforeach
+                    @endif
+
                     <div class="col-md-4 col-sm-6 col-xs-12 column-less-padding">
                         <div class="panel panel-info panel-info-ticket">
                             <div class="panel-heading">
@@ -73,9 +119,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="panel-footer">
-                                <button class="btn btn-primary btn-block btn-sm center-block" type="button" data-target="#modal-create-ticket" data-toggle="modal"><i class="fa fa-ticket fa-fw"></i>Solicitar Ticket</button>
-                            </div>
+
+                                @if (Auth::user()!=NULL)
+                                    <div class="panel-footer">
+                                        <button class="btn btn-primary btn-block btn-sm center-block" type="button" data-target="#modal-create-ticket" data-toggle="modal"><i class="fa fa-ticket fa-fw"></i>Solicitar Ticket</button>
+                                    </div>
+                                @else
+                                    <div class="panel-footer">
+                                        <p class="text-center" style="color: white;">Debes estar logueado para solicitar un ticket.</p>
+                                    </div>                                
+                                @endif
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-6 col-xs-12 column-less-padding">
@@ -134,6 +187,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

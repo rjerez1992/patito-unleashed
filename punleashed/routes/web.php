@@ -15,9 +15,10 @@ Route::get('/', function () {
     return view('frontpage/frontpage');
 });
 
+
 Route::get('/cliente/tickets', 'ClienteController@tickets');
 
-Route::get('/cliente/profile','ClienteController@profile');
+Route::get('/cliente/profile/{id?}','ClienteController@profile');
 
 Route::get('/cliente/institucion','ClienteController@institucion');
 
