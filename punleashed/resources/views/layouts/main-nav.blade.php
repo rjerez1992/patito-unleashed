@@ -10,7 +10,8 @@
             <div class="container-fluid">
                 <div class="navbar-header"><a class="navbar-brand" href="/"><i class="fa fa-ticket"></i> Ticketter<span style="font-weight: normal">{{ $user_type }}</span></a>
                 @if(!Auth::guest())
-                    <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+                    <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1"
+                    style="padding: 5px; border: none !important; padding-bottom: 2px;"><span class="sr-only">Toggle navigation</span><i class="fa fa-align-justify" style="font-size: 25px; color: #1485ee;"></i></button>
                 @endif                    
                 </div>
                 <div class="collapse navbar-collapse" id="navcol-1">
@@ -26,6 +27,12 @@
                     <li class="active" role="presentation"><a href="/administrador/institucion" style="color:rgb(102,102,102);"><i class="fa fa-building"></i> Institución</a></li>
                     <li role="presentation"><a href="#" style="color:rgb(102,102,102);"><i class="fa fa-university"></i> Sucursales</a></li>
                     <li role="presentation"><a href="#" style="color:rgb(102,102,102);"><i class="fa fa-users"></i> Usuarios</a></li>
+                    @endif
+
+                    @if(Auth::user()!=NULL && Auth::user()->tipo==App\Constantes::Admin())
+                    <li role="presentation" style="color:rgb(102,102,102);"><a href="/admin/dashboard" style="color: #1485ee;"><i class="fa fa-building"></i> Dashboard</a></li>
+                        <li class="active" role="presentation"><a href="/admin/instituciones/lista" style="color: #1485ee;"><i class="fa fa-university"></i> Instituciones</a></li>
+                        <li class="active" role="presentation"><a href="/admin/lista/clientes" style="color: #1485ee;"><i class="fa fa-users"></i> Usuarios</a></li>
                     @endif
 
 

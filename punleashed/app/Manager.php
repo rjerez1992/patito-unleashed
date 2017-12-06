@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Manager extends Model
 {
-    //
+    public function cuenta(){
+    	return $this->belongsTo('App\Cuenta');
+    }
 }

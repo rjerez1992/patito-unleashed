@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
 
         //Cliente       
         $c = 1;
-        for($c; $c<=$cantidad; $c++){
+        for($c; $c<=$cantidad*5; $c++){
             $cuenta = Cuenta::firstOrCreate([
                 'username' => 'cliente'.$c,
                 'email' => 'cliente'.$c.'@cliente.com',
