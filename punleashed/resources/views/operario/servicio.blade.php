@@ -9,7 +9,7 @@ $cuenta = Auth::user();
 $operario = $cuenta->usuario;
 //Siempre es necesario verificar que no sea nulo (por seguridad)
 if ($operario){
-	echo $operario->nombre;
+	echo $operario->nombre; //a
 }
 
 @endphp
