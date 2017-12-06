@@ -355,4 +355,132 @@ class AdminController extends Controller
 		Session::flash('status-ok', true);
     	return back();
     }
+
+    /* Lista las instituciones */
+    public function instituciones(){
+        //Busca las instituciones
+        //Retorna
+
+        $instituciones = Institucion::orderBy('id', 'desc')->simplePaginate(15);
+
+        $data =  array(
+                'instituciones' => $instituciones,
+            );
+
+        return view('admin/lista-instituciones')->with($data);
+    }
+
+    /* Muestra el FORMULARIO para agregar  una institucion */
+    public function agregarInstitucion(){
+        return view('admin/agregar-institucion');
+    }
+
+    /* Crea una institucion a partir de un  post */
+    public function  crearInstitucion(Request $request){
+     
+        //Valida las entradas
+        $this->validate($request, [
+            'username' => 'required|string|max:255|unique:cuentas',
+            'password' => 'required|string|min:6|confirmed',
+            'name' => 'required|string|max:255',
+            'rut' => 'required|numeric|unique:managers',
+            'nombreInstitucion' => 'required|string|max:255', //Ver como hacer el  unique aqui
+            'run' => 'required|numeric|unique:institucions',     
+        ]);  
+
+        //Crea la institucion
+        $institucion = new Institucion;
+        $institucion->nombre  = $request->nombreInstitucion;
+        $institucion->run = $request->run;
+        
+        $institucion->save();
+
+        //Crea la cuenta de manager
+        $cuenta = new Cuenta;
+        $cuenta->username = $request->username;
+        $cuenta->password = bcrypt($request->password);
+        $cuenta->tipo = Constantes::Manager();
+        $cuenta->save();
+
+        //Crea el manager
+        $manager = new  Manager;
+        $manager->institucion_id =  $institucion->id;
+        $manager->cuenta_id = $cuenta->id;
+        $manager->rut = $request->rut;
+        $manager->nombre = $request->name;
+
+        $manager->save();
+
+        //Entrega un mensaje de vuelta
+        Session::flash('msg', Constantes::Mensaje('institucion_creada_exito'));
+        Session::flash('status-ok', true);
+        return back();
+    }
+
+    /* Muestra el FORMULARIO de edicion de institucion  */
+    public function  preEdicionInstitucion($id){
+
+        //Busca la institucion
+        $institucion = Institucion::find($id);
+
+        if ($institucion==NULL){
+            abort(404);
+        }
+
+        $data = array(
+                'institucion' => $institucion,
+            );
+
+        return  view('admin/editar-instituciones')->with($data);
+    }
+
+    public function editarInstitucion(Request $request){
+        //TODO: FIX: Debería primero validar el ID, luego buscar la cuenta y el usuario. En caso que el rut y el username del request sean distintos al anterior, validarlos nuevamente. Sino dejar pasar, porque ahora está dejando pasar ruts y usernames repetidos. (Misma idea para esto);
+        //Valida las entradas
+        $this->validate($request, [
+            'institucionId' => 'required|numeric',
+            'name' => 'required|string|max:255',
+            'run' => 'required|numeric',
+            'descripcion' => 'required|string|max:1024',    
+        ]);  
+
+        //Busca la institucion
+        $institucion = Institucion::find($request->institucionId);
+
+        if ($institucion==NULL){
+            abort(404);
+        }
+
+        $institucion->nombre = $request->name;
+        $institucion->run = $request->run;
+        $institucion->descripcion = $request->descripcion;
+        $institucion->save();
+
+        //Entrega un mensaje de vuelta
+        Session::flash('msg', Constantes::Mensaje('cuenta_editada_exito'));
+        Session::flash('status-ok', true);
+        return back();
+    }
+
+    /* Elimina una institucion */
+    public function eliminarInstitucion(Request $request){
+
+        if (!is_numeric($request->hiddenId)){
+            abort(404);
+        }
+
+        //Buscamos la institucion
+        $institucion = Institucion::find($request->hiddenId);
+
+        //Eliminamos (cascade debería eliminar todo lo relacionado)
+        $institucion->delete();
+
+        //Entrega un mensaje de vuelta
+        Session::flash('msg', Constantes::Mensaje('institucion_eliminada_exito'));
+        Session::flash('status-ok', true);
+        return back();
+    }
+
+
 }
+

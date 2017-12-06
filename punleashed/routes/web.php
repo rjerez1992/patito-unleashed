@@ -33,7 +33,18 @@ Route::get('/manager/dashboard', 'ManagerController@dashboard');
 Route::middleware("filtro:".App\Constantes::Admin())->group(function () {
     Route::get('/admin/dashboard', 'AdminController@dashboard');
 
-    /* CRUD */
+    /* CRUD Instituciones */
+    Route::get('/admin/instituciones/agregar', 'AdminController@agregarInstitucion');
+    Route::post('/admin/instituciones/agregar/crear', 'AdminController@crearInstitucion');
+
+    Route::get('/admin/instituciones/lista', 'AdminController@instituciones');
+
+    Route::get('/admin/instituciones/editar/{id}', 'AdminController@preEdicionInstitucion');
+    Route::post('/admin/instituciones/editar/editar', 'AdminController@editarInstitucion');
+
+    Route::post('/admin/instituciones/eliminar', 'AdminController@eliminarInstitucion');
+
+    /* CRUD USUARIOS*/
     Route::get('/admin/agregar/{tipoUsuario}', 'AdminController@agregar');
     Route::post('/admin/agregar/{tipoUsuario}/crear', 'AdminController@crear');
 

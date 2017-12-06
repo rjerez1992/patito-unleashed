@@ -15,4 +15,8 @@ class Institucion extends Model
         return $this->hasManyThrough('App\Servicio', 'App\Sucursal');
     }
 
+    public function managers(){
+    	return $this->hasMany('App\Manager');
+    }
+
 }

@@ -75,6 +75,8 @@ class Constantes extends Model
             'cuenta_creada_exito' => 'El usuario ha sido creado de manera exitosa',
             'cuenta_eliminada_exito' => 'El usuario ha sido eliminado de manera exitosa',
             'cuenta_editada_exito' => 'El usuario ha sido editado de manera exitosa',
+            'institucion_eliminada_exito' => 'La institucion ha sido eliminada de manera exitosa',
+            'institucion_creada_exito' => 'El manager y la institucion correespondiente han sido creadas con exito',
             );
         return $mensaje[$key];
     }

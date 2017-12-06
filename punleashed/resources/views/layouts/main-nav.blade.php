@@ -31,7 +31,7 @@
 
                     @if(Auth::user()!=NULL && Auth::user()->tipo==App\Constantes::Admin())
                     <li role="presentation" style="color:rgb(102,102,102);"><a href="/admin/dashboard" style="color: #1485ee;"><i class="fa fa-building"></i> Dashboard</a></li>
-                        <li class="active" role="presentation"><a href="#" style="color: #1485ee;"><i class="fa fa-university"></i> Instituciones</a></li>
+                        <li class="active" role="presentation"><a href="/admin/instituciones/lista" style="color: #1485ee;"><i class="fa fa-university"></i> Instituciones</a></li>
                         <li class="active" role="presentation"><a href="/admin/lista/clientes" style="color: #1485ee;"><i class="fa fa-users"></i> Usuarios</a></li>
                     @endif
 

@@ -28,7 +28,7 @@
                             <div class="thumb" style="background-image: url('/assets/img/instituciones.jpg')"></div>
                         </div>
                         <div class="col-md-7">
-                            <a href="#"><h3 class="name accent-color">Ver instituciones </h3></a>
+                            <a href="/admin/instituciones/lista"><h3 class="name accent-color">Ver instituciones </h3></a>
                             <p class="description">Desde esta seccion puede crear y monitorear instituciones dentro del sistema</p>
                         </div>
                     </div>
@@ -50,7 +50,7 @@
                             <div class="thumb" style="background-image: url('/assets/img/n-institucion.jpg')"></div>
                         </div>
                         <div class="col-md-7">
-                            <h3 class="name accent-color">Agregar institucion</h3>
+                            <a href="/admin/instituciones/agregar"><h3 class="name accent-color">Agregar institucion</h3></a>
                             <p class="description">¿Quieres agregar una institucion rapidamente? Ingresa aquí y hazlo de manera directa</p>
                         </div>
                     </div>
