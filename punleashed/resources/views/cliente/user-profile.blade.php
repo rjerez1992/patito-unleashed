@@ -78,7 +78,7 @@
             <div class="panel-body">
                 <div class="row visible-xs-block visible-sm-block visible-md-block visible-lg-block row-eq-height">
 
-                    @if($sucursalesFrecuentes->isEmpty())
+                    @if($sucursalesFrecuentes==NULL)
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12 text-center">
                                     <p>No existen sucursales frecuentes. Intente solicitar un ticket en alguna sucursal.</p>

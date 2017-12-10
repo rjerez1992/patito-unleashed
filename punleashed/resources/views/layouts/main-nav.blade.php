@@ -19,7 +19,7 @@
                     @if(Auth::user()!=NULL && Auth::user()->tipo==App\Constantes::Cliente())
                     <li role="presentation"><a href="#"><i class="fa fa-plus fa-fw navbar-menu-icon"></i>Obtener ticket</a></li>
                     <li role="presentation"><a href="/cliente/tickets"><i class="fa fa-ticket fa-fw navbar-menu-icon"></i>Mis tickets</a></li>
-                    <li role="presentation"><a href="/cliente/profile"><i class="fa fa-user fa-fw navbar-menu-icon"></i>Mi cuenta</a></li>
+                    <li role="presentation"><a href="/cliente/profile/"><i class="fa fa-user fa-fw navbar-menu-icon"></i>Mi cuenta</a></li>
                     @endif
 
                     @if(Auth::user()!=NULL && Auth::user()->tipo==App\Constantes::Manager())

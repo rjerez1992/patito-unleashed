@@ -14,14 +14,14 @@
     <div class="container">
         <ol class="breadcrumb">
             <li><a href="/"><span>Inicio </span></a></li>
-            <li><a href="/cliente/institucion"><span>{{ $nameInstitucion }}</span></a></li>
-            <li><span>{{ $nameSucursal }}</span></li>
+            <li><a href="/cliente/institucion/{{$institucion->id}}"><span>{{ $sucursal->nombre }}</span></a></li>
+            <li><span>{{ $sucursal->nombre }}</span></li>
         </ol>
         <div class="row row-title">
-            <div class="col-md-2 col-sm-2 col-xs-12"><img class="img-circle center-block" src="{{ $imageSucursal }}" width="100" height="100"></div>
+            <div class="col-md-2 col-sm-2 col-xs-12"><img class="img-circle center-block" src="{{ $sucursal->image }}" width="100" height="100"></div>
             <div class="col-md-10 col-sm-10 col-xs-12">
-                <h3 class="text-left visible-sm-block visible-md-block visible-lg-block">{{ $nameSucursal }}</h3>
-                <h3 class="text-center visible-xs-block">{{ $nameSucursal }}</h3></div>
+                <h3 class="text-left visible-sm-block visible-md-block visible-lg-block">{{ $sucursal->nombre }}</h3>
+                <h3 class="text-center visible-xs-block">{{ $sucursal->nombre }}</h3></div>
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -32,13 +32,13 @@
                         <div class="row">
                             <div class="col-md-2 col-sm-3 col-xs-12"><strong>Dirección: </strong></div>
                             <div class="col-md-10 col-sm-9 col-xs-12">
-                                <p>{{ $dirSucursal }}</p>
+                                <p>{{ $sucursal->direccion }}</p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-2 col-sm-3 col-xs-12"><strong>Descripción: </strong></div>
                             <div class="col-md-10 col-sm-9 col-xs-12">
-                                <p>{{ $descSucursal }}</p>
+                                <p>{{ $sucursal->descripcion }}</p>
                             </div>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
             <div class="panel-body">
                 <div class="row visible-xs-block visible-sm-block visible-md-block visible-lg-block row-eq-height">
                     
-                    @if($servicios->isEmpty())
+                    @if($servicios==NULL)
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12 text-center">
                                     <p>No existen servicios disponibles para esta sucursal. Estamos trabajando en ello.</p>
@@ -82,7 +82,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if (Auth::user()!=NULL)
+                                @if ($cuenta!=NULL)
                                     <div class="panel-footer">
                                         <button class="btn btn-primary btn-block btn-sm center-block" type="button" data-target="#modal-create-ticket" data-toggle="modal"><i class="fa fa-ticket fa-fw"></i>Solicitar Ticket</button>
                                     </div>
@@ -95,98 +95,6 @@
                         </div>                        
                         @endforeach
                     @endif
-
-                    <div class="col-md-4 col-sm-6 col-xs-12 column-less-padding">
-                        <div class="panel panel-info panel-info-ticket">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-md-12 col-sm-12 col-xs-12"><strong>Atención General</strong></div>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-md-6 col-sm-6 col-xs-6 info-service">
-                                        <div class="alert alert-danger text-center alert-info-ticket center-block" role="alert">
-                                            <div class="col-md-12 col-sm-12 col-xs-12"><i class="fa fa-flag fa-fw"></i><strong> Actual</strong></div>
-                                            <div class="col-md-12 col-sm-12 col-xs-12"><strong>A150 </strong></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6 col-xs-6 info-service">
-                                        <div class="alert alert-info text-center alert-info-ticket center-block" role="alert">
-                                            <div class="col-md-12 col-sm-12 col-xs-12"><i class="fa fa-clock-o fa-fw"></i><strong>Espera</strong></div>
-                                            <div class="col-md-12 col-sm-12 col-xs-12"><strong>30 minutos</strong></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                                @if (Auth::user()!=NULL)
-                                    <div class="panel-footer">
-                                        <button class="btn btn-primary btn-block btn-sm center-block" type="button" data-target="#modal-create-ticket" data-toggle="modal"><i class="fa fa-ticket fa-fw"></i>Solicitar Ticket</button>
-                                    </div>
-                                @else
-                                    <div class="panel-footer">
-                                        <p class="text-center" style="color: white;">Debes estar logueado para solicitar un ticket.</p>
-                                    </div>                                
-                                @endif
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12 column-less-padding">
-                        <div class="panel panel-info panel-info-ticket">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-md-12 col-sm-12 col-xs-12"><strong>Giros / Depósitos </strong></div>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-md-6 col-sm-6 col-xs-6 info-service">
-                                        <div class="alert alert-danger text-center alert-info-ticket center-block" role="alert">
-                                            <div class="col-md-12 col-sm-12 col-xs-12"><i class="fa fa-flag fa-fw"></i><strong> Actual</strong></div>
-                                            <div class="col-md-12 col-sm-12 col-xs-12"><strong>G10 </strong></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6 col-xs-6 info-service">
-                                        <div class="alert alert-info text-center alert-info-ticket center-block" role="alert">
-                                            <div class="col-md-12 col-sm-12 col-xs-12"><i class="fa fa-clock-o fa-fw"></i><strong>Espera</strong></div>
-                                            <div class="col-md-12 col-sm-12 col-xs-12"><strong>10 minutos</strong></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel-footer">
-                                <button class="btn btn-primary btn-block btn-sm center-block" type="button" data-target="#modal-create-ticket" data-toggle="modal"><i class="fa fa-ticket fa-fw"></i>Solicitar Ticket</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12 column-less-padding">
-                        <div class="panel panel-info panel-info-ticket">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-md-12 col-sm-12 col-xs-12"><strong>Créditos de Consumo</strong></div>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-md-6 col-sm-6 col-xs-6 info-service">
-                                        <div class="alert alert-danger text-center alert-info-ticket center-block" role="alert">
-                                            <div class="col-md-12 col-sm-12 col-xs-12"><i class="fa fa-flag fa-fw"></i><strong> Actual</strong></div>
-                                            <div class="col-md-12 col-sm-12 col-xs-12"><strong>C94 </strong></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6 col-xs-6 info-service">
-                                        <div class="alert alert-info text-center alert-info-ticket center-block" role="alert">
-                                            <div class="col-md-12 col-sm-12 col-xs-12"><i class="fa fa-clock-o fa-fw"></i><strong>Espera</strong></div>
-                                            <div class="col-md-12 col-sm-12 col-xs-12"><strong>20 minutos</strong></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel-footer">
-                                <button class="btn btn-primary btn-block btn-sm center-block" type="button" data-target="#modal-create-ticket" data-toggle="modal"><i class="fa fa-ticket fa-fw"></i>Solicitar Ticket</button>
-                            </div>
-                        </div>
-                    </div>
 
                 </div>
             </div>
@@ -209,10 +117,10 @@
                         </div>
                         <div class="panel-body body-info-ticket">
                             <div class="row">
-                                <div class="col-md-2 col-sm-2 col-xs-3"><img class="img-circle" src="{{ $imageSucursal }}" width="55" height="55"></div>
+                                <div class="col-md-2 col-sm-2 col-xs-3"><img class="img-circle" src="{{ $sucursal->image }}" width="55" height="55"></div>
                                 <div class="col-md-10 col-sm-10 col-xs-9">
                                     <div class="row">
-                                        <div class="col-md-12 col-sm-12 col-xs-12"><strong>{{ $nameSucursal }}</strong></div>
+                                        <div class="col-md-12 col-sm-12 col-xs-12"><strong>{{ $sucursal->nombre }}</strong></div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12 col-xs-12"><span>Créditos de Consumo</span></div>

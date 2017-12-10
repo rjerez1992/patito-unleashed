@@ -1,68 +1,99 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Admin;
+use App\Cliente;
+use App\Constantes;
+use App\Cubiculo;
+use App\Cuenta;
+use App\Institucion;
+use App\Manager;
+use App\Operario;
+use App\Servicio;
+use App\Sucursal;
+use App\Ticket;
+use Session;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Constantes;
 use Illuminate\Support\Facades\DB;
 
 class ClienteController extends Controller
 {
-    public function profile()
+    public function profile($id=-1)
     {
-        if (Auth::user()!=NULL)
+        if($id==-1)
         {
-            $cuenta = Auth::user();
-            $cliente = $cuenta->usuario;
-            if ($cliente && $cuenta->tipo==Constantes::Cliente())
-            {
-                $reputacionCliente='6.5';
-                $sucursalesFrecuentes=collect([]);
-                $id_perfil = $cliente->id;
-                return view('cliente/user-profile',compact('cuenta','cliente','sucursalesFrecuentes','reputacionCliente'));
-            }
+            $cuenta=Auth::user();
+            $data = array(
+                'cuenta' => $cuenta,
+                'cliente' => $cuenta->usuario,
+                'sucursalesFrecuentes' =>NULL,
+                'reputacionCliente' => '6.5',
+            );
+            return  view('cliente/user-profile')->with($data);
         }
-        return redirect('/');
+        $cliente = Cliente::find($id);
+
+        if ($cliente==NULL){
+            return redirect('/');
+        }
+
+        $data = array(
+                'cuenta' => $cuenta,
+                'cliente' => $cliente,
+                'sucursalesFrecuentes' =>NULL,
+                'reputacionCliente' => '6.5',
+            );
+
+        return  view('cliente/user-profile')->with($data);
     }
 
-    public function institucion()
+    public function search()
     {
-        if (Auth::user()!=NULL)
-        {
-            $cuenta = Auth::user();
-            $cliente = $cuenta->usuario;
-            $sucursales=collect([]);
-            if ($cliente && $cuenta->tipo==Constantes::Cliente())
-            {
-                $nameInstitucion='Santander Chile S.A.';
-                $runInstitucion='123.456.789-0';
-                $descInstitucion='Santander Chile es de los primeros bancos en apoyar una universidad estatal que no posee un casino de calidad.';
-                $imageInstitucion='https://pbs.twimg.com/profile_images/468879197025226752/MJ5hJowM.png';
-                return view('cliente/institucion-profile',compact('sucursales','nameInstitucion','runInstitucion','descInstitucion','imageInstitucion'));
-            }
-        }
-        return redirect('/');
+        $sucursales=collect([]);
+        return view('cliente/search',compact('sucursales'));
     }
 
-    public function sucursal()
+    public function institucion($id)
     {
-        $nameInstitucion='Santander Chile S.A.';
-        $nameSucursal='Santander Talca #346';
-        $dirSucursal='1 Sur #346, Talca, Región del Maule, Chile-0';
-        $descSucursal='Santander Chile es de los primeros bancos en apoyar una universidad estatal que no posee un casino de calidad.';
-        $servicios=collect([]);
-        $imageSucursal='https://pbs.twimg.com/profile_images/468879197025226752/MJ5hJowM.png';
-        if (Auth::user()!=NULL)
-        {
-            $cuenta = Auth::user();
-            $cliente = $cuenta->usuario;
-            if ($cliente && $cuenta->tipo==Constantes::Cliente())
-            {
-                return view('cliente/sucursal-profile',compact('servicios','nameInstitucion','nameSucursal','dirSucursal','descSucursal','imageSucursal'));
-            }
+        $institucion = Institucion::find($id);
+
+        if ($institucion==NULL){
+            return redirect('/');
         }
-        return view('cliente/sucursal-profile',compact('servicios','nameInstitucion','nameSucursal','dirSucursal','descSucursal','imageSucursal'));
+
+        $data = array(
+                'institucion' => $institucion,
+                'sucursales' =>NULL,
+                //'sucursales' => Sucursal::where('institucion_id','=',$institucion->id),
+            );
+
+        return  view('cliente/institucion-profile')->with($data);
+    }
+
+    public function sucursal($id)
+    {
+        $sucursal = Sucursal::find($id);
+
+        if ($sucursal==NULL){
+            return redirect('/');
+        }
+
+        $cuenta=NULL;
+        if(Auth::user()!=NULL) //&& (Auth::user())->usuario->tipo==constantes::Cliente())
+        {
+            $cuenta=Auth::user();
+        }
+        $data = array(
+                'institucion' => Institucion::find($sucursal->institucion_id),
+                'sucursal' => $sucursal,
+                'servicios' => NULL,
+                //'servicios' => $sucursal->servicios(),
+                'cuenta' => $cuenta,
+            );
+
+        return  view('cliente/sucursal-profile')->with($data);
     }
 
     public function tickets()
@@ -71,12 +102,14 @@ class ClienteController extends Controller
         {
             $cuenta = Auth::user();
             $cliente = $cuenta->usuario;
-            if ($cliente && $cuenta->tipo==Constantes::Cliente())
-            {
-                $ticketsActivos = collect([]);
-                $historialTickets = collect([]);
-                return view('cliente/tickets-box',compact('cliente','ticketsActivos','historialTickets'));
-            }
+            $data = array(
+                    'cliente' => $cliente,
+                    'ticketsActivos' => NULL,
+                    'historialTickets' => NULL,
+                    //'servicios' => $sucursal->servicios(),
+                    'cuenta' => $cuenta,
+                );
+            return view('cliente/tickets-box')->with($data);
         }
         return redirect('/');
 

@@ -20,9 +20,11 @@ Route::get('/cliente/tickets', 'ClienteController@tickets');
 
 Route::get('/cliente/profile/{id?}','ClienteController@profile');
 
-Route::get('/cliente/institucion','ClienteController@institucion');
+Route::get('/cliente/institucion/{id}','ClienteController@institucion');
 
-Route::get('/cliente/sucursal','ClienteController@sucursal');
+Route::get('/cliente/sucursal/{id}','ClienteController@sucursal');
+
+Route::get('/cliente/search','ClienteController@search');
 
 Route::get('/operario/servicio', 'OperarioController@servicio');
 

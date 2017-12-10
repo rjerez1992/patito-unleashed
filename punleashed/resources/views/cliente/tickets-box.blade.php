@@ -14,7 +14,7 @@
     <div class="container">
         <ol class="breadcrumb">
             <li><a href="/"><span>Inicio </span></a></li>
-            <li><a href="/cliente/profile"><span>Mi Cuenta</span></a></li>
+            <li><a href="/cliente/profile/{{$cliente->id}}"><span>Mi Cuenta</span></a></li>
             <li><span>Mis Tickets</span></li>
         </ol>
         <div class="row row-title">
@@ -29,7 +29,7 @@
             <div class="panel-body">
                 <div class="row visible-xs-block visible-sm-block visible-md-block visible-lg-block row-eq-height">
                     
-                    @if($ticketsActivos->isEmpty())
+                    @if($ticketsActivos==NULL)
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12 text-center">
                                     <p>No existen tickets activos. Intente solicitar un ticket en alguna sucursal.</p>
@@ -78,7 +78,7 @@
             <div class="panel-body">
                 <div class="row visible-xs-block visible-sm-block visible-md-block visible-lg-block row-eq-height">
                     
-                    @if($historialTickets->isEmpty())
+                    @if($historialTickets==NULL)
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12 text-center">
                                     <p>No existen tickets antiguos. Intente solicitar un ticket en alguna sucursal.</p>

@@ -14,13 +14,13 @@
     <div class="container">
         <ol class="breadcrumb">
             <li><a href="/"><span>Inicio </span></a></li>
-            <li><span>{{ $nameInstitucion }}</span></li>
+            <li><span>{{ $institucion->nombre }}</span></li>
         </ol>
         <div class="row row-title">
-            <div class="col-md-2 col-sm-2 col-xs-12"><img class="img-circle center-block" src="{{ $imageInstitucion }}" width="100" height="100"></div>
+            <div class="col-md-2 col-sm-2 col-xs-12"><img class="img-circle center-block" src="{{ $institucion->image }}" width="100" height="100"></div>
             <div class="col-md-10 col-sm-10 col-xs-12">
-                <h3 class="text-left visible-sm-block visible-md-block visible-lg-block">{{ $nameInstitucion }}</h3>
-                <h3 class="text-center visible-xs-block">{{ $nameInstitucion }}</h3></div>
+                <h3 class="text-left visible-sm-block visible-md-block visible-lg-block">{{ $institucion->nombre }}</h3>
+                <h3 class="text-center visible-xs-block">{{ $institucion->nombre }}</h3></div>
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -31,13 +31,13 @@
                         <div class="row">
                             <div class="col-md-2 col-sm-3 col-xs-12"><strong>RUN: </strong></div>
                             <div class="col-md-10 col-sm-9 col-xs-12">
-                                <p>{{ $runInstitucion }}</p>
+                                <p>{{ $institucion->run }}</p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-2 col-sm-3 col-xs-12"><strong>Descripción: </strong></div>
                             <div class="col-md-10 col-sm-9 col-xs-12">
-                                <p>{{ $descInstitucion }}</p>
+                                <p>{{ $institucion->descripcion }}</p>
                             </div>
                         </div>
                     </div>
@@ -50,7 +50,7 @@
             <div class="panel-body">
                 <div class="row visible-xs-block visible-sm-block visible-md-block visible-lg-block row-eq-height">
 
-                    @if($sucursales->isEmpty())
+                    @if($sucursales==NULL)
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12 text-center">
                                     <p>No existen sucursales para esta institución. Estamos trabajando para agregar nuevas sucursales.</p>
