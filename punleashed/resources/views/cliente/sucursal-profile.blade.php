@@ -14,7 +14,7 @@
     <div class="container">
         <ol class="breadcrumb">
             <li><a href="/"><span>Inicio </span></a></li>
-            <li><a href="/cliente/institucion/{{$institucion->id}}"><span>{{ $sucursal->nombre }}</span></a></li>
+            <li><a href="/cliente/institucion/{{$institucion->id}}"><span>{{ $institucion->nombre }}</span></a></li>
             <li><span>{{ $sucursal->nombre }}</span></li>
         </ol>
         <div class="row row-title">
@@ -51,7 +51,7 @@
             <div class="panel-body">
                 <div class="row visible-xs-block visible-sm-block visible-md-block visible-lg-block row-eq-height">
                     
-                    @if($servicios==NULL)
+                    @if(count($servicios) == 0)
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12 text-center">
                                     <p>No existen servicios disponibles para esta sucursal. Estamos trabajando en ello.</p>
@@ -82,9 +82,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if ($cuenta!=NULL)
+                                @if ($cuenta!=NULL && $servicio->numero_disponible!=-1)
                                     <div class="panel-footer">
                                         <button class="btn btn-primary btn-block btn-sm center-block" type="button" data-target="#modal-create-ticket" data-toggle="modal"><i class="fa fa-ticket fa-fw"></i>Solicitar Ticket</button>
+                                    </div>
+                                @elseif ($cuenta!=NULL)
+                                    <div class="panel-footer">
+                                        <p class="text-center" style="color: white;">El servicio no está disponible.</p>
                                     </div>
                                 @else
                                     <div class="panel-footer">

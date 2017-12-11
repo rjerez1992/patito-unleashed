@@ -50,7 +50,7 @@
             <div class="panel-body">
                 <div class="row visible-xs-block visible-sm-block visible-md-block visible-lg-block row-eq-height">
 
-                    @if($sucursales==NULL)
+                    @if(count($sucursales) == 0)
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12 text-center">
                                     <p>No existen sucursales para esta institución. Estamos trabajando para agregar nuevas sucursales.</p>
@@ -59,7 +59,7 @@
                     @else
                         @foreach ($sucursales as $sucursal)
                         <div class="col-md-4 col-sm-6 col-xs-12 column-less-padding">
-                            <a href="/cliente/sucursal">
+                            <a href="/cliente/sucursal/{{$sucursal->id}}">
                                 <div class="panel panel-default">
                                     <div class="panel-body body-info-ticket">
                                         <div class="row">

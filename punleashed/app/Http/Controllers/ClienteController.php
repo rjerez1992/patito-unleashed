@@ -22,13 +22,13 @@ class ClienteController extends Controller
 {
     public function profile($id=-1)
     {
+        $cuenta=Auth::user();
         if($id==-1)
         {
-            $cuenta=Auth::user();
             $data = array(
                 'cuenta' => $cuenta,
                 'cliente' => $cuenta->usuario,
-                'sucursalesFrecuentes' =>NULL,
+                'sucursalesFrecuentes' =>Sucursal::all(),
                 'reputacionCliente' => '6.5',
             );
             return  view('cliente/user-profile')->with($data);
@@ -65,8 +65,7 @@ class ClienteController extends Controller
 
         $data = array(
                 'institucion' => $institucion,
-                'sucursales' =>NULL,
-                //'sucursales' => Sucursal::where('institucion_id','=',$institucion->id),
+                'sucursales' =>$institucion->sucursales,
             );
 
         return  view('cliente/institucion-profile')->with($data);
@@ -88,8 +87,7 @@ class ClienteController extends Controller
         $data = array(
                 'institucion' => Institucion::find($sucursal->institucion_id),
                 'sucursal' => $sucursal,
-                'servicios' => NULL,
-                //'servicios' => $sucursal->servicios(),
+                'servicios' => $sucursal->servicios,
                 'cuenta' => $cuenta,
             );
 
@@ -104,9 +102,8 @@ class ClienteController extends Controller
             $cliente = $cuenta->usuario;
             $data = array(
                     'cliente' => $cliente,
-                    'ticketsActivos' => NULL,
-                    'historialTickets' => NULL,
-                    //'servicios' => $sucursal->servicios(),
+                    'ticketsActivos' => Ticket::where('cliente_id', '=', $cliente->id)->where('estado', '=', Constantes::NuevoTicket())->get(),
+                    'historialTickets' => Ticket::where('cliente_id', '=', $cliente->id)->where('estado', '!=', Constantes::NuevoTicket())->get(),
                     'cuenta' => $cuenta,
                 );
             return view('cliente/tickets-box')->with($data);

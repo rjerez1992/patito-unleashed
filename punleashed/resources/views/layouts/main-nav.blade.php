@@ -17,7 +17,7 @@
                 <div class="collapse navbar-collapse" id="navcol-1">
                     <ul class="nav navbar-nav navbar-right">                
                     @if(Auth::user()!=NULL && Auth::user()->tipo==App\Constantes::Cliente())
-                    <li role="presentation"><a href="#"><i class="fa fa-plus fa-fw navbar-menu-icon"></i>Obtener ticket</a></li>
+                    <li role="presentation"><a href="/cliente/search"><i class="fa fa-search fa-fw navbar-menu-icon"></i>Buscador</a></li>
                     <li role="presentation"><a href="/cliente/tickets"><i class="fa fa-ticket fa-fw navbar-menu-icon"></i>Mis tickets</a></li>
                     <li role="presentation"><a href="/cliente/profile/"><i class="fa fa-user fa-fw navbar-menu-icon"></i>Mi cuenta</a></li>
                     @endif

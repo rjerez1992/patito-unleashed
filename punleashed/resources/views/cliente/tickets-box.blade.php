@@ -23,13 +23,20 @@
                 <h3 class="text-left visible-sm-block visible-md-block visible-lg-block"><i class="fa fa-ticket"></i> Mis Tickets</h3>
                 <h3 class="text-center visible-xs-block"><i class="fa fa-ticket"></i> Mis Tickets</h3></div>
         </div>
+
+        @if(isset($infoTicket))
+        <div class="alert alert-success alert-dismissable">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Info: </strong>Ticket cancelado con éxito :)
+        </div>
+        @endif
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="ticket-heading-number"><i class="fa fa-inbox fa-fw icon-ticket-list"></i><strong> Bandeja de Tickets</strong></h4></div>
             <div class="panel-body">
                 <div class="row visible-xs-block visible-sm-block visible-md-block visible-lg-block row-eq-height">
                     
-                    @if($ticketsActivos==NULL)
+                    @if(count($ticketsActivos) == 0)
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12 text-center">
                                     <p>No existen tickets activos. Intente solicitar un ticket en alguna sucursal.</p>
@@ -46,13 +53,13 @@
                                     </div>
                                     <div class="panel-body body-info-ticket">
                                         <div class="row">
-                                            <div class="col-md-3 col-sm-3 col-xs-3"><img class="img-circle" src="{{ $imageSucursal }}" width="55" height="55"></div>
+                                            <div class="col-md-3 col-sm-3 col-xs-3"><img class="img-circle" src="imagenSucursal" width="55" height="55"></div>
                                             <div class="col-md-9 col-sm-9 col-xs-9">
                                                 <div class="row">
-                                                    <div class="col-md-12 col-sm-12 col-xs-12"><strong>{{$ticket->servicio->sucursal->nombre}}</strong></div>
+                                                    <div class="col-md-12 col-sm-12 col-xs-12"><strong>nombreSucursal</strong></div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-12 col-sm-12 col-xs-12"><span>{{$ticket->servicio->nombre}}</span></div>
+                                                    <div class="col-md-12 col-sm-12 col-xs-12"><span>nombreServicio</span></div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-12 col-sm-12 col-xs-12"><strong>N° Actual: </strong><strong>A148 </strong></div>
@@ -68,7 +75,6 @@
                             </div>
                         @endforeach
                     @endif
-
                 </div>
             </div>
         </div>
@@ -78,7 +84,7 @@
             <div class="panel-body">
                 <div class="row visible-xs-block visible-sm-block visible-md-block visible-lg-block row-eq-height">
                     
-                    @if($historialTickets==NULL)
+                    @if(count($historialTickets) == 0)
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12 text-center">
                                     <p>No existen tickets antiguos. Intente solicitar un ticket en alguna sucursal.</p>
@@ -100,16 +106,14 @@
                                 <div class="panel-heading"><i class="fa fa-ticket fa-fw"></i><strong class="text-uppercase"> {{$ticket->numero}}</strong><strong> - Inasistente</strong></div>
                                 <div class="panel-body body-danger-ticket">
                             @else
-                                echo '<script language="javascript">alert("OJO, etiqueta estado mal hecha D:");</script>'; 
+                                <script language="javascript">alert("OJO, etiqueta estado mal hecha D:");</script>
                             @endif
-
-
                                         <div class="row">
-                                            <div class="col-md-3 col-sm-3 col-xs-3"><img class="img-circle" src="{{ $ticket->servicio->sucursal->imagen }}" width="55" height="55"></div>
+                                            <div class="col-md-3 col-sm-3 col-xs-3"><img class="img-circle" src="imagen" width="55" height="55"></div>
                                             <div class="col-md-9 col-sm-9 col-xs-9">
                                                 <div class="row">
-                                                    <div class="col-md-12 col-sm-12 col-xs-12"><strong>{{$ticket->servicio->sucursal->nombre}}</strong></div>
-                                                    <div class="col-md-12 col-sm-12 col-xs-12"><span>{{$ticket->servicio->nombre}}</span></div>
+                                                    <div class="col-md-12 col-sm-12 col-xs-12"><strong>nombreSucursal</strong></div>
+                                                    <div class="col-md-12 col-sm-12 col-xs-12"><span>nombre servicio</span></div>
                                                     <div class="col-md-12 col-sm-12 col-xs-12"><i class="fa fa-calendar fa-fw"></i><span>{{$ticket->fecha}} </span></div>
                                                     <div class="col-md-12 col-sm-12 col-xs-12"><i class="fa fa-clock-o fa-fw"></i><span>{{$ticket->hora}} </span></div>
                                                 </div>
@@ -136,7 +140,7 @@
                     <p>¿Está seguro de cancelar el ticket solicitado? Esta acción puede llevar una penalización de por medio.</p>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-warning" type="button"><i class="fa fa-check fa-fw"></i>Aceptar </button>
+                    <button class="btn btn-warning" type="submit" href="#"><i class="fa fa-check fa-fw"></i>Aceptar </button>
                     <button class="btn btn-default" type="button" data-dismiss="modal"><i class="fa fa-close fa-fw"></i>Cancelar </button>
                 </div>
             </div>
