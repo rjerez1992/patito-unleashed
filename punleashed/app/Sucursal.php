@@ -12,7 +12,7 @@ class Sucursal extends Model
 
     //TODO: Soy yo o esta mal esta wea?
     public function institucion(){
-    	return $this->hasOne('App\Institucion');
+    	return $this->belongsTo('App\Institucion');
     }
 
 }

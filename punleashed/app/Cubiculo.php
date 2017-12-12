@@ -8,7 +8,10 @@ class Cubiculo extends Model
 {
     //
     public function servicio(){
-    	return $this->hasOne('App\Servicio');
+    	return $this->belongsTo('App\Servicio');
     }
 
+    public function operario(){
+    	return $this->hasOne('App\Operario');
+    }
 }

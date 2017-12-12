@@ -8,7 +8,7 @@ class Servicio extends Model
 {
     //
     public function sucursal(){
-    	return $this->hasOne('App\Sucursal');
+    	return $this->belongsTo('App\Sucursal');
     }
 
     public function cubiculos(){

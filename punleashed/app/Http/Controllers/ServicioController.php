@@ -6,5 +6,7 @@ use Illuminate\Http\Request;
 
 class ServicioController extends Controller
 {
-    //
+    public function sucursal(){
+    	return $this->belongsTo('App\Sucursal');
+    }
 }
