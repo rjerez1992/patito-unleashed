@@ -15,14 +15,16 @@ Route::get('/', function () {
     return view('frontpage/frontpage');
 });
 
-
 Route::get('/cliente/tickets', 'ClienteController@tickets');
+Route::post('/cliente/tickets/updateActivos', 'ClienteController@ticketsActivos');
+Route::get('/cliente/tickets/cancelarTicket/{id}', 'ClienteController@cancelarTicket');
 
 Route::get('/cliente/profile/{id?}','ClienteController@profile');
 
 Route::get('/cliente/institucion/{id}','ClienteController@institucion');
 
 Route::get('/cliente/sucursal/{id}','ClienteController@sucursal');
+Route::post('/cliente/sucursal/{idSucursal}/getTicket/{idServicio}','ClienteController@getTicketServicio');
 
 Route::get('/cliente/search','ClienteController@search');
 

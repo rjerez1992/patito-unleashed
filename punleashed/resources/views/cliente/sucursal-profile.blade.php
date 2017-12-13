@@ -84,7 +84,7 @@
                                 </div>
                                 @if ($cuenta!=NULL && $servicio->numero_disponible!=-1)
                                     <div class="panel-footer">
-                                        <button class="btn btn-primary btn-block btn-sm center-block" type="button" data-target="#modal-create-ticket" data-toggle="modal"><i class="fa fa-ticket fa-fw"></i>Solicitar Ticket</button>
+                                        <button class="btn btn-primary btn-block btn-sm center-block" type="button" onclick="solicitarTicket({{$sucursal->id}},{{$servicio->id}})"><i class="fa fa-ticket fa-fw"></i>Solicitar Ticket </button>
                                     </div>
                                 @elseif ($cuenta!=NULL)
                                     <div class="panel-footer">
@@ -109,7 +109,6 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                     <h4 class="modal-title"><i class="fa fa-ticket fa-fw"></i>Solicitud de Ticket</h4></div>
                 <div class="modal-body">
                     <p>Acabas de solicitar un ticket al sistema, estos son los datos de tu ticket: </p>
@@ -127,11 +126,11 @@
                                         <div class="col-md-12 col-sm-12 col-xs-12"><strong>{{ $sucursal->nombre }}</strong></div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-12 col-sm-12 col-xs-12"><span>Créditos de Consumo</span></div>
+                                        <div class="col-md-12 col-sm-12 col-xs-12"><span id="modal_nombreServicio"></span></div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-12 col-sm-12 col-xs-12"><strong>N° Actual: </strong><strong>A107 </strong></div>
-                                        <div class="col-md-12 col-sm-12 col-xs-12"><span>50 </span><span> minutos restantes</span></div>
+                                        <div class="col-md-12 col-sm-12 col-xs-12"><strong>N° Actual: </strong><strong id="modal_numeroTicket"></strong></div>
+                                        <div class="col-md-12 col-sm-12 col-xs-12"><span id="modal_tiempo"></span><span> minutos restantes</span></div>
                                     </div>
                                 </div>
                             </div>
@@ -139,10 +138,9 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary" type="button" data-dismiss="modal"><i class="fa fa-check fa-fw"></i>Aceptar </button>
+                    <button class="btn btn-primary" type="button" data-dismiss="modal" onclick="actualizarPage({{$sucursal->id}})"><i class="fa fa-check fa-fw"></i>Aceptar </button>
                 </div>
             </div>
         </div>
     </div>
-
 @endsection

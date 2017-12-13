@@ -111,4 +111,82 @@ class ClienteController extends Controller
         return redirect('/');
 
     }
+
+    public function ticketsActivos()
+    {
+        $cuenta = Auth::user();
+        $cliente = $cuenta->usuario;
+        $tickets=Ticket::where('cliente_id', '=', $cliente->id)->where('estado', '=', Constantes::NuevoTicket())->get();
+        if (count($tickets) > 0) {
+            foreach($tickets as $ticket) {
+               echo "<div class='col-md-4 col-sm-6 col-xs-12 column-less-padding'>
+                        <div class='panel panel-info panel-info-ticket'>
+                            <div class='panel-heading'>
+                                <div class='row'>
+                                    <div class='col-md-12 col-sm-12 col-xs-12'><i class='fa fa-ticket fa-fw'></i><strong class='text-uppercase'>{$ticket->numero} </strong><strong>(<i class='fa fa-clock-o fa-fw'></i> </strong><strong>{$ticket->hora}</strong><strong class='no-padding'>) - En Espera</strong></div>
+                                </div>
+                            </div>
+                            <div class='panel-body body-info-ticket'>
+                                <div class='row'>
+                                    <div class='col-md-3 col-sm-3 col-xs-3'><img class='img-circle' src='{$ticket->servicio->sucursal->imagen}' width='55' height='55'></div>
+                                    <div class='col-md-9 col-sm-9 col-xs-9'>
+                                        <div class='row'>
+                                            <div class='col-md-12 col-sm-12 col-xs-12'><strong>{$ticket->servicio->sucursal->nombre}</strong></div>
+                                        </div>
+                                        <div class='row'>
+                                            <div class='col-md-12 col-sm-12 col-xs-12'><span>{$ticket->servicio->nombre}</span></div>
+                                        </div>
+                                        <div class='row'>
+                                            <div class='col-md-12 col-sm-12 col-xs-12'><strong>N° Actual: </strong><strong>{$ticket->servicio->letra}{$ticket->servicio->numero_actual}</strong></div>
+                                            <div class='col-md-12 col-sm-12 col-xs-12'><span class='text-danger'>10 </span><span class='text-danger'> minutos restantes</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='panel-footer body-info-ticket'>
+                                <button class='btn btn-primary btn-block' type='button' onclick='modalCancelarTicket({$ticket->id})'><i class='fa fa-remove fa-fw'></i> Cancelar Ticket</button>
+                            </div>
+                        </div>
+                    </div>";
+            }
+        } 
+        else {
+            echo "<div class='row'>
+                        <div class='col-md-12 col-sm-12 col-xs-12 text-center'>
+                            <p>No existen tickets activos. Intente solicitar un ticket en alguna sucursal.</p>
+                        </div>
+                    </div>";
+        }
+    }
+
+    public function cancelarTicket($idTicket)
+    {
+        $cuenta = Auth::user();
+        $cliente = $cuenta->usuario;
+        $ticket = Ticket::where('id', '=', $idTicket)->update(['estado' => Constantes::TicketCancelado()]);
+        return redirect('/cliente/tickets');
+    }
+
+    public function getTicketServicio($idSucursal, $idServicio)
+    {
+ /*       $cuenta = Auth::user();
+        $cliente = $cuenta->usuario;
+
+        DB::transaction(function($id) use ($idServicio) {
+            $servicioAux = Servicio::find($id);
+            Servicio::where('id', '=', $id)->update(['numero_disponible' => ($servicioAux->numero_disponible + 1)]);
+
+            $ticket = new Ticket;
+
+            $ticket->fecha = '2017-11-30';
+            $ticket->hora = '21:24:47';
+            $ticket->numero = $servicioAux->numero_disponible;
+            $ticket->servicio_id = $id;
+            $ticket->cliente_id = $cliente->id;
+
+            $ticket->save();
+
+        });*/
+    }
+
 }
