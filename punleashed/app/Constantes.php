@@ -58,6 +58,10 @@ class Constantes extends Model
         return 'Desocupado';
     }
 
+    public static function CubiculoOcupado(){
+        return 'Ocupado';
+    }
+
     public static function NuevoTicket(){
         return 'Pendiente';
     }

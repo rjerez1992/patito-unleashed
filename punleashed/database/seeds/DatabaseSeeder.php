@@ -127,6 +127,9 @@ class DatabaseSeeder extends Seeder
                 'cubiculo_id' => $cubiculo_random->id, 
                 'servicio_id' => $servicio_random->id, 
             ]);
+
+            $cubiculo_random->disponibilidad = Constantes::CubiculoOcupado();
+            $cubiculo_random->save();
         }
 
 

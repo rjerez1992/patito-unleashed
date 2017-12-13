@@ -24,7 +24,17 @@ Route::get('/cliente/institucion','ClienteController@institucion');
 
 Route::get('/cliente/sucursal','ClienteController@sucursal');
 
+/*
+ * Rutas de operarios
+ */
+Route::middleware("filtro:".App\Constantes::Operario())->group(function () {
+
 Route::get('/operario/servicio', 'OperarioController@servicio');
+Route::get('/operario/perfil', 'OperarioController@perfil');
+Route::get('/operario/perfil/editar', 'OperarioController@editar');
+Route::get('/operario/atencion', 'OperarioController@atencion');
+
+});
 
 Route::get('/manager/dashboard', 'ManagerController@dashboard');
 

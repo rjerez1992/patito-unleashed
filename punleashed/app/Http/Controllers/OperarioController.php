@@ -47,4 +47,30 @@ class OperarioController extends Controller
 
     	return view('operario/servicio')->with($data);
     }
+
+    public function perfil(){
+        //Buscamos el operario
+        $cuenta = Auth::user();
+        $usuario = $cuenta->usuario;
+
+        //Si no tiene servicio asignado
+        if ($servicio == NULL){
+            return abort(404);
+        }
+
+        //Obtenemos el servicio del usuario
+        $servicio = $usuario->servicio;  
+        $sucursal = $servicio->sucursal;
+        $institucion = $servicio->institucion; 
+
+        $data = array(
+                'cuenta' => $cuenta,
+                'usuario' => $usuario,
+                'servicio' => $servicio,
+                'sucursal' => $sucursal,
+                'institucion' => $institucion,
+            );              
+
+        return view('operario/perfil')->with($data);
+    }
 }
