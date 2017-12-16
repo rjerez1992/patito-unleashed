@@ -24,11 +24,12 @@ Route::get('/cliente/profile/{id?}','ClienteController@profile');
 Route::get('/cliente/institucion/{id}','ClienteController@institucion');
 
 Route::get('/cliente/sucursal/{id}','ClienteController@sucursal');
-Route::post('/cliente/sucursal/{idSucursal}/getTicket/{idServicio}','ClienteController@getTicketServicio');
+Route::get('/cliente/sucursal/{idSucursal}/getTicket/{idServicio}','ClienteController@getTicketServicio');
 
 Route::get('/cliente/search','ClienteController@search');
 
 Route::get('/operario/servicio', 'OperarioController@servicio');
+Route::get('/cliente/sucursal/{idSucursal}/getTicket/{idServicio}', 'ClienteController@getTicketServicio');
 
 Route::get('/manager/dashboard', 'ManagerController@dashboard');
 

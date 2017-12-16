@@ -70,29 +70,41 @@
                                     <div class="row">
                                         <div class="col-md-6 col-sm-6 col-xs-6 info-service">
                                             <div class="alert alert-danger text-center alert-info-ticket center-block" role="alert">
-                                                <div class="col-md-12 col-sm-12 col-xs-12"><i class="fa fa-flag fa-fw"></i><strong>Actual</strong></div>
-                                                <div class="col-md-12 col-sm-12 col-xs-12"><strong>{{$servicio->letra}}{{$servicio->numero_actual}} </strong></div>
+                                                <div class="col-md-12 col-sm-12 col-xs-12"><i class="fa fa-flag fa-fw"></i><strong> Atendiendo</strong></div>
+                                                <div class="col-md-12 col-sm-12 col-xs-12"><h4><strong style="font-size: 16px,">{{$servicio->letra}}{{$servicio->numero_actual}}</strong></h4></div>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-sm-6 col-xs-6 info-service">
+                                            <div class="alert alert-warning text-center alert-info-ticket center-block" role="alert">
+                                                <div class="col-md-12 col-sm-12 col-xs-12"><strong><i class="fa fa-flag fa-fw"></i> Disponible</strong></div>
+                                                <div class="col-md-12 col-sm-12 col-xs-12"><h4><strong>{{$servicio->letra}}{{$servicio->numero_disponible}}</strong></h4></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12 col-xs-12 info-service">
                                             <div class="alert alert-info text-center alert-info-ticket center-block" role="alert">
-                                                <div class="col-md-12 col-sm-12 col-xs-12"><i class="fa fa-clock-o fa-fw"></i><strong>Espera</strong></div>
-                                                <div class="col-md-12 col-sm-12 col-xs-12"><strong>{{$servicio->tiempo_espera}} minutos</strong></div>
+                                                <div class="col-md-6 col-sm-6 col-xs-6"><i class="fa fa-clock-o fa-fw"></i><strong> Espera</strong></div>
+                                                <div class="col-md-6 col-sm-6 col-xs-6"><strong>{{$servicio->tiempo_espera}} minutos</strong></div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                @if ($cuenta!=NULL && $servicio->numero_disponible!=-1)
+                                @if ($cuenta!=NULL && $servicio->numero_disponible!=-1 && $servicio->ticketCliente($cuenta->usuario->id)==NULL)
                                     <div class="panel-footer">
                                         <button class="btn btn-primary btn-block btn-sm center-block" type="button" onclick="solicitarTicket({{$sucursal->id}},{{$servicio->id}})"><i class="fa fa-ticket fa-fw"></i>Solicitar Ticket </button>
                                     </div>
-                                @elseif ($cuenta!=NULL)
+                                @elseif ($cuenta!=NULL && $servicio->numero_disponible==-1)
                                     <div class="panel-footer">
-                                        <p class="text-center" style="color: white;">El servicio no está disponible.</p>
+                                        <p class="text-center" style="color: white;"><strong>El servicio no está disponible.</strong></p>
+                                    </div>
+                                @elseif ($cuenta!=NULL && $servicio->ticketCliente($cuenta->usuario->id)!=NULL)
+                                    <div class="panel-footer">
+                                        <p class="text-center" style="color: white;"><strong>Ya posees un ticket para este servicio.</strong></p>
                                     </div>
                                 @else
                                     <div class="panel-footer">
-                                        <p class="text-center" style="color: white;">Debes estar logueado para solicitar un ticket.</p>
+                                        <p class="text-center" style="color: white;"><strong>Debes estar logueado para solicitar un ticket.</strong></p>
                                     </div>
                                 @endif
                             </div>
@@ -136,6 +148,22 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="button" data-dismiss="modal" onclick="actualizarPage({{$sucursal->id}})"><i class="fa fa-check fa-fw"></i>Aceptar </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" role="dialog" tabindex="-1" id="modal-fail-ticket">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"><i class="fa fa-exclamation-circle fa-fw"></i>Error: Solicitud de Ticket fallida</h4></div>
+                <div class="modal-body">
+                    <p>Ha ocurrido un error solicitando un ticket para el servicio seleccionado. Intente solicitar un ticket en este servicio mas tarde.</p>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-primary" type="button" data-dismiss="modal" onclick="actualizarPage({{$sucursal->id}})"><i class="fa fa-check fa-fw"></i>Aceptar </button>

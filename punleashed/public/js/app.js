@@ -50,16 +50,29 @@ function cancelarTicket(){
 }
 
 function solicitarTicket(idSucursal,idServicio) {
+
     //location.href='/cliente/sucursal/'+idSucursal+'/getTicket/'+idServicio;
-    document.getElementById("modal_nombreServicio").innerHTML='hola sucursal';
-    document.getElementById("modal_numeroTicket").innerHTML='A'+'150';
-    document.getElementById("modal_tiempo").innerHTML='45';
-      $('.modal-create-ticket').click(function(e) {
-        e.preventDefault();
-        $('body').css('overflow', 'hidden');
-      });
-    $('#modal-create-ticket').modal({backdrop: 'static', keyboard: false})
-    $('#modal-create-ticket').modal('show');
+    var request = $.get('/cliente/sucursal/'+idSucursal+'/getTicket/'+idServicio);
+
+    console.log(request); 
+    if(request!=null)//se genero ticket
+    {
+		$('.modal-create-ticket').click(function(e) {
+		    e.preventDefault();
+		    $('body').css('overflow', 'hidden');
+		});
+	    $('#modal-create-ticket').modal({backdrop: 'static', keyboard: false})
+		$('#modal-create-ticket').modal('show')
+    }
+    else //fallo generar ticket
+    {
+		$('.modal-fail-ticket').click(function(e) {
+		    e.preventDefault();
+		    $('body').css('overflow', 'hidden');
+		});
+	    $('#modal-fail-ticket').modal({backdrop: 'static', keyboard: false})
+		$('#modal-fail-ticket').modal('show')
+    }
 }
 
 function actualizarPage(idSucursal) {
