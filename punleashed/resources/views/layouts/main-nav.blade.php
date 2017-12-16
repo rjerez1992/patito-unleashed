@@ -22,11 +22,10 @@
                     <li role="presentation"><a href="/cliente/profile/"><i class="fa fa-user fa-fw navbar-menu-icon"></i>Mi cuenta</a></li>
                     @endif
 
-                    @if(Auth::user()!=NULL && Auth::user()->tipo==App\Constantes::Manager())
-                    <li role="presentation"><a href="/administrador/dashboard" style="color:rgb(102,102,102);"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                    <li class="active" role="presentation"><a href="/administrador/institucion" style="color:rgb(102,102,102);"><i class="fa fa-building"></i> Institución</a></li>
-                    <li role="presentation"><a href="#" style="color:rgb(102,102,102);"><i class="fa fa-university"></i> Sucursales</a></li>
-                    <li role="presentation"><a href="#" style="color:rgb(102,102,102);"><i class="fa fa-users"></i> Usuarios</a></li>
+                     @if(Auth::user()!=NULL && Auth::user()->tipo==App\Constantes::Manager())
+                    <li role="presentation"><a href="/manager/dashboard" style="color:rgb(102,102,102);"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                    <li role="presentation"><a href="/manager/Sucursales" style="color:rgb(102,102,102);"><i class="fa fa-university"></i> Sucursales</a></li>
+                    <li role="presentation"><a href="/manager/Usuarios" style="color:rgb(102,102,102);"><i class="fa fa-users"></i> Usuarios</a></li>
                     @endif
 
                     @if(Auth::user()!=NULL && Auth::user()->tipo==App\Constantes::Admin())

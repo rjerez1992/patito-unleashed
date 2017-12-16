@@ -5,14 +5,15 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 class Sucursal extends Model
-{    
-    public function servicios(){
-    	return $this->hasMany('App\Servicio');
-    }
+{
+    protected $table = 'sucursals';
+    public $timestamps = false;
 
-    //TODO: Soy yo o esta mal esta wea?
-    public function institucion(){
-    	return $this->belongsTo('App\Institucion');
-    }
+    public static function Servicios($id)
+    {
+        $Servicios=Servicio::where('sucursal_id','=',$id)->get(); 
+        return $Servicios;
 
+    }
+      
 }

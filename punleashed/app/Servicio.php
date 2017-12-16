@@ -6,12 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Servicio extends Model
 {
-    //
-    public function sucursal(){
-    	return $this->belongsTo('App\Sucursal');
+    protected $table = 'servicios';
+    public $timestamps = false;
+
+    public static function Cubiculo($id)
+    {
+    	$cubiculos = Cubiculo::where("servicio_id","=",$id)->get();
+    	return $cubiculos->count();
     }
 
-    public function cubiculos(){
-    	return $this->hasMany('App\Cubiculo');
+    public static function Operario($id)
+    {
+    	$operarios = Operario::where("servicio_id","=",$id)->get();
+    	
+    	return $operarios->count();
     }
 }
+ 

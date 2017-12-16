@@ -356,6 +356,35 @@ class AdminController extends Controller
     	return back();
     }
 
+     public function editarCliente(Request $request, $id){
+        $this->validate($request, [
+            'name' => 'required|string|max:255',    
+            'usuarioId' => 'required|numeric', 
+        ]);  
+        $usuario = Manager::find($id);
+
+        $usuario->nombre = $request->name;
+        $usuario->rut = $request->rut; 
+        $usuario->save();
+
+        $user=\Auth::user();
+
+        $cliente=Manager::where('cuenta_id', $user->id)->first();
+        $Institucion=Institucion::where('manager', $cliente->id)->first();
+
+        if ($Institucion!=null) {
+            $Sucursales=Sucursal::where('institucion_id', $Institucion->id)->get();
+        }
+        else{
+            $Sucursales=null;
+        }
+
+        
+        return view('manager/dashboard')->with('user', $user)->with('cliente', $cliente)
+                                 ->with('Sucursales', $Sucursales)   
+                                 ->with('Institucion', $Institucion); 
+    }
+
     /* Lista las instituciones */
     public function instituciones(){
         //Busca las instituciones

@@ -57,6 +57,7 @@ Route::middleware("filtro:".App\Constantes::Admin())->group(function () {
 
     Route::get('/admin/editar/{tipoUsuario}/{id}', 'AdminController@preEdicion');
     Route::post('/admin/editar/{tipoUsuario}/editar', 'AdminController@editar');
+   
 
     Route::post('/admin/eliminar/{tipoUsuario}', 'AdminController@eliminar');
 });
@@ -67,5 +68,79 @@ Route::middleware("filtro:".App\Constantes::Admin())->group(function () {
 Route::get('/ingresar', 'Auth\LoginController@ingresar');
 
 Route::get('/registro', 'Auth\RegisterController@registro');
+
+//Institucion
+Route::get('/CrearInstitucion',  [
+        'as' => '/CrearInstitucion', 
+        'uses' => 'InstitucionController@InsertForm']);
+Route::post('Insertar.Inst', [
+        'as' => 'Insertar.Inst', 
+        'uses' => 'InstitucionController@Insertar']);
+Route::post('/Insertar','InstitucionController@Insertar');
+
+Route::get('/manager/Sucursales', 'ManagerController@Sucursales');
+Route::get('/manager/Usuarios', 'ManagerController@Usuarios');
+Route::post('/admin/editar/{id}', [
+        'as' => '/admin/editar/', 
+        'uses' => 'ManagerController@editarCliente']);
+
+//Sucursal
+Route::post('Insertar.Sucursal', [
+        'as' => 'Insertar.Sucursal', 
+        'uses' => 'SucursalController@Insertar']);
+
+Route::post('ActualizarSucursal/{id}', [
+        'as' => 'Update.Sucursal', 
+        'uses' => 'SucursalController@Update']);
+
+Route::post('EliminarSucursal/{id}', [
+        'as' => 'Sucursal.Eliminar', 
+        'uses' => 'SucursalController@Delete'
+        ]);
+
+//Servicio
+Route::post('Insertar.Servicio/{id}', [
+        'as' => 'Insertar.Servicio', 
+        'uses' => 'ServicioController@Insertar']);
+
+Route::post('ActualizarServicio/{id}', [
+        'as' => 'Update.Servicio', 
+        'uses' => 'ServicioController@Update']);
+
+Route::post('EliminarServicio/{id}', [
+        'as' => 'Servicio.Eliminar', 
+        'uses' => 'ServicioController@Delete'
+        ]);
+Route::post('/manager/Servicio.N', [
+    'as' => '/manager/Servicio.N', 
+    'uses' => 'OperarioController@Servicios'
+    ]);
+
+
+//Operario
+Route::post('Insertar.Operario/{id}', [
+        'as' => 'Insertar.Operario', 
+        'uses' => 'OperarioController@Insertar']);
+Route::post('Insertar.Operario2/{id}', [
+        'as' => 'Insertar.Operario2', 
+        'uses' => 'OperarioController@Insertar2']);
+Route::post('EditarOperario/{id}', [
+        'as' => 'EditarOperario', 
+        'uses' => 'OperarioController@Update']);
+Route::post('EliminarOperario/{id}', [
+        'as' => 'EliminarOperario', 
+        'uses' => 'OperarioController@Delete']);
+
+//Cubiculo
+Route::post('Insertar.Cubiculo/{id}', [
+        'as' => 'Insertar.Cubiculo', 
+        'uses' => 'CubiculoController@Insertar']);
+Route::post('AgregarCubiculo/{id}', [
+        'as' => 'AgregarCubiculo', 
+        'uses' => 'OperarioController@AgregarCubiculo']);
+
+
+
+
 
 Auth::routes();
