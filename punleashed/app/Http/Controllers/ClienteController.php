@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 
 class ClienteController extends Controller
 {
@@ -42,7 +43,7 @@ class ClienteController extends Controller
         $data = array(
                 'cuenta' => $cuenta,
                 'cliente' => $cliente,
-                'sucursalesFrecuentes' =>NULL,
+                'sucursalesFrecuentes' => NULL,
                 'reputacionCliente' => '6.5',
             );
 
@@ -51,8 +52,20 @@ class ClienteController extends Controller
 
     public function search()
     {
-        $sucursales=collect([]);
-        return view('cliente/search',compact('sucursales'));
+        $busqueda = NULL;
+        $instituciones = NULL;
+        $sucursales = NULL;
+        if(Input::has('search_input') && Input::get('search_input')!='')
+        {
+            $busqueda = Input::get('search_input');
+            $instituciones = Institucion::where('nombre', 'like', '%'.$busqueda.'%')->get();
+            $sucursales = Sucursal::where('nombre', 'like', '%'.$busqueda.'%')->get();
+        }
+        $data = array(
+            'instituciones' => $instituciones,
+            'sucursales' => $sucursales,
+        );
+        return view('cliente/search')->with($data);
     }
 
     public function institucion($id)
@@ -123,15 +136,15 @@ class ClienteController extends Controller
                         <div class='panel panel-info panel-info-ticket'>
                             <div class='panel-heading'>
                                 <div class='row'>
-                                    <div class='col-md-12 col-sm-12 col-xs-12'><i class='fa fa-ticket fa-fw'></i><strong class='text-uppercase'>{$ticket->numero} </strong><strong>(<i class='fa fa-clock-o fa-fw'></i> </strong><strong>{$ticket->hora}</strong><strong class='no-padding'>) - En Espera</strong></div>
+                                    <div class='col-md-12 col-sm-12 col-xs-12'><i class='fa fa-ticket fa-fw'></i><strong class='text-uppercase'>{$ticket->servicio->letra}{$ticket->numero} </strong><strong>(<i class='fa fa-clock-o fa-fw'></i> </strong><strong>{$ticket->hora}</strong><strong class='no-padding'>) - En Espera</strong></div>
                                 </div>
                             </div>
                             <div class='panel-body body-info-ticket'>
                                 <div class='row'>
-                                    <div class='col-md-3 col-sm-3 col-xs-3'><img class='img-circle' src='{$ticket->servicio->sucursal->imagen}' width='55' height='55'></div>
+                                    <div class='col-md-3 col-sm-3 col-xs-3'><a href='/cliente/sucursal/{$ticket->servicio->sucursal->id}'><img class='img-circle' src='{$ticket->servicio->sucursal->imagen}' width='55' height='55'></a></div>
                                     <div class='col-md-9 col-sm-9 col-xs-9'>
                                         <div class='row'>
-                                            <div class='col-md-12 col-sm-12 col-xs-12'><strong>{$ticket->servicio->sucursal->nombre}</strong></div>
+                                            <div class='col-md-12 col-sm-12 col-xs-12'><a href='/cliente/sucursal/{$ticket->servicio->sucursal->id}'><strong>{$ticket->servicio->sucursal->nombre}</strong></a></div>
                                         </div>
                                         <div class='row'>
                                             <div class='col-md-12 col-sm-12 col-xs-12'><span>{$ticket->servicio->nombre}</span></div>
@@ -169,24 +182,43 @@ class ClienteController extends Controller
 
     public function getTicketServicio($idSucursal, $idServicio)
     {
- /*       $cuenta = Auth::user();
-        $cliente = $cuenta->usuario;
+        $data= NULL;
+        $ticket=NULL;
+        $servicioAux=NULL;
+        DB::transaction(function() use($idServicio){
 
-        DB::transaction(function($id) use ($idServicio) {
-            $servicioAux = Servicio::find($id);
-            Servicio::where('id', '=', $id)->update(['numero_disponible' => ($servicioAux->numero_disponible + 1)]);
+            $cuenta = Auth::user();
+            $cliente = $cuenta->usuario;
 
-            $ticket = new Ticket;
+            $servicioAux = Servicio::find($idServicio);
+            if($servicioAux->numero_disponible!=-1)
+            {
+                Servicio::where('id', '=', $idServicio)->update(['numero_disponible' => ($servicioAux->numero_disponible + 1)]);
 
-            $ticket->fecha = '2017-11-30';
-            $ticket->hora = '21:24:47';
-            $ticket->numero = $servicioAux->numero_disponible;
-            $ticket->servicio_id = $id;
-            $ticket->cliente_id = $cliente->id;
+                $ticket = new Ticket;
 
-            $ticket->save();
+                $ticket->fecha = '2017-11-30';
+                $ticket->hora = '21:24:47';
+                $ticket->numero = $servicioAux->numero_disponible;
+                $ticket->servicio_id = $idServicio;
+                $ticket->cliente_id = $cliente->id;
 
-        });*/
+                $ticket->save();
+            }
+            
+        });
+        if($ticket!=NULL)
+        {
+            $data = array(
+                'ticket_id' => $ticket->id,
+                'ticket_numero' => $servicioAux->letra+''+$ticket->numero,
+                'ticket_hora' => $ticket->hora,
+                'servicio_nombre' => $servicioAux->nombre,
+                'servicio_ticketActual' => $servicioAux->letra+''+$servicioAux->numero_actual,
+                'ticket_tiempoAprox' => $servicioAux->tiempo_espera,
+            );
+        }
+        return $data;
     }
 
 }

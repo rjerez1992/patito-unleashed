@@ -24,12 +24,6 @@
                 <h3 class="text-center visible-xs-block"><i class="fa fa-ticket"></i> Mis Tickets</h3></div>
         </div>
 
-        @if(isset($infoTicket))
-        <div class="alert alert-success alert-dismissable">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Info: </strong>Ticket cancelado con éxito :)
-        </div>
-        @endif
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="ticket-heading-number"><i class="fa fa-inbox fa-fw icon-ticket-list"></i><strong> Bandeja de Tickets</strong></h4></div>
@@ -56,7 +50,7 @@
                                     }
                                 }); 
                         }
-                        setInterval(ajax,3000);
+                        setInterval(ajax,1000);
                     </script>
 
                 </div>
@@ -79,27 +73,27 @@
                             <div class="col-md-4 col-sm-6 col-xs-12 column-less-padding">
                             @if ($ticket->estado == App\Constantes::TicketAtendido())
                                 <div class="panel panel-success panel-success-ticket">
-                                <div class="panel-heading"><i class="fa fa-ticket fa-fw"></i><strong class="text-uppercase"> {{$ticket->numero}}</strong><strong> - Atendido</strong></div>
+                                <div class="panel-heading"><i class="fa fa-ticket fa-fw"></i><strong class="text-uppercase"> {{$ticket->servicio->letra}}{{$ticket->numero}}</strong><strong> - Atendido</strong></div>
                                 <div class="panel-body body-success-ticket">
                             @elseif ($ticket->estado == App\Constantes::TicketCancelado())
                                 <div class="panel panel-warning panel-warning-ticket">
-                                <div class="panel-heading"><i class="fa fa-ticket fa-fw"></i><strong class="text-uppercase"> {{$ticket->numero}}</strong><strong> - Cancelado</strong></div>
+                                <div class="panel-heading"><i class="fa fa-ticket fa-fw"></i><strong class="text-uppercase"> {{$ticket->servicio->letra}}{{$ticket->numero}}</strong><strong> - Cancelado</strong></div>
                                 <div class="panel-body body-warning-ticket">
                             @elseif ($ticket->estado == App\Constantes::TicketInasistente())
                                 <div class="panel panel-danger panel-danger-ticket">
-                                <div class="panel-heading"><i class="fa fa-ticket fa-fw"></i><strong class="text-uppercase"> {{$ticket->numero}}</strong><strong> - Inasistente</strong></div>
+                                <div class="panel-heading"><i class="fa fa-ticket fa-fw"></i><strong class="text-uppercase"> {{$ticket->servicio->letra}}{{$ticket->numero}}</strong><strong> - Inasistente</strong></div>
                                 <div class="panel-body body-danger-ticket">
                             @else
                                 <script language="javascript">alert("OJO, etiqueta estado mal hecha D:");</script>
                             @endif
                                         <div class="row">
-                                            <div class="col-md-3 col-sm-3 col-xs-3"><img class="img-circle" src="{{$ticket->servicio->sucursal->imagen}}" width="55" height="55"></div>
+                                            <div class="col-md-3 col-sm-3 col-xs-3"><a href="/cliente/sucursal/{{$ticket->servicio->sucursal->id}}"><img class="img-circle" src="{{$ticket->servicio->sucursal->imagen}}" width="55" height="55"></a></div>
                                             <div class="col-md-9 col-sm-9 col-xs-9">
                                                 <div class="row">
-                                                    <div class="col-md-12 col-sm-12 col-xs-12"><strong>{{$ticket->servicio->sucursal->nombre}}</strong></div>
+                                                    <div class="col-md-12 col-sm-12 col-xs-12"><a href="/cliente/sucursal/{{$ticket->servicio->sucursal->id}}"><strong>{{$ticket->servicio->sucursal->nombre}}</strong></a></div>
                                                     <div class="col-md-12 col-sm-12 col-xs-12"><span>{{$ticket->servicio->nombre}}</span></div>
-                                                    <div class="col-md-12 col-sm-12 col-xs-12"><i class="fa fa-calendar fa-fw"></i><span>{{$ticket->fecha}} </span></div>
-                                                    <div class="col-md-12 col-sm-12 col-xs-12"><i class="fa fa-clock-o fa-fw"></i><span>{{$ticket->hora}} </span></div>
+                                                    <div class="col-md-6 col-sm-6 col-xs-6"><i class="fa fa-calendar fa-fw"></i><span>{{$ticket->fecha}} </span></div>
+                                                    <div class="col-md-6 col-sm-6 col-xs-6"><i class="fa fa-clock-o fa-fw"></i><span>{{$ticket->hora}} </span></div>
                                                 </div>
                                             </div>
                                         </div>

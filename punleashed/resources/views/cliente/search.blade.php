@@ -22,12 +22,14 @@
         </div>
         <div class="panel panel-default">
             <div class="panel-body">
-                <div class="input-group">
-                    <input class="form-control" type="search" name="search" placeholder="Ingrese valores a buscar..." id="search-input">
-                    <div class="input-group-btn">
-                        <button class="btn btn-primary" type="submit"> <i class="fa fa-search"></i></button>
+                <form id="search-form">
+                    <div class="input-group">
+                        <input class="form-control" type="search_input" name="search_input" placeholder="Ingrese valores a buscar..." id="search_input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-primary" type="submit"> <i class="fa fa-search"></i></button>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
         <div class="panel panel-default">
@@ -36,30 +38,50 @@
             <div class="panel-body">
                 <div class="row visible-xs-block visible-sm-block visible-md-block visible-lg-block row-eq-height">
                     
-                    @if($sucursales->isEmpty())
+                    @if(count($sucursales)==0 && count($instituciones)==0)
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-xs-12 text-center">
                                 <p>No se han encontrado resultados. Intente con otros datos.</p>
                             </div>
                         </div>
                     @else
-                        @foreach ($sucursales as $sucursal)
+                        @foreach ($instituciones as $institucion)
                         <div class="col-md-4 col-sm-6 col-xs-12 column-less-padding">
-                            <div class="panel panel-default">
-                                <div class="panel-body body-info-ticket">
-                                    <div class="row">
-                                        <div class="col-md-3 col-sm-3 col-xs-3"><img class="img-circle" src="{{$sucursal->imagen}}" width="60" height="60"></div>
-                                        <div class="col-md-9 col-sm-9 col-xs-9">
-                                            <div class="row">
-                                                <div class="col-md-12 col-sm-12 col-xs-12"><strong>{{$sucursal->nombre}}</strong></div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12 col-sm-12 col-xs-12"><span>{{$sucursal->direccion}}</span></div>
+                            <a href="/cliente/institucion/{{$institucion->id}}">
+                                <div class="panel panel-default">
+                                    <div class="panel-body body-info-ticket">
+                                        <div class="row">
+                                            <div class="col-md-3 col-sm-3 col-xs-3"><img class="img-circle" src="{{$institucion->imagen}}" width="60" height="60"></div>
+                                            <div class="col-md-9 col-sm-9 col-xs-9">
+                                                <div class="row">
+                                                    <div class="col-md-12 col-sm-12 col-xs-12"><strong>{{$institucion->nombre}}</strong></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
+                        </div>
+                        @endforeach
+                        @foreach ($sucursales as $sucursal)
+                        <div class="col-md-4 col-sm-6 col-xs-12 column-less-padding">
+                            <a href="/cliente/sucursal/{{$sucursal->id}}">
+                                <div class="panel panel-default">
+                                    <div class="panel-body body-info-ticket">
+                                        <div class="row">
+                                            <div class="col-md-3 col-sm-3 col-xs-3"><img class="img-circle" src="{{$sucursal->imagen}}" width="60" height="60"></div>
+                                            <div class="col-md-9 col-sm-9 col-xs-9">
+                                                <div class="row">
+                                                    <div class="col-md-12 col-sm-12 col-xs-12"><strong>{{$sucursal->nombre}}</strong></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12 col-sm-12 col-xs-12"><span>{{$sucursal->direccion}}</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
                         @endforeach
                     @endif
