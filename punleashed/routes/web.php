@@ -33,7 +33,7 @@ Route::get('/operario/servicio', 'OperarioController@servicio');
 Route::get('/operario/datos/servicio', 'OperarioController@datosServicio');
 Route::get('/operario/perfil', 'OperarioController@perfil');
 Route::get('/operario/perfil/editar', 'OperarioController@editar');
-Route::get('/operario/atencion', 'OperarioController@atencion');
+Route::get('/operario/atencion/{id}', 'OperarioController@atencion');
 
 });
 

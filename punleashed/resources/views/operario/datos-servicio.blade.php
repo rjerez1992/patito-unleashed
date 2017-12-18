@@ -84,7 +84,7 @@
         <div class="col-md-12">
             @foreach($usuario->servicio->sucursal->institucion->managers as  $manager)
              <a href="#"><div class="row">
-                <div class="col-md-12"><span><i class="fa fa-user"></i> {{$manager->nombre}} - Desde {{$manager->created_at}}</span></div>
+                <div class="col-md-12"><span><i class="fa fa-user"></i> {{$manager->nombre}} <!--- Desde {{$manager->created_at}}--></span></div>
                                
             </div> </a>
             @endforeach

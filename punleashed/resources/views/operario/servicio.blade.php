@@ -84,7 +84,7 @@
 
             <!-- Panel de cubiculo -->
             <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">       
-                @if($cubiculo->operario==NULL)<a href="#">@endif<div class="panel panel-default @if($cubiculo->operario!=NULL) panel-off @endif">
+                @if($cubiculo->operario==NULL)<a href="/operario/atencion/{{$cubiculo->id}}">@endif<div class="panel panel-default @if($cubiculo->operario!=NULL) panel-off @endif">
                     <!--<div class="panel-heading">
                         <h3 class="panel-title"><i class="fa fa-cube"></i> {{$cubiculo->nombre}}</h3></div>-->
                     <div class="panel-body">

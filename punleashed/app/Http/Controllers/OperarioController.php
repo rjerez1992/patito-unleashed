@@ -97,4 +97,8 @@ class OperarioController extends Controller
 
         return view('operario/datos-servicio')->with($data);
     }
+
+    public function atencion($id){
+        return view('operario/atencion');        
+    }
 }

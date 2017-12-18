@@ -155,7 +155,7 @@ class AdminController extends Controller
 	    $cuenta = new Cuenta;
 	    $cuenta->username = $request->username;
 	    $cuenta->password = bcrypt($request->password);
-	    $cuenta->save();
+	    //$cuenta->save();
 
 	    $usuario = NULL;
 
@@ -163,19 +163,23 @@ class AdminController extends Controller
 	    if ($tipoUsuario=='clientes'){	    	
 	    	$usuario = new Cliente;
 	    	$usuario->rut = $request->rut;
+            $cuenta->tipo = Constantes::Cliente();
 	    }
     	else if($tipoUsuario=='operarios'){
     		$usuario = new Operario;    
     		$usuario->rut = $request->rut;
     		$usuario->servicio_id = $request->servicio;		
+            $cuenta->tipo = Constantes::Operario();
     	}
 		else if($tipoUsuario=='managers'){
 			$usuario = new Manager;
 			$usuario->rut = $request->rut;
 			$usuario->institucion_id = $request->institucion;
+            $cuenta->tipo = Constantes::Manager();
 		}
 		else if($tipoUsuario=='admins'){
-			$usuario = new Admin;			
+			$usuario = new Admin;	
+            $cuenta->tipo = Constantes::Admin();		
 		}
 		else{
 			//En caso de obtener el parametro mal, elimina la cuenta y aborta
@@ -183,6 +187,7 @@ class AdminController extends Controller
 			abort(404);
 		}
 
+        $cuenta->save();
 		$usuario->nombre = $request->name;
 		$usuario->cuenta_id = $cuenta->id;
 		$usuario->save();
