@@ -154,7 +154,7 @@ class AdminController extends Controller
     	//Crea la cuenta
 	    $cuenta = new Cuenta;
 	    $cuenta->username = $request->username;
-	    $cuenta->password = $request->password;
+	    $cuenta->password = bcrypt($request->password);
 	    $cuenta->save();
 
 	    $usuario = NULL;
@@ -414,7 +414,7 @@ class AdminController extends Controller
         //Entrega un mensaje de vuelta
         Session::flash('msg', Constantes::Mensaje('institucion_creada_exito'));
         Session::flash('status-ok', true);
-        return back();
+        return back(); 
     }
 
     /* Muestra el FORMULARIO de edicion de institucion  */

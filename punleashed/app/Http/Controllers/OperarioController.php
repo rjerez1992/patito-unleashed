@@ -52,14 +52,14 @@ class OperarioController extends Controller
         //Buscamos el operario
         $cuenta = Auth::user();
         $usuario = $cuenta->usuario;
+        $servicio = $usuario->servicio;
 
         //Si no tiene servicio asignado
         if ($servicio == NULL){
             return abort(404);
         }
 
-        //Obtenemos el servicio del usuario
-        $servicio = $usuario->servicio;  
+        //Obtenemos el servicio del usuario          
         $sucursal = $servicio->sucursal;
         $institucion = $servicio->institucion; 
 
@@ -72,5 +72,29 @@ class OperarioController extends Controller
             );              
 
         return view('operario/perfil')->with($data);
+    }
+
+    public function datosServicio(){                
+        //Buscamos el operario
+        $cuenta = Auth::user();
+        $usuario = $cuenta->usuario;
+
+        //Obtenemos el servicio del usuario
+        $servicio = $usuario->servicio;  
+        $imagen = $servicio->sucursal->imagen; 
+
+        //Si no tiene servicio asignado
+        if ($servicio == NULL){
+            return abort(404);
+        }
+
+        $data = array(
+                'cuenta' => $cuenta,
+                'usuario' => $usuario,
+                'servicio' => $servicio,
+                'imagen' => $imagen,
+            );                    
+
+        return view('operario/datos-servicio')->with($data);
     }
 }

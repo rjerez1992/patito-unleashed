@@ -36,9 +36,9 @@
                     @endif
 
                     @if(Auth::user()!=NULL && Auth::user()->tipo==App\Constantes::Operario())
-                    <li role="presentation" style="color:rgb(102,102,102);"><a href="#" style="color: #1485ee;"><i class="fa fa-building"></i> Atención</a></li>
-                    <!--<li class="active" role="presentation"><a href="#" style="color: #1485ee;"><i class="fa fa-university"></i> Historial</a></li>-->
-                    <li class="active" role="presentation"><a href="/operario/perfil" style="color: #1485ee;"><i class="fa fa-users"></i> Perfil</a></li>
+                    <li role="presentation" style="color:rgb(102,102,102);"><a href="/operario/servicio" style="color: #1485ee;"><i class="fa fa-suitcase"></i> Atender cubiculo</a></li>
+                    <li class="active" role="presentation"><a href="/operario/datos/servicio" style="color: #1485ee;"><i class="fa fa-university"></i> Datos del servicio</a></li>
+                    <li class="active" role="presentation"><a href="/operario/perfil" style="color: #1485ee;"><i class="fa fa-user"></i> Perfil de usuario</a></li>
                     @endif
 
                     @if(Auth::user()!=NULL)

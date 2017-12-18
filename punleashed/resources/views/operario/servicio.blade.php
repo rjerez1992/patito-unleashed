@@ -18,7 +18,7 @@
         <h1 style="color: #1485ee;">Atención de cubiculo        
         </h1>
         <hr style="margin: 0px; margin-bottom: 15px;">
-        <h4 style="color: #1485ee;"> <i class="fa fa-info-circle"></i> Datos de atención del servicio</h4>
+        <!--<h4 style="color: #1485ee;"> <i class="fa fa-info-circle"></i> Datos de atención del servicio</h4>
         <hr style="margin: 0px; margin-bottom: 15px;">
         <div class="row">
             <div class="col-md-3">
@@ -66,13 +66,18 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
         <h4 style="margin-top: 15px; color: #1485ee;" ><i class="fa fa-hand-o-up"></i> Seleccione un cubiculo disponible</h4>
         <hr style="margin: 0px; margin-bottom: 15px;">
+
+        <p>Para comenzar la atencion del servicio asignado debe seleccionar un cubiculo disponible, los cubiculos disponibles están marcados con azul. Una vez seleccionado el cubiculo debe confirmar la apertura de este mismo, luego será redirigido al control del cubiculo.  Desde ahi podrá llamar al siguiente ticket,  notificar el  estado de la atencion y cerrar el cubiculo para terminar.</p>
+
+        <hr style="margin: 0px; margin-bottom: 15px;">
+
         <div class="row">
 
             @if(empty($servicio->cubiculos))
-            <h4 class="text-center">No hay cubiculos asignados para este servicio.</h4>
+            <h4 class="text-center">No hay cubiculos asignados para este servicio. Comuniquese con el manager de la plataforma correspondiente a su institución.</h4>
             @endif
           
             @foreach($servicio->cubiculos->sortBy('disponibilidad') as $cubiculo)

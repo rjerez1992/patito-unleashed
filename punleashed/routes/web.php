@@ -30,6 +30,7 @@ Route::get('/cliente/sucursal','ClienteController@sucursal');
 Route::middleware("filtro:".App\Constantes::Operario())->group(function () {
 
 Route::get('/operario/servicio', 'OperarioController@servicio');
+Route::get('/operario/datos/servicio', 'OperarioController@datosServicio');
 Route::get('/operario/perfil', 'OperarioController@perfil');
 Route::get('/operario/perfil/editar', 'OperarioController@editar');
 Route::get('/operario/atencion', 'OperarioController@atencion');

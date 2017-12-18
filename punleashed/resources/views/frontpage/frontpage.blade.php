@@ -87,7 +87,7 @@
                         <h3>Profesor </h3>
                         <ul>
                             <li><a href="#">Daniel Moreno</a></li>
-                            <li><a href="#">Cat Lover 100%</a></li>
+                            <li></li>
                             <li></li>
                         </ul>
                     </div>

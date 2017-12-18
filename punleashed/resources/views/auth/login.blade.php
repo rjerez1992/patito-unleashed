@@ -15,7 +15,7 @@
 
                         <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
                         <label for="username">Usuario</label>
-                        <input class="form-control" type="text" placeholder="Ejemplo: Alberto89" name="username" id="username" value="{{ old('username') }}" autofocus>
+                        <input class="form-control" type="text" placeholder="Ejemplo: Patricio69" name="username" id="username" value="{{ old('username') }}" autofocus>
                         @if ($errors->has('username'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('username') }}</strong>
