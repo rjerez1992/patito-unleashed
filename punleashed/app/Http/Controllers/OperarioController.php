@@ -99,6 +99,14 @@ class OperarioController extends Controller
     }
 
     public function atencion($id){
-        return view('operario/atencion');        
+        $usuario = Cliente::find(1);
+        $cuenta = $usuario->cuenta;
+
+        $data = array(
+                "usuario" => $usuario,
+                "cuenta" => $cuenta,
+            );
+
+        return view('operario/atencion')->with($data);        
     }
 }
