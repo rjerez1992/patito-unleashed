@@ -511,8 +511,8 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  @if($sucursal->Servicios($sucursal->id)!=null)
-                                    @foreach ($sucursal->Servicios($sucursal->id) as $servicio)
+                                  @if($sucursal->getServicios($sucursal->id)!=null)
+                                    @foreach ($sucursal->getServicios($sucursal->id) as $servicio)
                                       <tr>
                                         <td>{{$servicio->nombre}} </td>
                                         <td > 
@@ -574,7 +574,7 @@
                                               </div>
                                               {!! Form::open(['route' => ['Servicio.Eliminar', $servicio->id], 'method' => 'POST']) !!}
                                               <div class="modal-body">
-                                                 @if($servicio->Cubiculo($servicio->id) > 0 || $servicio->Operario($servicio->id) > 0)
+                                                 @if($servicio->getCubiculo($servicio->id) > 0 || $servicio->getOperario($servicio->id) > 0)
                                                  
                                                     No se puede eliminar este servicio, existen operarios o cubiculos asociados.
                                                 
@@ -587,7 +587,7 @@
                                                 
                                               </div>
                                               <div class="modal-footer">
-                                                 @if($servicio->Cubiculo($servicio->id) > 0 || $servicio->Operario($servicio->id) > 0)
+                                                 @if($servicio->getCubiculo($servicio->id) > 0 || $servicio->getOperario($servicio->id) > 0)
                                                   @else
                                                     <button  type="submit" value="Submit" class="btn btn-success">Eliminar</button>
                                                   @endif

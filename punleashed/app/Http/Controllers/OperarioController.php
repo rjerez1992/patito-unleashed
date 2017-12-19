@@ -16,7 +16,9 @@ use App\Cubiculo;
 
 class OperarioController extends Controller
 {
-   
+    public function servicio(){
+        return view('operario/servicio');
+    }
 
     public function Insertar(Request $request, $id){
 

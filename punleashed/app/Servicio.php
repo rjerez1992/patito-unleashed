@@ -7,8 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Servicio extends Model
 {
-    protected $table = 'servicios';
-    public $timestamps = false;
+    //protected $table = 'servicios';
+    //public $timestamps = false;
+
+    public function sucursal(){
+        return $this->belongsTo('App\Sucursal');
+    }
+
+    public function cubiculos(){
+        return $this->hasMany('App\Cubiculo');
+    }
 
     public static function Cubiculo($id)
     {

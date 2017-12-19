@@ -6,15 +6,45 @@
   margin-top:10px;
 }
 
+.panel-title{
+	color: #1485ee;
+}
+
+.panel-heading{
+	background: white !important;
+}
+
 .accent-color{
-    color: #1485ee;
+	color: #1485ee;
 }
 
 .navbar-brand{
-    font-weight: bold; 
-    color: #1485ee !important;
+	font-weight: bold; 
+	color: #1485ee !important;
 }
 
 .panel-footer{
-    background: #1485ee !important;
+	background: #1485ee !important;
+}
+
+.thumb {
+    display: inline-block;
+    width: 100%;
+    height: 110px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    /*border: 3px solid #c99;*/
+    background-position: center center;
+    background-size: cover;
+}
+
+.thumb-tall {
+    display: inline-block;
+    width: 100%;
+    height: 160px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    /*border: 3px solid #c99;*/
+    background-position: center center;
+    background-size: cover;
 }

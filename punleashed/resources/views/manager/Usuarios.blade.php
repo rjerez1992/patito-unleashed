@@ -141,14 +141,14 @@
                       <td><img src="../storage/{{$operario->imagen}}" width="100px"></td>
                       <td>{{$operario->nombre}}</td>
                       <td>{{$operario->rut}}</td>
-                      <td>{{$operario->Cuenta($operario->cuenta_id)->email}}</td>
-                      <td>{{$operario->Sucursal($operario->servicio_id)->nombre}}</td>
-                      <td>{{$operario->Servicio($operario->servicio_id)->nombre}}</td>
+                      <td>{{$operario->getCuenta($operario->cuenta_id)->email}}</td>
+                      <td>{{$operario->getSucursal($operario->servicio_id)->nombre}}</td>
+                      <td>{{$operario->getServicio($operario->servicio_id)->nombre}}</td>
                       <td>
                         @if( $operario->cubiculo_id==0)
                           Sin Cubiculo
                         @else
-                        {{$operario->Cubiculo($operario->cubiculo_id)->nombre}}
+                        {{$operario->getCubiculo($operario->cubiculo_id)->nombre}}
 
                         @endif
                       </td>
@@ -179,7 +179,7 @@
                                     <div class="col-md-12 form-group {{ $errors->has('name') ? ' has-error' : '' }}">
                                     <h4>Cuenta</h4>
                                           <label for="username" class="control-label">Nombre de usuario: </label>
-                                          <input id="username" name="username" class="form-control" type="text" value="{{$operario->Cuenta($operario->cuenta_id)->username }}" value="{{ old('username') }}" required autofocus>
+                                          <input id="username" name="username" class="form-control" type="text" value="{{$operario->getCuenta($operario->cuenta_id)->username }}" value="{{ old('username') }}" required autofocus>
                                           @if ($errors->has('username'))
                                                   <span class="help-block">
                                                       <strong>{{ str_replace("username","nombre de usuario",$errors->first('username')) }}</strong>
@@ -189,8 +189,8 @@
 
                                       <div class=" col-md-12 form-group {{ $errors->has('email') ? ' has-error' : '' }}">
                                           <label for="email" class="control-label">Correo electronico:</label>
-                                          <input id="email" name="email" class="form-control" type="email" value="{{$operario->Cuenta($operario->cuenta_id)->email }}" disabled>
-                                          <input id="idS" name="idS" type="hidden" value="{{$operario->Cuenta($operario->cuenta_id)->id }}" >
+                                          <input id="email" name="email" class="form-control" type="email" value="{{$operario->getCuenta($operario->cuenta_id)->email }}" disabled>
+                                          <input id="idS" name="idS" type="hidden" value="{{$operario->getCuenta($operario->cuenta_id)->id }}" >
                                           @if ($errors->has('email'))
                                                   <span class="help-block">
                                                       <strong>{{ $errors->first('email') }}</strong>
@@ -302,11 +302,11 @@
                             <br>
                              <div class="form-group">
                                {!! Form::label('Cubiculo', 'Cubiculo') !!}
-                                @if($operario->Cubiculos($operario->servicio_id)->Count() > 0)
+                                @if($operario->getCubiculos($operario->servicio_id)->Count() > 0)
                                   <select name="cubiculo" class="form-control">
                                     <option value="0">Seleccione</option>
 
-                                    @foreach ($operario->Cubiculos($operario->servicio_id) as $cubiculo)
+                                    @foreach ($operario->getCubiculos($operario->servicio_id) as $cubiculo)
                                       <option value="{{$cubiculo->id}}">{{$cubiculo->nombre}}</option>
                                     @endforeach
                                   </select> 

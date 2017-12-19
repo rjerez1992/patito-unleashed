@@ -109,8 +109,8 @@
                               <h4 class="modal-title">Servicios</h4>
                             </div>
                             <div class="modal-body">
-                               @if($sucursal->Servicios($sucursal->id)!=null)
-                                  @foreach ($sucursal->Servicios($sucursal->id) as $servicio)
+                               @if($sucursal->getServicios($sucursal->id)!=null)
+                                  @foreach ($sucursal->getServicios($sucursal->id) as $servicio)
                                         <div class="col-md-8">
                                            <li>
                                                 {{$servicio->nombre}} 
@@ -158,13 +158,13 @@
                                     <tbody>
                                     @if($operarios != null)
                                       @foreach ($operarios as $operario)
-                                        @if($operario->Sucursal($operario->servicio_id)->id == $sucursal->id )
+                                        @if($operario->getSucursal($operario->servicio_id)->id == $sucursal->id )
 
                                           <tr>
                                             <td><img src="../storage/{{$operario->imagen}}" width="100px"></td>
                                             <td>{{$operario->nombre}}</td>
-                                            <td>{{$operario->Cuenta($operario->cuenta_id)->email}}</td>
-                                            <td>{{$operario->Servicio($operario->servicio_id)->nombre}}</td>
+                                            <td>{{$operario->getCuenta($operario->cuenta_id)->email}}</td>
+                                            <td>{{$operario->getServicio($operario->servicio_id)->nombre}}</td>
                                           </tr>
                                         @endif
                                       @endforeach
@@ -249,8 +249,8 @@
                                   <div class="form-group">
                                     <label for="rut" class="control-label">Servicio asociado: </label>
                                     <select name="servicio" class="form-control" >
-                                      @if($sucursal->Servicios($sucursal->id)!=null)
-                                        @foreach ($sucursal->Servicios($sucursal->id) as $servicio)
+                                      @if($sucursal->getServicios($sucursal->id)!=null)
+                                        @foreach ($sucursal->getServicios($sucursal->id) as $servicio)
                                           <option value="{{$servicio->id}} ">{{$servicio->nombre}} </option>
                                         @endforeach
                                       @endif
@@ -306,8 +306,8 @@
                                   <div class="form-group">
                                     <label for="rut" class="control-label">Servicio asociado: </label>
                                     <select name="servicio_id" class="form-control" >
-                                      @if($sucursal->Servicios($sucursal->id)!=null)
-                                        @foreach ($sucursal->Servicios($sucursal->id) as $servicio)
+                                      @if($sucursal->getServicios($sucursal->id)!=null)
+                                        @foreach ($sucursal->getServicios($sucursal->id) as $servicio)
                                           <option value="{{$servicio->id}} ">{{$servicio->nombre}} </option>
                                         @endforeach
                                       @endif
@@ -348,11 +348,11 @@
                                     <tbody>
                                     @if($cubiculos != null)
                                       @foreach ($cubiculos as $cubiculo)
-                                        @if($cubiculo->Sucursal($cubiculo->servicio_id)->id == $sucursal->id )
+                                        @if($cubiculo->getSucursal($cubiculo->servicio_id)->id == $sucursal->id )
                                           <tr>
                                             <td>{{$cubiculo->nombre}}</td>
                                             <td>{{$cubiculo->disponibilidad}}</td>
-                                            <td>{{$cubiculo->Servicio($cubiculo->servicio_id)->nombre}}</td>
+                                            <td>{{$cubiculo->getServicio($cubiculo->servicio_id)->nombre}}</td>
                                           </tr>
                                         @endif
                                       @endforeach
