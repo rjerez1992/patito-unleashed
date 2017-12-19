@@ -18,13 +18,13 @@ class Servicio extends Model
         return $this->hasMany('App\Cubiculo');
     }
 
-    public static function Cubiculo($id)
+    public static function getCubiculo($id)
     {
     	$cubiculos = Cubiculo::where("servicio_id","=",$id)->get();
     	return $cubiculos->count();
     }
 
-    public static function Operario($id)
+    public static function getOperario($id)
     {
     	$operarios = Operario::where("servicio_id","=",$id)->get();
     	

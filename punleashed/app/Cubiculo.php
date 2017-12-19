@@ -6,16 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cubiculo extends Model
 {
-    protected $table = 'cubiculos';
-    public $timestamps = false;
+    //protected $table = 'cubiculos';
+    //public $timestamps = false;
 
-     public static function Servicio($id)
+     public static function getServicio($id)
      {
      	$servicio= Servicio::find($id);
      	return $servicio;
      }
 
-     public static function Sucursal($id)
+     public static function getSucursal($id)
      {
      	$servicio= Servicio::find($id);
      	$sucursal= Sucursal::find($servicio->sucursal_id);
