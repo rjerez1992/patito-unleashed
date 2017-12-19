@@ -18,7 +18,7 @@
                     <ul class="nav navbar-nav navbar-right">                
                     @if(Auth::user()!=NULL && Auth::user()->tipo==App\Constantes::Cliente())
                     <li role="presentation"><a href="/cliente/search"><i class="fa fa-search fa-fw navbar-menu-icon"></i>Buscador</a></li>
-                    <li role="presentation"><a href="/cliente/tickets"><i class="fa fa-ticket fa-fw navbar-menu-icon"></i>Mis tickets<i id="iconoNotificacion" class="fa fa-info-circle fa-fw hidden" style="color: red"></i></a></li>
+                    <li role="presentation"><a href="/cliente/tickets"><i class="fa fa-ticket fa-fw navbar-menu-icon"></i>Mis tickets <i id="iconoNotificacion" class="fa fa-info-circle fa-fw" style="display: none"></i></a></li>
                     <li role="presentation"><a href="/cliente/profile/"><i class="fa fa-user fa-fw navbar-menu-icon"></i>Mi cuenta</a></li>
                     @endif
 
@@ -46,14 +46,19 @@
                 </form>
             </div>
         </nav>
-        <div class="container hidden" id="notificacionTicketAtencion">
+        <div class="container" id="aviso1TicketAtencion" style="display: none">
+            <div class="alert alert-warning">
+                <h4><strong>¡Atención, tu turno está cerca!</strong> Ingrese a la bandeja de tickets para revisar el servicio al cuál acudir, y así llegar con tiempo.</h4>
+            </div>
+        </div>
+        <div class="container" id="aviso2TicketAtencion" style="display: none">
             <div class="alert alert-danger">
                 <h4><strong>¡Atención, es tu turno!</strong> Ingrese a la bandeja de tickets para revisar el servicio al cuál acudir.</h4>
             </div>
         </div>
 
                         <script type="text/javascript">
-                            function notificacionesPeriodicas(){
+                            function ajax(){
                                 $.ajaxSetup({
                                     headers: {
                                         'X-CSRF-TOKEN': $('meta[name="_tokenNotify"]').attr('content')
@@ -66,23 +71,28 @@
                                         success: function(msg){
                                             if(msg=='NOTIFIED')
                                             {
-                                                document.getElementById("iconoNotificacion").style.visibility = "visible";
-                                                document.getElementById("notificacionTicketAtencion").style.visibility = "none";
+                                                document.getElementById("iconoNotificacion").style.display = "inline";
+                                                document.getElementById("iconoNotificacion").style.color = "red";
+                                                document.getElementById("aviso1TicketAtencion").style.display = "block";
+                                                document.getElementById("aviso2TicketAtencion").style.display = "none";
                                             }
                                             else if(msg=='YOUTURN')
                                             {
-                                                document.getElementById("iconoNotificacion").style.visibility = "visible";
-                                                document.getElementById("notificacionTicketAtencion").style.visibility = "visible";
+                                                document.getElementById("iconoNotificacion").style.display = "inline";
+                                                document.getElementById("iconoNotificacion").style.color = "red";
+                                                document.getElementById("aviso1TicketAtencion").style.display = "none";
+                                                document.getElementById("aviso2TicketAtencion").style.display = "block";
                                             }
                                             else
                                             {
-                                                document.getElementById("iconoNotificacion").style.visibility = "none";
-                                                document.getElementById("notificacionTicketAtencion").style.visibility = "none";
+                                                document.getElementById("iconoNotificacion").style.display = "none";
+                                                document.getElementById("aviso1TicketAtencion").style.display = "none";
+                                                document.getElementById("aviso2TicketAtencion").style.display = "none";
                                             }
                                         }
                                     }); 
                             }
-                            setInterval(notificacionesPeriodicas,1000);
+                            setInterval(ajax,1000);
                         </script>
     </div>
     <meta name="_tokenNotify" content="{!! csrf_token() !!}" />

@@ -26,11 +26,33 @@ class ClienteController extends Controller
         $cuenta=Auth::user();
         if($id==-1)
         {
+            $sucursalesFrecuentes = DB::table('tickets')
+                ->orderBy('tickets.created_at', 'DESC')
+                ->join('servicios', 'tickets.servicio_id', '=', 'servicios.id')
+                ->join('sucursals', 'servicios.sucursal_id', '=', 'sucursals.id')
+                ->take(6)->get();
+
+            $TicketsValidos=Ticket::where('cliente_id', '=', $cuenta->usuario->id)->where('estado', '=', Constantes::TicketAtendido())->count();
+            $TicketsCancelados=Ticket::where('cliente_id', '=', $cuenta->usuario->id)->where('estado', '=', Constantes::TicketCancelado())->count();
+            $TicketsInasistentes=Ticket::where('cliente_id', '=', $cuenta->usuario->id)->where('estado', '=', Constantes::TicketInasistente())->count();
+
+            $reputacion=(5+($TicketsValidos/10)-($TicketsCancelados/20)-($TicketsInasistentes/5));
+            if($reputacion<1)
+            {
+                $reputacion=1;
+            }
+            if($reputacion>5)
+            {
+                $reputacion=5;
+            }
+            $cuenta->usuario->max_tickets=$reputacion;
+            $cuenta->usuario->save();
+
             $data = array(
                 'cuenta' => $cuenta,
                 'cliente' => $cuenta->usuario,
-                'sucursalesFrecuentes' =>Sucursal::all(),
-                'reputacionCliente' => '6.5',
+                'sucursalesFrecuentes' => $sucursalesFrecuentes,
+                'reputacionCliente' => $reputacion,
             );
             return  view('cliente/user-profile')->with($data);
         }
@@ -43,8 +65,7 @@ class ClienteController extends Controller
         $data = array(
                 'cuenta' => $cuenta,
                 'cliente' => $cliente,
-                'sucursalesFrecuentes' => NULL,
-                'reputacionCliente' => '6.5',
+                'sucursalesFrecuentes' => Sucursal::all()->take(6),
             );
 
         return  view('cliente/user-profile')->with($data);
@@ -116,7 +137,7 @@ class ClienteController extends Controller
             $data = array(
                     'cliente' => $cliente,
                     'ticketsActivos' => Ticket::where('cliente_id', '=', $cliente->id)->where('estado', '=', Constantes::NuevoTicket())->get(),
-                    'historialTickets' => Ticket::where('cliente_id', '=', $cliente->id)->where('estado', '!=', Constantes::NuevoTicket())->get(),
+                    'historialTickets' => Ticket::where('cliente_id', '=', $cliente->id)->where('estado', '!=', Constantes::NuevoTicket())->orderBy('created_at', 'DESC')->take(9)->get(),
                     'cuenta' => $cuenta,
                 );
             return view('cliente/tickets-box')->with($data);
@@ -149,18 +170,50 @@ class ClienteController extends Controller
                                         <div class='row'>
                                             <div class='col-md-12 col-sm-12 col-xs-12'><span>{$ticket->servicio->nombre}</span></div>
                                         </div>
-                                        <div class='row'>
-                                            <div class='col-md-12 col-sm-12 col-xs-12'><strong>N° Actual: </strong><strong>{$ticket->servicio->letra}{$ticket->servicio->numero_actual}</strong></div>
+                                        <div class='row'>";
+                if($ticket->numero==$ticket->servicio->numero_actual)
+                {
+                    echo "<div class='col-md-12 col-sm-12 col-xs-12'><strong>Cubículo: </strong><strong>";
+                    $found=0;
+                    $cubiculos=$ticket->servicio->cubiculos;
+                    foreach($cubiculos as $cubiculo)
+                    {
+                        if($cubiculo->numero_atencion==$ticket->numero)
+                        {
+                            echo $cubiculo;
+                            $found=1;
+                            break;   
+                        }
+                    }
+                    if($found==0)
+                    {
+                        echo 'No Definido';
+                    }
+                    echo "</strong></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <div class='panel-footer body-info-ticket'>
+                                <p class='text-center' style='color: white;'><strong>Diríjase a su cubículo correspondiente.</strong></p>
+                            </div>
+                        </div>
+                    </div>";
+                }
+                else
+                {
+                    echo "<div class='col-md-12 col-sm-12 col-xs-12'><strong>N° Actual: </strong><strong>{$ticket->servicio->letra}{$ticket->servicio->numero_actual}</strong></div>
                                             <div class='col-md-12 col-sm-12 col-xs-12'><span class='text-danger'>10 </span><span class='text-danger'> minutos restantes</span></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class='panel-footer body-info-ticket'>
+                        <div class='panel-footer body-info-ticket'>
                                 <button class='btn btn-primary btn-block' type='button' onclick='modalCancelarTicket({$ticket->id})'><i class='fa fa-remove fa-fw'></i> Cancelar Ticket</button>
                             </div>
                         </div>
                     </div>";
+                }
             }
         } 
         else {

@@ -62,7 +62,7 @@
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="alert alert-info text-center alert-info-ticket center-block" role="alert">
                                             <div class="col-md-12 col-sm-12 col-xs-12"><i class="fa fa-flag fa-fw"></i><strong> Reputación</strong></div>
-                                            <div class="col-md-12 col-sm-12 col-xs-12"><strong>{{ $reputacionCliente }}</strong><strong> ({{ $cliente->max_tickets }} tickets máx) </strong></div>
+                                            <div class="col-md-12 col-sm-12 col-xs-12"><strong>{{ $cliente->max_tickets }} tickets máximos </strong></div>
                                         </div>
                                     </div>
                                 </div>
