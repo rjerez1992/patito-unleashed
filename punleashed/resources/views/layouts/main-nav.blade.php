@@ -18,7 +18,7 @@
                     <ul class="nav navbar-nav navbar-right">                
                     @if(Auth::user()!=NULL && Auth::user()->tipo==App\Constantes::Cliente())
                     <li role="presentation"><a href="/cliente/search"><i class="fa fa-search fa-fw navbar-menu-icon"></i>Buscador</a></li>
-                    <li role="presentation"><a href="/cliente/tickets"><i class="fa fa-ticket fa-fw navbar-menu-icon"></i>Mis tickets</a></li>
+                    <li role="presentation"><a href="/cliente/tickets"><i class="fa fa-ticket fa-fw navbar-menu-icon"></i>Mis tickets<i id="iconoNotificacion" class="fa fa-info-circle fa-fw hidden" style="color: red"></i></a></li>
                     <li role="presentation"><a href="/cliente/profile/"><i class="fa fa-user fa-fw navbar-menu-icon"></i>Mi cuenta</a></li>
                     @endif
 
@@ -46,4 +46,43 @@
                 </form>
             </div>
         </nav>
+        <div class="container hidden" id="notificacionTicketAtencion">
+            <div class="alert alert-danger">
+                <h4><strong>¡Atención, es tu turno!</strong> Ingrese a la bandeja de tickets para revisar el servicio al cuál acudir.</h4>
+            </div>
+        </div>
+
+                        <script type="text/javascript">
+                            function notificacionesPeriodicas(){
+                                $.ajaxSetup({
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="_tokenNotify"]').attr('content')
+                                    }
+                                });
+                                $.ajax({
+                                        type:"POST",
+                                        url:"/cliente/notificarCercanos",
+                                        data:"",
+                                        success: function(msg){
+                                            if(msg=='NOTIFIED')
+                                            {
+                                                document.getElementById("iconoNotificacion").style.visibility = "visible";
+                                                document.getElementById("notificacionTicketAtencion").style.visibility = "none";
+                                            }
+                                            else if(msg=='YOUTURN')
+                                            {
+                                                document.getElementById("iconoNotificacion").style.visibility = "visible";
+                                                document.getElementById("notificacionTicketAtencion").style.visibility = "visible";
+                                            }
+                                            else
+                                            {
+                                                document.getElementById("iconoNotificacion").style.visibility = "none";
+                                                document.getElementById("notificacionTicketAtencion").style.visibility = "none";
+                                            }
+                                        }
+                                    }); 
+                            }
+                            setInterval(notificacionesPeriodicas,1000);
+                        </script>
     </div>
+    <meta name="_tokenNotify" content="{!! csrf_token() !!}" />

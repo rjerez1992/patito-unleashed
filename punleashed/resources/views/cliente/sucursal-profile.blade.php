@@ -66,6 +66,7 @@
                                         <div class="col-md-12 col-sm-12 col-xs-12"><strong>{{$servicio->nombre}}</strong></div>
                                     </div>
                                 </div>
+                            @if($servicio->numero_disponible!=-1)
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-md-6 col-sm-6 col-xs-6 info-service">
@@ -90,23 +91,70 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if ($cuenta!=NULL && $servicio->numero_disponible!=-1 && $servicio->ticketCliente($cuenta->usuario->id)==NULL)
-                                    <div class="panel-footer">
-                                        <button class="btn btn-primary btn-block btn-sm center-block" type="button" onclick="solicitarTicket({{$sucursal->id}},{{$servicio->id}})"><i class="fa fa-ticket fa-fw"></i>Solicitar Ticket </button>
-                                    </div>
-                                @elseif ($cuenta!=NULL && $servicio->numero_disponible==-1)
-                                    <div class="panel-footer">
-                                        <p class="text-center" style="color: white;"><strong>El servicio no está disponible.</strong></p>
-                                    </div>
-                                @elseif ($cuenta!=NULL && $servicio->ticketCliente($cuenta->usuario->id)!=NULL)
-                                    <div class="panel-footer">
-                                        <p class="text-center" style="color: white;"><strong>Ya posees un ticket para este servicio.</strong></p>
-                                    </div>
+                                @if($cuenta!=NULL)
+                                    @if($servicio->ticketCliente($cuenta->usuario->id)!=NULL)
+                                        <div class="panel-footer">
+                                            <p class="text-center" style="color: white;"><strong>Ya posees un ticket para este servicio.</strong></p>
+                                        </div>
+                                    @elseif($cuenta->usuario->ticketsActivos->count()>=$cuenta->usuario->max_tickets)
+                                        <div class="panel-footer">
+                                            <p class="text-center" style="color: white;"><strong>Ya has pedido un máximo de tickets.</strong></p>
+                                        </div>
+                                    @else
+                                        <div class="panel-footer">
+                                            <button class="btn btn-primary btn-block btn-sm center-block botonObtenerTicket" type="button" data-id="{{$servicio->id}}" onclick=getTicketAjax(this)><i class="fa fa-ticket fa-fw"></i>Solicitar Ticket </button>
+                                            
+                                            <script type="text/javascript">
+                                                function getTicketAjax(but) {
+                                                    $.ajaxSetup({
+                                                        headers: {
+                                                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                                                        }
+                                                    });
+                                                    $.ajax({
+                                                      url: 'getTicket',
+                                                      type: 'POST',
+                                                      data: {'idSucursal': {{$sucursal->id}},
+                                                            'idServicio': $(but).data("id")},
+                                                      success:function(data) {
+                                                        $("#modal-create-ticket").html(data);
+                                                        $('.modal-create-ticket').click(function(e) {
+                                                            e.preventDefault();
+                                                            $('body').css('overflow', 'hidden');
+                                                        });
+                                                        $('#modal-create-ticket').modal({backdrop: 'static', keyboard: false})
+                                                        $('#modal-create-ticket').modal('show')
+                                                      }
+                                                    });
+                                                }
+                                            </script>
+                                        </div>
+                                    @endif
                                 @else
                                     <div class="panel-footer">
                                         <p class="text-center" style="color: white;"><strong>Debes estar logueado para solicitar un ticket.</strong></p>
                                     </div>
                                 @endif
+                            @else
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-3 col-xs-3 info-service">
+                                            <div class="alert alert-info text-center alert-info-ticket center-block" role="alert">
+                                                <div class="col-md-12 col-sm-12 col-xs-12"><i class="fa fa-info-circle fa-fw"></i></div>
+                                                <div class="col-md-12 col-sm-12 col-xs-12"><strong>Info</strong></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9 col-sm-9 col-xs-9 info-service">
+                                            <div class="alert alert-info text-center alert-info-ticket center-block" role="alert">
+                                                <div class="col-md-12 col-sm-12 col-xs-12">{{$servicio->descripcion}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-footer">
+                                    <p class="text-center" style="color: white;"><strong>El servicio no está disponible.</strong></p>
+                                </div>
+                            @endif
                             </div>
                         </div>                        
                         @endforeach
@@ -171,4 +219,6 @@
             </div>
         </div>
     </div>
+    
+    <meta name="_token" content="{!! csrf_token() !!}" />
 @endsection

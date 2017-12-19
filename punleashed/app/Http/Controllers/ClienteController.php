@@ -180,18 +180,21 @@ class ClienteController extends Controller
         return redirect('/cliente/tickets');
     }
 
-    public function getTicketServicio($idSucursal, $idServicio)
+    public function getTicket(request $request)
     {
-        $data= NULL;
-        $ticket=NULL;
-        $servicioAux=NULL;
-        DB::transaction(function() use($idServicio){
+        $idServicio=$request->idServicio;
+        $idSucursal=$request->idSucursal;
+        $sucursal=Sucursal::find($idSucursal);
+        $servicioAux = Servicio::find($idServicio);
+        $ticket=DB::transaction(function() use($idServicio){
 
+            $ticket=NULL;
             $cuenta = Auth::user();
             $cliente = $cuenta->usuario;
 
             $servicioAux = Servicio::find($idServicio);
-            if($servicioAux->numero_disponible!=-1)
+            $cantTickets = Ticket::where('cliente_id','=',$cliente->id)->where('estado', '=', Constantes::NuevoTicket())->count();
+            if($servicioAux->numero_disponible!=-1 && $cantTickets<$cliente->max_tickets)
             {
                 Servicio::where('id', '=', $idServicio)->update(['numero_disponible' => ($servicioAux->numero_disponible + 1)]);
 
@@ -205,20 +208,97 @@ class ClienteController extends Controller
 
                 $ticket->save();
             }
-            
+            return $ticket;
         });
-        if($ticket!=NULL)
+        if($ticket!=NULL)//pasa
         {
-            $data = array(
-                'ticket_id' => $ticket->id,
-                'ticket_numero' => $servicioAux->letra+''+$ticket->numero,
-                'ticket_hora' => $ticket->hora,
-                'servicio_nombre' => $servicioAux->nombre,
-                'servicio_ticketActual' => $servicioAux->letra+''+$servicioAux->numero_actual,
-                'ticket_tiempoAprox' => $servicioAux->tiempo_espera,
-            );
+            echo "<div class='modal-dialog' role='document'>
+                <div class='modal-content'>
+                    <div class='modal-header'>
+                        <h4 class='modal-title'><i class='fa fa-ticket fa-fw'></i>Solicitud de Ticket</h4></div>
+                    <div class='modal-body'>
+                        <p>Acabas de solicitar un ticket al sistema, estos son los datos de tu ticket: </p>
+                        <div class='panel panel-info panel-info-ticket'>
+                            <div class='panel-heading'>
+                                <div class='row'>
+                                    <div class='col-md-12 col-sm-12 col-xs-12'><i class='fa fa-ticket fa-fw'></i><strong class='text-uppercase'>{$servicioAux->letra}{$ticket->numero} </strong><strong>(<i class='fa fa-clock-o fa-fw'></i> </strong><strong>14:00:03 </strong><strong class='no-padding'>) </strong></div>
+                                </div>
+                            </div>
+                            <div class='panel-body body-info-ticket'>
+                                <div class='row'>
+                                    <div class='col-md-2 col-sm-2 col-xs-3'><img class='img-circle' src='{ $sucursal->image }' width='55' height='55'></div>
+                                    <div class='col-md-10 col-sm-10 col-xs-9'>
+                                        <div class='row'>
+                                            <div class='col-md-12 col-sm-12 col-xs-12'><strong>{ $sucursal->nombre }</strong></div>
+                                        </div>
+                                        <div class='row'>
+                                            <div class='col-md-12 col-sm-12 col-xs-12'><span id='modal_nombreServicio'>{$servicioAux->nombre}</span></div>
+                                        </div>
+                                        <div class='row'>
+                                            <div class='col-md-12 col-sm-12 col-xs-12'><strong>N° Actual: </strong><strong id='modal_numeroTicket'>{$servicioAux->letra}{$servicioAux->numero_actual}</strong></div>
+                                            <div class='col-md-12 col-sm-12 col-xs-12'><span id='modal_tiempo'>{$servicioAux->tiempo_espera}</span><span> minutos restantes</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='modal-footer'>
+                        <button class='btn btn-primary' type='button' data-dismiss='modal' onclick='actualizarPage({$sucursal->id})'><i class='fa fa-check fa-fw'></i>Aceptar </button>
+                    </div>
+                </div>
+            </div>";
         }
-        return $data;
+        else//no pasa
+        {
+            echo "<div class='modal-dialog' role='document'>
+                <div class='modal-content'>
+                    <div class='modal-header'>
+                        <h4 class='modal-title'><i class='fa fa-exclamation-circle fa-fw'></i>Error: Solicitud de Ticket fallida</h4></div>
+                    <div class='modal-body'>
+                        <p>Ha ocurrido un error solicitando un ticket para el servicio seleccionado. Intente solicitar un ticket en este servicio mas tarde.</p>
+                    </div>
+                    <div class='modal-footer'>
+                        <button class='btn btn-primary' type='button' data-dismiss='modal' onclick='actualizarPage({$sucursal->id})'><i class='fa fa-check fa-fw'></i>Aceptar </button>
+                    </div>
+                </div>
+            </div>";
+        }
+
+    }
+
+    public function notificarCercanos()
+    {
+        $cuenta = Auth::user();
+        $cliente = $cuenta->usuario;
+        $tickets=Ticket::where('cliente_id', '=', $cliente->id)->where('estado', '=', Constantes::NuevoTicket())->get();
+        $encontrado=0;
+        foreach($tickets as $ticket)
+        {
+            $servicioAux=Servicio::find($ticket->servicio_id);
+            if($ticket->numero - $servicioAux->numero_actual < 5)
+            {
+                //ojo! notificar
+                if($ticket->numero == $servicioAux->numero_actual)
+                {
+                    $encontrado=2;
+                    break;
+                }
+                $encontrado=1;
+            }
+        }
+        if($encontrado==1)
+        {
+            echo 'NOTIFIED';
+        }
+        else if($encontrado==2)
+        {
+            echo 'YOUTURN';
+        }
+        else
+        {
+            echo 'NON NOTIFIED';
+        }
     }
 
 }

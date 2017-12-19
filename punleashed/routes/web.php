@@ -18,13 +18,14 @@ Route::get('/', function () {
 Route::get('/cliente/tickets', 'ClienteController@tickets');
 Route::post('/cliente/tickets/updateActivos', 'ClienteController@ticketsActivos');
 Route::get('/cliente/tickets/cancelarTicket/{id}', 'ClienteController@cancelarTicket');
+Route::post('/cliente/notificarCercanos', 'ClienteController@notificarCercanos');
 
 Route::get('/cliente/profile/{id?}','ClienteController@profile');
 
 Route::get('/cliente/institucion/{id}','ClienteController@institucion');
 
 Route::get('/cliente/sucursal/{id}','ClienteController@sucursal');
-Route::get('/cliente/sucursal/{idSucursal}/getTicket/{idServicio}','ClienteController@getTicketServicio');
+Route::post('/cliente/sucursal/getTicket','ClienteController@getTicket');
 
 Route::get('/cliente/search','ClienteController@search');
 
