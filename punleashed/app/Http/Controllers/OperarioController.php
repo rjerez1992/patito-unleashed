@@ -44,22 +44,17 @@ class OperarioController extends Controller
     	$operario->rut = $request->rut;
     	$operario->imagen =$file_route;
     	$operario->cuenta_id = $cuenta->id;
-    	$operario->cubiculo_id = 0;
     	$operario->servicio_id = $request->servicio;
     	$operario->save();
 
      	$cliente=Manager::where('cuenta_id', $user->id)->first();
-        $Institucion=Institucion::where('manager', $cliente->id)->first();
+        $Institucion=Institucion::find($cliente->institucion_id);
         $Sucursales=Sucursal::where('institucion_id', $Institucion->id)->get();
         $operarios=Operario::get();
         $cubiculos=Cubiculo::get();
 
         
-    	return redirect('manager/Sucursales')->with('user', $user)->with('cliente', $cliente)
-                                 ->with('Sucursales', $Sucursales)   
-                                 ->with('operarios', $operarios)   
-                                 ->with('cubiculos', $cubiculos)   
-                                 ->with('Institucion', $Institucion);     
+    	return back(); 
     }
     public function Insertar2(Request $request, $id){
 
@@ -70,7 +65,9 @@ class OperarioController extends Controller
         $cuenta->username = $request->username;
         $cuenta->email = $request->email;
         $cuenta->tipo = 5;
-        $cuenta->password = bcrypt($request->password);
+        if ( $cuenta->password !="") {
+            $cuenta->password = bcrypt($request->password);
+        }
         $cuenta->save();
        
        //obtenemos el campo file definido en el formulario
@@ -85,14 +82,13 @@ class OperarioController extends Controller
         $operario->rut = $request->rut;
         $operario->imagen =$file_route;
         $operario->cuenta_id = $cuenta->id;
-        $operario->cubiculo_id = 0;
         $operario->servicio_id = $request->servicio;
         $operario->save();
 
        $user=\Auth::user();
 
         $cliente=Manager::where('cuenta_id', $user->id)->first();
-        $Institucion=Institucion::where('manager', $cliente->id)->first();
+        $Institucion=Institucion::find($cliente->institucion_id);
 
         if ($Institucion!=null) {
             $MisSucursales=Sucursal::where('institucion_id', $Institucion->id)->get();
@@ -105,11 +101,7 @@ class OperarioController extends Controller
         $operarios=Operario::get();
         $cubiculos=Cubiculo::get();
         
-        return view('manager/Usuarios')->with('user', $user)->with('cliente', $cliente)
-                                 ->with('operarios', $operarios)   
-                                 ->with('cubiculos', $cubiculos)   
-                                 ->with('Sucursales', $Sucursales)   
-                                 ->with('Institucion', $Institucion);   
+        return back();  
     }
     public function AgregarCubiculo(Request $request, $id){
         $operario=Operario::find($id);
@@ -118,7 +110,7 @@ class OperarioController extends Controller
 
         $user=\Auth::user();
         $cliente=Manager::where('cuenta_id', $user->id)->first();
-        $Institucion=Institucion::where('manager', $cliente->id)->first();
+        $Institucion=Institucion::find($cliente->institucion_id);
         if ($Institucion!=null) {
             $MisSucursales=Sucursal::where('institucion_id', $Institucion->id)->get();
             $Sucursales=$MisSucursales->pluck('nombre','id'); 
@@ -145,7 +137,7 @@ class OperarioController extends Controller
         $user=\Auth::user();
 
         $cliente=Manager::where('cuenta_id', $user->id)->first();
-        $Institucion=Institucion::where('manager', $cliente->id)->first();
+        $Institucion=Institucion::find($cliente->institucion_id);
 
         if ($Institucion!=null) {
             $MisSucursales=Sucursal::where('institucion_id', $Institucion->id)->get();
@@ -158,11 +150,7 @@ class OperarioController extends Controller
         $operarios=Operario::get();
         $cubiculos=Cubiculo::get();
         
-        return view('manager/Usuarios')->with('user', $user)->with('cliente', $cliente)
-                                 ->with('operarios', $operarios)   
-                                 ->with('cubiculos', $cubiculos)   
-                                 ->with('Sucursales', $Sucursales)   
-                                 ->with('Institucion', $Institucion);
+        return back();
     }
     public function Update(Request $request , $id){
     	$user=\Auth::user();
@@ -189,17 +177,13 @@ class OperarioController extends Controller
         $operario->save();
 
      	$cliente=Manager::where('cuenta_id', $user->id)->first();
-        $Institucion=Institucion::where('manager', $cliente->id)->first();
+        $Institucion=Institucion::find($cliente->institucion_id);
         $Sucursales=Sucursal::where('institucion_id', $Institucion->id)->get();
         $operarios=Operario::get();
         $cubiculos=Cubiculo::get();
 
         
-    	return redirect('manager/Usuarios')->with('user', $user)->with('cliente', $cliente)
-                                 ->with('Sucursales', $Sucursales)   
-                                 ->with('operarios', $operarios)   
-                                 ->with('cubiculos', $cubiculos)   
-                                 ->with('Institucion', $Institucion);  
+    	return back();
     }
 
     public function servicios(Request $request)

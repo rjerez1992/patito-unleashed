@@ -30,13 +30,11 @@ class ServicioController extends Controller
     	$Servicio->save();
     	
      	$cliente=Manager::where('cuenta_id', $user->id)->first();
-        $Institucion=Institucion::where('manager', $cliente->id)->first();
+        $Institucion=Institucion::find($cliente->institucion_id);
         $Sucursales=Sucursal::where('institucion_id', $Institucion->id)->get();
 
         
-    	return redirect('manager/dashboard')->with('user', $user)->with('cliente', $cliente)
-                                 ->with('Sucursales', $Sucursales)   
-                                 ->with('Institucion', $Institucion);    
+    	return back();   
     }
 
 
@@ -48,7 +46,7 @@ class ServicioController extends Controller
         
         $user=\Auth::user();
     	$cliente=Manager::where('cuenta_id', $user->id)->first();
-        $Institucion=Institucion::where('manager', $cliente->id)->first();
+        $Institucion=Institucion::find($cliente->institucion_id);
         $Sucursales=Sucursal::where('institucion_id', $Institucion->id)->get();
 
         
@@ -66,7 +64,7 @@ class ServicioController extends Controller
     	$Servicio->save();
     	
      	$cliente=Manager::where('cuenta_id', $user->id)->first();
-        $Institucion=Institucion::where('manager', $cliente->id)->first();
+        $Institucion=Institucion::find($cliente->institucion_id);
         $Sucursales=Sucursal::where('institucion_id', $Institucion->id)->get();
 
         

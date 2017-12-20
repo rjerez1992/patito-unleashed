@@ -34,8 +34,6 @@ class Operario extends Model
         $cubiculo=Cubiculo::find($id);
         return $cubiculo;
      }
-
-
      public static function getSucursal($id)
      {
      	$servicio= Servicio::find($id);

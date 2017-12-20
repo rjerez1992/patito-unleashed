@@ -2,10 +2,18 @@
 
 @section('content')
 @extends('layouts.main-nav')
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
 
 <style type="text/css">
     body {
       background: #F1F3FA;
+    }
+    .panel-heading{
+      background: #2471a3   !important;
+      color: white;
     }
 
     /* Profile container */
@@ -194,7 +202,7 @@
                         </div>
                        
                         <div class="col-md-8">
-                          <button data-toggle="modal" data-target="#modificarCuenta" class="btn btn-primary" style="float:right; border: none; ">
+                          <button data-toggle="modal" data-target="#modificarCuenta" class="btn btn-primary" style="float:right; background: #2471a3  ">
                             <i class="fa fa-edit icon-edit-ticket" ></i>
                           </button>
 
@@ -309,43 +317,6 @@
                       
                     </div>
                   </div>
-                @else
-                  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModalCrearInstitucion">Agregar Institución</button>
-                  <div class="modal fade" id="myModalCrearInstitucion" role="dialog">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal">&times;</button>
-                          <h4 class="modal-title">Nueva Institucion</h4>
-                        </div>
-
-                       {!! Form::open(['route' => ['Insertar.Inst'], 'method' => 'POST','validate','name'=>'myForm']) !!}
-                        <div class="modal-body">
-                            
-                        <div class="form-group">
-                              {!! Form::label('full_name', 'Nombre') !!}
-                              {!! Form::text('nombre', null, ['class' => 'form-control' , 'required' => 'required']) !!}
-                          </div>
-                          <div class="form-group">
-                              {!! Form::label('email', 'Run') !!}
-                              {!! Form::text('run', null, ['class' => 'form-control' , 'required' => 'required']) !!}
-                          </div>
-                           <div class="form-group">
-                              {!! Form::label('email', 'Descripci&oacute;n') !!}
-                              {!! Form::text('descripcion', null, ['class' => 'form-control' , 'required' => 'required']) !!}
-                          </div>
-                          
-                        <div class="form-group">
-                          </div>
-                        </div>
-                        <div class="modal-footer">
-                              {!! Form::submit('Enviar', ['class' => 'btn btn-success ' ] ) !!}
-                          <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                        </div>
-                        {!! Form::close() !!}
-                      </div>
-                    </div>
-                  </div>
                 @endif
                 </div>  
                 <br>
@@ -356,7 +327,7 @@
                     @foreach ($Sucursales as $sucursal)
                      
                     <div class="panel panel-primary">
-                      <div class="panel-heading" style="color:white">
+                      <div class="panel-heading" >
                         <div class="row">
                             <div class="col-md-4">
                               <strong>
@@ -366,11 +337,11 @@
                            
                             <div class="col-md-8">
                                {!! Form::open(['route' => ['Sucursal.Eliminar', $sucursal->id], 'method' => 'POST']) !!}
-                                <button class="btn btn-primary" style="float:right; border: none">
+                                <button class="btn btn-primary" style="float:right; background:  #2471a3 ">
                                   <i class="fa fa-remove icon-cerrar-ticket" ></i>
                                 </button>
                                {!! Form::close() !!}
-                                  <button data-toggle="modal" data-target="#myModalUP_{{$sucursal->id}}" class="btn btn-primary" style="float:right; border: none; margin-top:-13px">
+                                  <button data-toggle="modal" data-target="#myModalUP_{{$sucursal->id}}" class="btn btn-primary" style="float:right;background:#2471a3 ; margin-top:-14px">
                                     <i class="fa fa-edit icon-edit-ticket" ></i>
                                   </button>
                             </div>
