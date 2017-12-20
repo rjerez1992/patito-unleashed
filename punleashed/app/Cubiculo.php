@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cubiculo extends Model
 {
+
     //protected $table = 'cubiculos';
     //public $timestamps = false;
 
@@ -21,4 +22,13 @@ class Cubiculo extends Model
      	$sucursal= Sucursal::find($servicio->sucursal_id);
      	return $sucursal;
      }
+
+    public function servicio(){
+    	return $this->belongsTo('App\Servicio');
+    }
+
+    public function operario(){
+    	return $this->hasOne('App\Operario');
+    }
+
 }

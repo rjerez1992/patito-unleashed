@@ -12,8 +12,7 @@ use App\Servicio;
 use App\Manager;
 
 class ServicioController extends Controller
-{
-    
+{    
 	 public function Insertar(Request $request, $id){
 
         $user=\Auth::user();
@@ -72,6 +71,4 @@ class ServicioController extends Controller
                                  ->with('Sucursales', $Sucursales)   
                                  ->with('Institucion', $Institucion);
     }
-
-
 }

@@ -154,8 +154,8 @@ class AdminController extends Controller
     	//Crea la cuenta
 	    $cuenta = new Cuenta;
 	    $cuenta->username = $request->username;
-	    $cuenta->password = $request->password;
-	    $cuenta->save();
+	    $cuenta->password = bcrypt($request->password);
+	    //$cuenta->save();
 
 	    $usuario = NULL;
 
@@ -163,19 +163,23 @@ class AdminController extends Controller
 	    if ($tipoUsuario=='clientes'){	    	
 	    	$usuario = new Cliente;
 	    	$usuario->rut = $request->rut;
+            $cuenta->tipo = Constantes::Cliente();
 	    }
     	else if($tipoUsuario=='operarios'){
     		$usuario = new Operario;    
     		$usuario->rut = $request->rut;
     		$usuario->servicio_id = $request->servicio;		
+            $cuenta->tipo = Constantes::Operario();
     	}
 		else if($tipoUsuario=='managers'){
 			$usuario = new Manager;
 			$usuario->rut = $request->rut;
 			$usuario->institucion_id = $request->institucion;
+            $cuenta->tipo = Constantes::Manager();
 		}
 		else if($tipoUsuario=='admins'){
-			$usuario = new Admin;			
+			$usuario = new Admin;	
+            $cuenta->tipo = Constantes::Admin();		
 		}
 		else{
 			//En caso de obtener el parametro mal, elimina la cuenta y aborta
@@ -183,6 +187,7 @@ class AdminController extends Controller
 			abort(404);
 		}
 
+        $cuenta->save();
 		$usuario->nombre = $request->name;
 		$usuario->cuenta_id = $cuenta->id;
 		$usuario->save();
@@ -214,6 +219,7 @@ class AdminController extends Controller
     	}
 		else if($tipoUsuario=='managers'){
 			$usuario = Manager::find($request->hiddenId);
+
 		}
 		else if($tipoUsuario=='admins'){
 			$usuario = Admin::find($request->hiddenId);			
@@ -227,6 +233,14 @@ class AdminController extends Controller
 		if ($usuario == NULL){
 			abort(404);
 		}
+
+        //En caso que sea un manager, revisa si se debe eliminar la institucion
+        if ($tipoUsuario=='managers'){
+            $institucion = $usuario->institucion; 
+            if ($institucion->managers->count() <= 1){
+                $institucion->delete();
+            }
+        }
 
 		$cuenta = $usuario->cuenta;
 		//$cuenta->usuario->delete();
@@ -443,7 +457,7 @@ class AdminController extends Controller
         //Entrega un mensaje de vuelta
         Session::flash('msg', Constantes::Mensaje('institucion_creada_exito'));
         Session::flash('status-ok', true);
-        return back();
+        return back(); 
     }
 
     /* Muestra el FORMULARIO de edicion de institucion  */

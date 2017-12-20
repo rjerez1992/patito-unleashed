@@ -41,4 +41,11 @@ class Operario extends Model
      	return $sucursal;
      }
 
+    public function servicio(){
+    	return $this->belongsTo('App\Servicio');
+    }
+
+    public function cubiculo(){
+    	return $this->belongsTo('App\Cubiculo');
+    }
 }

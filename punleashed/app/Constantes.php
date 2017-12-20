@@ -39,7 +39,7 @@ class Constantes extends Model
     }
 
     public static function ImagenClienteDefecto(){
-        return 'img/cliente-perfil.jpg';
+        return 't.png';
     }
 
     public static function NuevaInstitucion(){
@@ -58,6 +58,10 @@ class Constantes extends Model
         return 'Desocupado';
     }
 
+    public static function CubiculoOcupado(){
+        return 'Ocupado';
+    }
+
     public static function NuevoTicket(){
         return 'Pendiente';
     }
@@ -72,6 +76,14 @@ class Constantes extends Model
 
     public static function TicketInasistente(){
         return 'Inasistente';
+    }
+
+    public static function TicketAutocancelado(){
+        return 'Cancelado por sistema';
+    }
+
+    public static function TicketEnCurso(){
+        return 'En curso';
     }
 
     public static function Mensaje($key){

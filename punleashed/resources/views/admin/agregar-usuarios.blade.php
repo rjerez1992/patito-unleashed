@@ -39,8 +39,8 @@
 
     <div class="container">
         <h1 style="color: #1485ee;">Agregar nuevo
-        @if(!Session::get('status-ok'))<a href="/admin/lista/clientes" class="btn btn-danger pull-right" type="button"><i class="fa fa-remove"></i><span class="hidden-xs"> Cancelar </span></a>
-        @else <a href="/admin/lista/clientes" class="btn btn-info pull-right" type="button"><i class="fa fa-arrow-left"></i><span class="hidden-xs"> Volver a usuarios </span></a>@endif
+        @if(!Session::get('status-ok'))<a href="/admin/lista/{{$tipoUsuario}}" class="btn btn-danger pull-right" type="button"><i class="fa fa-remove"></i><span class="hidden-xs"> Cancelar </span></a>
+        @else <a href="/admin/lista/{{$tipoUsuario}}" class="btn btn-info pull-right" type="button"><i class="fa fa-arrow-left"></i><span class="hidden-xs"> Volver a usuarios </span></a>@endif
         </h1>
         <hr style="margin-top: 0px; margin-bottom: 15px;">
         <div>

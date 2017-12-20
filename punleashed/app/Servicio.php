@@ -11,7 +11,7 @@ class Servicio extends Model
     //public $timestamps = false;
 
     public function sucursal(){
-        return $this->belongsTo('App\Sucursal');
+    	return $this->belongsTo('App\Sucursal');
     }
 
     public function cubiculos(){
@@ -45,6 +45,10 @@ class Servicio extends Model
     		}
     	}
     	return NULL;
+    }
+
+    public function tickets(){
+    	return $this->hasMany('App\Ticket');
     }
 }
  

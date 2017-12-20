@@ -28,8 +28,29 @@ Route::get('/cliente/sucursal/{idSucursal}/getTicket/{idServicio}','ClienteContr
 
 Route::get('/cliente/search','ClienteController@search');
 
-Route::get('/operario/servicio', 'OperarioController@servicio');
+/*
+ * Rutas de operarios
+ */
 Route::get('/cliente/sucursal/{idSucursal}/getTicket/{idServicio}', 'ClienteController@getTicketServicio');
+//Verificar si hay tickets
+Route::post('/operario/check', 'OperarioController@ticketsActivos');
+
+//Rutas privadas
+Route::middleware("filtro:".App\Constantes::Operario())->group(function () {
+
+Route::get('/operario/servicio', 'OperarioController@servicio');
+Route::get('/operario/datos/servicio', 'OperarioController@datosServicio');
+Route::get('/operario/perfil', 'OperarioController@perfil');
+Route::get('/operario/perfil/editar', 'OperarioController@editar');
+Route::post('/operario/perfil/editarPerfil', 'OperarioController@editarPerfil');
+Route::get('/operario/atencion/siguiente', 'OperarioController@siguiente');
+Route::post('/operario/atencion/cerrar', 'OperarioController@cerrarCubiculo');
+Route::post('/operario/atencion/calificar/{value}', 'OperarioController@calificar');
+Route::get('/operario/atencion/{id}', 'OperarioController@atencion');
+
+//debug
+Route::get('/tickets', 'OperarioController@tickets'); //No Usar
+});
 
 Route::get('/manager/dashboard', 'ManagerController@dashboard');
 

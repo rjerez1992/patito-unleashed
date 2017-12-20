@@ -59,7 +59,7 @@
         </div>
     </div>
     <script type="text/javascript">        
-        function EliminarInstitucion(id){        
+        function Calificar(id){        
             //Pasar id valor al input hidden del modal
             $("#hiddenId").val(id);
             //Abrir modal
@@ -76,7 +76,7 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr style="background: #1485ee; color:white;">
-                                    <th>ID </th>
+                                    <!--<th>ID </th>-->
                                     <th>Nombre </th>
                                     <th>Managers</th>
                                     <th>Sucursales</th>                                   
@@ -87,13 +87,13 @@
                                 </tr>
                             </thead>
                             <tbody>    
-								@foreach ($instituciones as $elemento)
+								@foreach ($instituciones as $elemento)                       
                                 <tr>
-                                    <td>{{$elemento->id}}</td>
+                                    <!--<td>{{$elemento->id}}</td>-->
                                     <td>{{$elemento->nombre}}</td>
                                     <td>@foreach($elemento->managers as $manager) {{$manager->nombre}} <br> @endforeach</td>
                                     <td>@foreach($elemento->sucursales as $sucursal) {{$sucursal->nombre}} <br> @endforeach</td>
-                                    <td style="width: 170px;">{{$elemento->created_at}}</td>
+                                    <td style="width: 170px;">{{$elemento->created_at->format('j/m/Y')}}</td>
                                     <td style="width: 170px;">
                                         <div class="btn-toolbar">
                                             <div class="btn-group" role="group">
