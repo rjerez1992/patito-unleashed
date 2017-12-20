@@ -185,7 +185,7 @@
                 <div class="row">                   
                     <div class="col-md-12">
                     @if($operario->cubiculo->numero_atencion > 0)
-                        <h1 class="text-center" style="margin-bottom: 20px;"><strong>136</strong></h1>
+                        <h1 class="text-center" style="margin-bottom: 20px;">{{\Auth::user()->usuario->cubiculo->servicio->letra}}<strong>{{\Auth::user()->usuario->cubiculo->numero_atencion}}</strong></h1>
                     @else
                     <h3 class="text-center" style="margin-bottom: 20px;"><strong>En espera</strong></h3>
                     @endif

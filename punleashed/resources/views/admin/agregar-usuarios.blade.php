@@ -13,7 +13,7 @@
 
     @include('layouts.main-nav')
 
-    @if (Session::has('msg'))  
+    @if(Session::has('msg'))  
     <!-- Modal de notificaciones por defecto -->    
     <div class="modal fade in" id="defaultModal" role="dialog" tabindex="-1">
         <div class="modal-dialog" role="document">
