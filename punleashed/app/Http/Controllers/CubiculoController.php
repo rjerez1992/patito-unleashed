@@ -27,7 +27,7 @@ class CubiculoController extends Controller
      	
 
      	$cliente=Manager::where('cuenta_id', $user->id)->first();
-        $Institucion=Institucion::where('manager', $cliente->id)->first();
+        $Institucion=Institucion::find($cliente->institucion_id);
         $Sucursales=Sucursal::where('institucion_id', $Institucion->id)->get();
         $operarios=Operario::get();
         $cubiculos=Cubiculo::get();

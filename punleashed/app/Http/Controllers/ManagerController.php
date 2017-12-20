@@ -16,7 +16,7 @@ class ManagerController extends Controller
         $user=\Auth::user();
 
     	$cliente=Manager::where('cuenta_id', $user->id)->first();
-        $Institucion=Institucion::where('manager', $cliente->id)->first();
+        $Institucion=Institucion::find($cliente->institucion_id);
 
         if ($Institucion!=null) {
        		$Sucursales=Sucursal::where('institucion_id', $Institucion->id)->get();
@@ -35,7 +35,7 @@ class ManagerController extends Controller
         $user=\Auth::user();
 
         $cliente=Manager::where('cuenta_id', $user->id)->first();
-        $Institucion=Institucion::where('manager', $cliente->id)->first();
+        $Institucion=Institucion::find($cliente->institucion_id);
 
         if ($Institucion!=null) {
             $Sucursales=Sucursal::where('institucion_id', $Institucion->id)->get();
@@ -59,7 +59,7 @@ class ManagerController extends Controller
         $user=\Auth::user();
 
         $cliente=Manager::where('cuenta_id', $user->id)->first();
-        $Institucion=Institucion::where('manager', $cliente->id)->first();
+        $Institucion=Institucion::find($cliente->institucion_id);
 
         if ($Institucion!=null) {
             $MisSucursales=Sucursal::where('institucion_id', $Institucion->id)->get();
@@ -89,7 +89,7 @@ class ManagerController extends Controller
         $user=\Auth::user();
 
         $cliente=Manager::where('cuenta_id', $user->id)->first();
-        $Institucion=Institucion::where('manager', $cliente->id)->first();
+        $Institucion=Institucion::find($cliente->institucion_id);
         if ($Institucion!=null) {
             $Sucursales=Sucursal::where('institucion_id', $Institucion->id)->get();
         }

@@ -26,7 +26,7 @@ class SucursalController extends Controller
     	$Sucursal->save();
     	
         $cliente=Manager::where('cuenta_id', $user->id)->first();
-        $Institucion=Institucion::where('manager', $cliente->id)->first();
+        $Institucion=Institucion::find($cliente->institucion_id);
         $Sucursales=Sucursal::where('institucion_id', $Institucion->id)->get();
 
         
@@ -42,7 +42,7 @@ class SucursalController extends Controller
         $Sucursal->delete(); 
     	
     	$cliente=Manager::where('cuenta_id', $user->id)->first();
-        $Institucion=Institucion::where('manager', $cliente->id)->first();
+        $Institucion=Institucion::find($cliente->institucion_id);
         $Sucursales=Sucursal::where('institucion_id', $Institucion->id)->get();
 
         
@@ -61,7 +61,7 @@ class SucursalController extends Controller
         $Sucursal->save();
         
         $cliente=Manager::where('cuenta_id', $user->id)->first();
-        $Institucion=Institucion::where('manager', $cliente->id)->first();
+        $Institucion=Institucion::find($cliente->institucion_id);
         $Sucursales=Sucursal::where('institucion_id', $Institucion->id)->get();
 
         

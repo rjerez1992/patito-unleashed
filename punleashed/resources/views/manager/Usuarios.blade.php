@@ -2,7 +2,11 @@
 
 @section('content')
 @extends('layouts.main-nav')
-
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+</head>
 <style type="text/css">
  body {
       background: #F1F3FA;
@@ -159,7 +163,6 @@
                             <ul class="dropdown-menu">
                               <li><a href="#" data-toggle="modal" data-target="#EditarOperario_{{$operario->id}}">Editar</a></li>
                               <li><a href="#" data-toggle="modal" data-target="#EliminarOperario_{{$operario->id}}">Eliminar</a></li>
-                              <li><a href="#" data-toggle="modal" data-target="#CubiculoOperario_{{$operario->id}}">Asignar Cubiculo</a></li>
                             </ul>
                           </div> 
                       </td>
@@ -210,13 +213,13 @@
 
                                       <div class="form-group col-md-6">
                                           <label for="password-confirm" class="control-label">Repetir contraseña: </label>
-                                          <input id="password-confirm" class="form-control" type="password" name="password_confirmation" required>
+                                          <input id="password-confirm" class="form-control" type="password" name="password_confirmation" >
                                       <br>
                                       </div>
                                       <div class="col-md-12 form-group {{ $errors->has('name') ? ' has-error' : '' }}">
                                       <h4>Datos Personales</h4>
                                           <label for="name" class="control-label margin-top-15">Nombre completo: </label>
-                                          <input id="nombre" class="form-control" type="text" value="{{$operario->nombre}}" name="nombre"  required autofocus>
+                                          <input id="nombre" class="form-control" type="text" value="{{$operario->nombre}}" name="nombre"   >
                                           @if ($errors->has('name'))
                                           <span class="help-block">
                                               <strong>{{ $errors->first('name') }}</strong>
@@ -236,17 +239,17 @@
                                       <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                       <div class=" form-group col-md-6">
                                         {!! Form::label('sucursal', 'Sucursal', ['for' => 'sucursal'] ) !!}<br>
-                                        {{Form::select('sucursal', $Sucursales, null,['id'=>'sucursal','style'=>'margin-bottom:5px','required' => 'required','class'=>'form-control','onchange' => 'javascript:Servicio2(this.value)']) }}<br>
+                                        {{Form::select('sucursal', $Sucursales, null,['id'=>'sucursal','style'=>'margin-bottom:5px','required' => 'required','class'=>'form-control','onchange' => 'javascript:Servicio2(this.value,'.$operario->id.')']) }}<br>
                                         <br>
                                       </div>
                                       <div class="form-group col-md-6">
                                         {!! Form::label('servicio', 'Servicio', ['for' => 'servicio'] ) !!}<br>
-                                        {{Form::select('servicio2',[null=>'Seleccione'],null,['id'=>'servicio2','style'=>'margin-bottom:5px','required' => 'required', 'class'=>'form-control']) }}<br>
+                                        {{Form::select('servicio2',[null=>'Seleccione'],null,['id'=>'servicio'.$operario->id,'style'=>'margin-bottom:5px','required' => 'required', 'class'=>'form-control']) }}<br>
                                         <br>
                                       </div>
                                       <div class="col-md-12 form-group">
                                         <label class="col-md-4 control-label">Imagen de perfil</label>
-                                        <br>
+                                        <br>    
                                         <input type="file"  name="file" >
                                       </div>
                                       <br>
@@ -286,45 +289,7 @@
                       </div>
                     </div>
 
-                    <div id="CubiculoOperario_{{$operario->id}}" class="modal fade" role="dialog">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Asignar Cubiculo</h4>
-                          </div>
-                          {!! Form::open(['route' => ['AgregarCubiculo',$operario->id], 'method' => 'POST','validate','name'=>'myForm','files'=>'true']) !!}
-
-                          <div class="modal-body">
-                            {!! Form::label('Cubiculo', 'Nombre Operario: ') !!}
-
-                            <h5>{{$operario->nombre}}</h5>
-                            <br>
-                             <div class="form-group">
-                               {!! Form::label('Cubiculo', 'Cubiculo') !!}
-                                @if($operario->getCubiculos($operario->servicio_id)->Count() > 0)
-                                  <select name="cubiculo" class="form-control">
-                                    <option value="0">Seleccione</option>
-
-                                    @foreach ($operario->getCubiculos($operario->servicio_id) as $cubiculo)
-                                      <option value="{{$cubiculo->id}}">{{$cubiculo->nombre}}</option>
-                                    @endforeach
-                                  </select> 
-                                @else
-                                  <h5>No existen cubiculos para este servicio</h5>
-                                @endif
-                              </div>
-                          </div>
-                          <div class="modal-footer">
-                                <button  type="submit" value="Submit" class="btn btn-success">Crear</button>
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                          </div>
-                          {!! Form::close() !!}  
-
-                        </div>
-
-                      </div>
-                    </div>
+                    
                    @endforeach
                 @endif
                 
@@ -338,7 +303,6 @@
 
 <center>
 </center>
-<br>
 <br>
 <script type="text/javascript">
   function Servicio(_sucursal) {
@@ -369,10 +333,10 @@
   }
 </script>
 <script type="text/javascript">
-  function Servicio2(_sucursal) {
-    console.log("333333333")
+  function Servicio2(_sucursal, _operarioID) {
+    console.log(_operarioID);
     var procemessage = "<option value='0'> Cargando...</option>";
-    $("#servicio2").html(procemessage).show();
+    $("#servicio"+_operarioID).html(procemessage).show();
     var url = "Servicio.N";
     var token = $('meta[name="csrf-token"]').attr('content');
     $.ajaxSetup({
@@ -389,20 +353,15 @@
            for (var x = 0; x < data.length; x++) {
               markup += "<option value=" + data[x].id + ">" + data[x].nombre + "</option>";
            }
-           $("#servicio2").html(markup).show();
-           },
+           $("#servicio"+_operarioID).html(markup).show();
+        },
         error: function (reponse) {
            alert("error : " + reponse);
         }
      });
   }
 </script>
-<script>
-  $(function () {
-     $(document).ready(function() {
-      $('#example').DataTable();
-  } );
-</script>
+
 </body>
 
 

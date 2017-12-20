@@ -2,10 +2,18 @@
 
 @section('content')
 @extends('layouts.main-nav')
-
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+</head>
 <style type="text/css">
  body {
       background: #F1F3FA;
+    }
+    .panel-heading{
+      background: #2471a3   !important;
+      color: white;
     }
 </style>
 
