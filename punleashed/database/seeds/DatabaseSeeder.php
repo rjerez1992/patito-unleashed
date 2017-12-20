@@ -72,6 +72,7 @@ class DatabaseSeeder extends Seeder
                         'tiempo_espera' => '00:00:00',
                         'numero_actual' => '-1',
                         'numero_disponible' => '-1',
+                        'letra' => 'A',
                         'sucursal_id' => $sucursal->id,
                     ]);
 
