@@ -50,7 +50,7 @@
                                     }
                                 }); 
                         }
-                        setInterval(ajax,1000);
+                        setInterval(ajax,1500);
                     </script>
 
                 </div>
@@ -123,6 +123,5 @@
             </div>
         </div>
     </div>
-    <meta name="_token" content="{!! csrf_token() !!}" />
 
 @endsection

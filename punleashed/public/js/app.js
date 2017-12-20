@@ -49,32 +49,6 @@ function cancelarTicket(){
     location.href='/cliente/tickets/cancelarTicket/'+idAux;
 }
 
-function solicitarTicket(idSucursal,idServicio) {
-
-    //location.href='/cliente/sucursal/'+idSucursal+'/getTicket/'+idServicio;
-    var request = $.get('/cliente/sucursal/'+idSucursal+'/getTicket/'+idServicio);
-
-    console.log(request); 
-    if(request!=null)//se genero ticket
-    {
-		$('.modal-create-ticket').click(function(e) {
-		    e.preventDefault();
-		    $('body').css('overflow', 'hidden');
-		});
-	    $('#modal-create-ticket').modal({backdrop: 'static', keyboard: false})
-		$('#modal-create-ticket').modal('show')
-    }
-    else //fallo generar ticket
-    {
-		$('.modal-fail-ticket').click(function(e) {
-		    e.preventDefault();
-		    $('body').css('overflow', 'hidden');
-		});
-	    $('#modal-fail-ticket').modal({backdrop: 'static', keyboard: false})
-		$('#modal-fail-ticket').modal('show')
-    }
-}
-
 function actualizarPage(idSucursal) {
     location.href='/cliente/sucursal/'+idSucursal;
 }

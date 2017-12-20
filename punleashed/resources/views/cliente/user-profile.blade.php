@@ -29,7 +29,7 @@
                     <div class="col-md-9 col-sm-9 col-xs-9">
                         <h4 class="ticket-heading-number"><i class="fa fa-info-circle fa-fw icon-ticket-list"></i><strong>Información Básica</strong></h4></div>
                     <div class="col-md-3 col-sm-3 col-xs-3">
-                        <button class="btn btn-primary pull-right" type="button"><i class="fa fa-gear fa-fw"></i>Editar </button>
+                        <button class="btn btn-primary pull-right" type="button" onclick="window.location='{{ url("/cliente/profile/edit") }}'"><i class="fa fa-gear fa-fw"></i>Editar </button>
                     </div>
                 </div>
             </div>
@@ -62,7 +62,7 @@
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="alert alert-info text-center alert-info-ticket center-block" role="alert">
                                             <div class="col-md-12 col-sm-12 col-xs-12"><i class="fa fa-flag fa-fw"></i><strong> Reputación</strong></div>
-                                            <div class="col-md-12 col-sm-12 col-xs-12"><strong>{{ $reputacionCliente }}</strong><strong> ({{ $cliente->max_tickets }} tickets máx) </strong></div>
+                                            <div class="col-md-12 col-sm-12 col-xs-12"><strong>{{ $cliente->max_tickets }} tickets máximos </strong></div>
                                         </div>
                                     </div>
                                 </div>
