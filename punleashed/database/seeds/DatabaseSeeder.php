@@ -45,14 +45,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'patito@holamundo.com',
             'tipo' => Constantes::Cliente(), 
             'password' => bcrypt('1234567890'),
-        ]);
-        Cliente::create([
-            'nombre' => 'Patricio Castro Rojas',
-            'rut' => '123456785',
-            'direccion' => '5 1/2 oriente #3056, Talca, Chile',
-            'imagen' => 'https://www.ibertronica.es/blog/wp-content/uploads/2016/02/perfil-azul.png',
-            'cuenta_id' => $cuenta->id,
-        ]);
+        ]);        
     
     	//Manager e institucion
         for($c=1; $c<=$cantidad; $c++){   

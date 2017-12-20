@@ -15,7 +15,8 @@
 
     <!-- TODO: Mover la imagen hacia arriba y colocar al lado el heading con la informacion. (En columnas separadas) -->  
     <div class="container">
-        <h1 style="color: #1485ee;">Atención de cubiculo        
+        <h1 style="color: #1485ee;">Atención de cubiculo   
+        <a href="/operario/servicio" class="btn btn-info pull-right" type="button"><i class="fa fa-refresh"></i><span class="hidden-xs"> Actualizar</span></a>     
         </h1>
         <hr style="margin: 0px; margin-bottom: 15px;">
         <!--<h4 style="color: #1485ee;"> <i class="fa fa-info-circle"></i> Datos de atención del servicio</h4>

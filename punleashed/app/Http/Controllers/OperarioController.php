@@ -74,6 +74,53 @@ class OperarioController extends Controller
         return view('operario/perfil')->with($data);
     }
 
+    public function editar(){
+        $data = array(
+                'usuario' => Auth::user()->usuario,
+                'cuenta' => Auth::user(),
+            );
+
+        return view('operario/editar-perfil')->with($data);        
+    }
+
+    //Esta es para el post del edit
+    public function editarPerfil(Request $request){
+        $cuenta = Auth::user();
+        $usuario = $cuenta->usuario;
+        if ($usuario==NULL){abort(404);}
+
+        //Valida las entradas
+        $this->validate($request, [              
+            'name' => 'required|string|max:255',    
+            'rut' => 'required|numeric', 
+        ]); 
+        $usuario->nombre = $request->name;
+        $usuario->rut = $request->rut; 
+
+        if ($request->password != ""){
+           $this->validate($request, [              
+                'password' => 'string|min:6|confirmed',
+            ]); 
+            $cuenta->password = bcrypt($request->password);
+            $cuenta->save();
+        }
+      
+        if ($request->image != ""){
+            $originalName = $request->image->getClientOriginalName();
+            $ext = pathinfo($originalName, PATHINFO_EXTENSION);
+            $imageName = $cuenta->username.".".$ext;
+            $request->image->move(public_path('/assets/img'), $imageName);
+            $usuario->imagen = $imageName;
+        }
+
+        $usuario->save();
+      
+        //Entrega un mensaje de vuelta
+        Session::flash('msg', Constantes::Mensaje('cuenta_editada_exito'));
+        Session::flash('status-ok', true);
+        return back();
+    }
+
     public function datosServicio(){                
         //Buscamos el operario
         $cuenta = Auth::user();

@@ -17,9 +17,9 @@
     <div class="container">
         <h1 style="color: #1485ee;">Perfil
         <!-- boton editar -->
-        <a href="/admin/agregar/clientes" class="btn btn-info pull-right" type="button"><i class="fa fa-edit"></i><span class="hidden-xs"> Modificar datos</span></a>
+        <a href="/operario/perfil/editar" class="btn btn-info pull-right" type="button"><i class="fa fa-edit"></i><span class="hidden-xs"> Modificar datos</span></a>
         <!-- boton  perfil publico -->
-        <a href="#" class="btn btn-link pull-right" type="button" style="margin-right: 15px;"><i class="fa fa-eye"></i><span class="hidden-xs"> Ver pefil publico</span></a>
+        <!--<a href="#" class="btn btn-link pull-right" type="button" style="margin-right: 15px;"><i class="fa fa-eye"></i><span class="hidden-xs"> Ver pefil publico</span></a>-->
 
         </h1>
         <hr style="margin: 0px; margin-bottom: 15px;">
@@ -75,8 +75,8 @@
                                 
                                 
                             </div>
-                            <span class="pull-right hidden-xs" style="color: lightgray; margin-top: 15px; margin-bottom: 30px;">Ultima modificación: {{$usuario->updated_at}}</span>     
-                            <span class="visible-xs" style="color: lightgray; margin-top: 30px; margin-bottom: 30px;">Ultima modificación: {{$usuario->updated_at}}</span>                       
+                            <span class="pull-right hidden-xs" style="color: gray; margin-top: 15px; margin-bottom: 30px;">Ultima modificación: {{$usuario->updated_at->format('j/m/Y')}} a las {{$usuario->updated_at->format('H:i:s')}}</span>     
+                            <span class="visible-xs" style="color: gray; margin-top: 30px; margin-bottom: 30px;">Ultima modificación: {{$usuario->updated_at->format('j/m/Y')}} a las {{$usuario->updated_at->format('H:i:s')}}</span>                       
                         </form>
                     </div>
                 </div>

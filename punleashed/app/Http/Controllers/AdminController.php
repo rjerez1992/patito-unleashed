@@ -219,6 +219,7 @@ class AdminController extends Controller
     	}
 		else if($tipoUsuario=='managers'){
 			$usuario = Manager::find($request->hiddenId);
+
 		}
 		else if($tipoUsuario=='admins'){
 			$usuario = Admin::find($request->hiddenId);			
@@ -232,6 +233,14 @@ class AdminController extends Controller
 		if ($usuario == NULL){
 			abort(404);
 		}
+
+        //En caso que sea un manager, revisa si se debe eliminar la institucion
+        if ($tipoUsuario=='managers'){
+            $institucion = $usuario->institucion; 
+            if ($institucion->managers->count() <= 1){
+                $institucion->delete();
+            }
+        }
 
 		$cuenta = $usuario->cuenta;
 		//$cuenta->usuario->delete();

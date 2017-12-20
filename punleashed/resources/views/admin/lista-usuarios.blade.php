@@ -45,7 +45,9 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                     <h4 class="modal-title"><i class="fa fa-remove"></i> Confirmación </h4></div>
                 <div class="modal-body">
-                    <p>¿Esta seguro que desea eliminar el registro de {{$tipoUsuario}}?</p>
+                    <p>¿Esta seguro que desea eliminar el registro de {{$tipoUsuario}}?</p><br>
+                    @if($tipoUsuario=='managers') 
+                    Si está eliminando un manager el cual es el unico de una institucion, la institucion tambien será eliminada @endif
                 </div>
                 <div class="modal-footer" styles="padding: 0px !important; margin; 0px; bottom: 0px;">
                     <form class="form-horizontal" method="POST" action="/admin/eliminar/{{$tipoUsuario}}">
@@ -68,7 +70,7 @@
     </script>
 
 	<div class="container">
-        <h1 style="color: #1485ee;">Usuarios<a href="/admin/agregar/clientes" class="btn btn-info pull-right" type="button"><i class="fa fa-plus"></i><span class="hidden-xs"> Agregar nuevo</span></a></h1>
+        <h1 style="color: #1485ee;">Usuarios<a href="/admin/agregar/{{$tipoUsuario}}" class="btn btn-info pull-right" type="button"><i class="fa fa-plus"></i><span class="hidden-xs"> Agregar nuevo</span></a></h1>
         <hr style="margin-top: 0px; margin-bottom: 15px;">
         <div>
             <ul class="nav nav-tabs nav-justified">
@@ -83,9 +85,9 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr style="background: #1485ee; color:white;">
-                                    <th>ID </th>
-                                    <th>Usuario </th>
+                                    <!--<th>ID </th>-->
                                     <th>Nombre</th>
+                                    <th>Usuario </th>                                    
                                     <th>Fecha de registro</th>
                                     <th><!--
                                         <button class="btn btn-info btn-block btn-xs" type="button"><i class="fa fa-filter"></i> <span class="hidden-xs">Filtrar resultados</span></button>-->
@@ -95,10 +97,10 @@
                             <tbody>    
 								@foreach ($lista as $elemento)
                                 <tr>
-                                    <td>{{$elemento->id}}</td>
-                                    <td>{{$elemento->cuenta->username}}</td>
+                                    <!--<td>{{$elemento->id}}</td>-->                                    
                                     <td>{{$elemento->nombre}}</td>
-                                    <td style="width: 170px;">{{$elemento->created_at}}</td>
+                                    <td>{{$elemento->cuenta->username}}</td>
+                                    <td style="width: 170px;">{{$elemento->created_at->format('j/m/Y')}}</td>
                                     <td style="width: 170px;">
                                         <div class="btn-toolbar">
                                             <div class="btn-group" role="group">
