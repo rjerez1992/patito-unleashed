@@ -344,8 +344,11 @@
                                   <button data-toggle="modal" data-target="#myModalUP_{{$sucursal->id}}" class="btn btn-primary" style="float:right;background:#2471a3 ; margin-top:-14px">
                                     <i class="fa fa-edit icon-edit-ticket" ></i>
                                   </button>
-                            </div>
-                           <div class="modal fade" id="myModalUP_{{$sucursal->id}}" role="dialog">
+                            </div>                          
+
+                        </div>
+                     </div>
+                     <div class="modal fade" id="myModalUP_{{$sucursal->id}}" role="dialog">
                               <div class="modal-dialog">
                               
                                 <!-- Modal content-->
@@ -380,15 +383,10 @@
                                     <button  type="submit" value="Submit" class="btn btn-success">Modificar</button>
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                                   </div>
+                                  {!! Form::close() !!}
                                 </div>
-                              {!! Form::close() !!}
-                                  
-                                
                               </div>
                             </div>
-
-                        </div>
-                     </div>
                       <div class="panel-body row" >
                         <div class="col-md-12">
                            

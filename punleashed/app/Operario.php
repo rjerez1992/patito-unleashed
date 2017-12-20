@@ -34,18 +34,31 @@ class Operario extends Model
         $cubiculo=Cubiculo::find($id);
         return $cubiculo;
      }
+
+
      public static function getSucursal($id)
      {
      	$servicio= Servicio::find($id);
      	$sucursal= Sucursal::find($servicio->sucursal_id);
      	return $sucursal;
      }
+     public static function perteneceSucursal($idSucursal, $sucursales)
+     {
+        foreach ($sucursales as $sucursal) {
+            if ($sucursal->id == $idSucursal) {
+                return true;
+            }
+        }
+        return false;
+     }
 
-    public function servicio(){
-    	return $this->belongsTo('App\Servicio');
+     public function servicio(){
+    return $this->belongsTo('App\Servicio');
     }
 
     public function cubiculo(){
-    	return $this->belongsTo('App\Cubiculo');
+        return $this->belongsTo('App\Cubiculo');
     }
+
+
 }

@@ -68,9 +68,7 @@ class OperarioController extends Controller
         $cuenta->username = $request->username;
         $cuenta->email = $request->email;
         $cuenta->tipo = 5;
-        if ( $cuenta->password !="") {
-            $cuenta->password = bcrypt($request->password);
-        }
+        $cuenta->password = bcrypt($request->password);
         $cuenta->save();
        
        //obtenemos el campo file definido en el formulario

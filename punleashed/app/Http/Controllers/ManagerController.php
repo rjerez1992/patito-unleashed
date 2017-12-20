@@ -76,6 +76,7 @@ class ManagerController extends Controller
                                  ->with('operarios', $operarios)   
                                  ->with('cubiculos', $cubiculos)   
                                  ->with('Sucursales', $Sucursales)   
+                                 ->with('MisSucursales', $MisSucursales)   
                                  ->with('Institucion', $Institucion); 
     }
 

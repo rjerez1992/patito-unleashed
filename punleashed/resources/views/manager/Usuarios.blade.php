@@ -141,154 +141,153 @@
               <tbody>
                 @if($operarios != null)
                   @foreach ($operarios as $operario)
-                    <tr>
-                      <td><img src="../storage/{{$operario->imagen}}" width="100px"></td>
-                      <td>{{$operario->nombre}}</td>
-                      <td>{{$operario->rut}}</td>
-                      <td>{{$operario->getCuenta($operario->cuenta_id)->email}}</td>
-                      <td>{{$operario->getSucursal($operario->servicio_id)->nombre}}</td>
-                      <td>{{$operario->getServicio($operario->servicio_id)->nombre}}</td>
-                      <td>
-                        @if( $operario->cubiculo_id==0)
-                          Sin Cubiculo
-                        @else
-                        {{$operario->getCubiculo($operario->cubiculo_id)->nombre}}
+                    @if($operario->perteneceSucursal($operario->getSucursal($operario->servicio_id)->id, $MisSucursales))
+                      <tr>
+                        <td><img src="../storage/{{$operario->imagen}}" width="100px"></td>
+                        <td>{{$operario->nombre}}</td>
+                        <td>{{$operario->rut}}</td>
+                        <td>{{$operario->getCuenta($operario->cuenta_id)->email}}</td>
+                        <td>{{$operario->getSucursal($operario->servicio_id)->nombre}}</td>
+                        <td>{{$operario->getServicio($operario->servicio_id)->nombre}}</td>
+                        <td>
+                          @if( $operario->cubiculo_id==0)
+                            Sin Cubiculo
+                          @else
+                          {{$operario->getCubiculo($operario->cubiculo_id)->nombre}}
 
-                        @endif
-                      </td>
-                      <td>
-                         <div class="dropdown">
-                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Acciones
-                            <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                              <li><a href="#" data-toggle="modal" data-target="#EditarOperario_{{$operario->id}}">Editar</a></li>
-                              <li><a href="#" data-toggle="modal" data-target="#EliminarOperario_{{$operario->id}}">Eliminar</a></li>
-                            </ul>
-                          </div> 
-                      </td>
-                    </tr>
-                                        <!-- Modal -->
-                    <div id="EditarOperario_{{$operario->id}}" class="modal fade" role="dialog">
-                      <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Nuevo Operario</h4>
-                              </div>
-                               {!! Form::open(['route' => ['EditarOperario',$operario->id], 'method' => 'POST','validate','name'=>'myForm','files'=>'true']) !!}
-                                  <div class="modal-body">
-                                  <div class="row">
+                          @endif
+                        </td>
+                        <td>
+                           <div class="dropdown">
+                              <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Acciones
+                              <span class="caret"></span></button>
+                              <ul class="dropdown-menu">
+                                <li><a href="#" data-toggle="modal" data-target="#EditarOperario_{{$operario->id}}">Editar</a></li>
+                                <li><a href="#" data-toggle="modal" data-target="#EliminarOperario_{{$operario->id}}">Eliminar</a></li>
+                              </ul>
+                            </div> 
+                        </td>
+                      </tr>
+                      <div id="EditarOperario_{{$operario->id}}" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                  <h4 class="modal-title">Nuevo Operario</h4>
+                                </div>
+                                 {!! Form::open(['route' => ['EditarOperario',$operario->id], 'method' => 'POST','validate','name'=>'myForm','files'=>'true']) !!}
+                                    <div class="modal-body">
+                                    <div class="row">
 
-                                    <div class="col-md-12 form-group {{ $errors->has('name') ? ' has-error' : '' }}">
-                                    <h4>Cuenta</h4>
-                                          <label for="username" class="control-label">Nombre de usuario: </label>
-                                          <input id="username" name="username" class="form-control" type="text" value="{{$operario->getCuenta($operario->cuenta_id)->username }}" value="{{ old('username') }}" required autofocus>
-                                          @if ($errors->has('username'))
-                                                  <span class="help-block">
-                                                      <strong>{{ str_replace("username","nombre de usuario",$errors->first('username')) }}</strong>
-                                                  </span>
-                                          @endif
-                                      </div>
-
-                                      <div class=" col-md-12 form-group {{ $errors->has('email') ? ' has-error' : '' }}">
-                                          <label for="email" class="control-label">Correo electronico:</label>
-                                          <input id="email" name="email" class="form-control" type="email" value="{{$operario->getCuenta($operario->cuenta_id)->email }}" disabled>
-                                          <input id="idS" name="idS" type="hidden" value="{{$operario->getCuenta($operario->cuenta_id)->id }}" >
-                                          @if ($errors->has('email'))
-                                                  <span class="help-block">
-                                                      <strong>{{ $errors->first('email') }}</strong>
-                                                  </span>
-                                          @endif
-                                      </div>
-
-                                      <div class="form-group col-md-6 {{ $errors->has('password') ? ' has-error' : '' }}">
-                                          <label for="password" class="control-label">Contraseña: </label>
-                                          <input id="password" class="form-control" type="password" name="password" required>
-                                          @if ($errors->has('password'))
-                                                  <span class="help-block">
-                                                      <strong>{{str_replace('password','contraseña',$errors->first('password')) }}</strong>
-                                                  </span>
-                                          @endif
-                                      </div>
-
-                                      <div class="form-group col-md-6">
-                                          <label for="password-confirm" class="control-label">Repetir contraseña: </label>
-                                          <input id="password-confirm" class="form-control" type="password" name="password_confirmation" >
-                                      <br>
-                                      </div>
                                       <div class="col-md-12 form-group {{ $errors->has('name') ? ' has-error' : '' }}">
-                                      <h4>Datos Personales</h4>
-                                          <label for="name" class="control-label margin-top-15">Nombre completo: </label>
-                                          <input id="nombre" class="form-control" type="text" value="{{$operario->nombre}}" name="nombre"   >
-                                          @if ($errors->has('name'))
-                                          <span class="help-block">
-                                              <strong>{{ $errors->first('name') }}</strong>
-                                          </span>
-                                          @endif
-                                      </div>
+                                      <h4>Cuenta</h4>
+                                            <label for="username" class="control-label">Nombre de usuario: </label>
+                                            <input id="username" name="username" class="form-control" type="text" value="{{$operario->getCuenta($operario->cuenta_id)->username }}" value="{{ old('username') }}" required autofocus>
+                                            @if ($errors->has('username'))
+                                                    <span class="help-block">
+                                                        <strong>{{ str_replace("username","nombre de usuario",$errors->first('username')) }}</strong>
+                                                    </span>
+                                            @endif
+                                        </div>
 
-                                      <div class="col-md-12 form-group {{ $errors->has('rut') ? ' has-error' : '' }}">
-                                          <label for="rut" class="control-label">RUT: </label>
-                                          <input id="rut" name="rut" class="form-control" type="text" value="{{$operario->rut}}" required>
-                                          @if ($errors->has('rut'))
-                                                  <span class="help-block">
-                                                      <strong>{{ $errors->first('rut') }}</strong>
-                                                  </span>
-                                          @endif
-                                      </div>
-                                      <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                      <div class=" form-group col-md-6">
-                                        {!! Form::label('sucursal', 'Sucursal', ['for' => 'sucursal'] ) !!}<br>
-                                        {{Form::select('sucursal', $Sucursales, null,['id'=>'sucursal','style'=>'margin-bottom:5px','required' => 'required','class'=>'form-control','onchange' => 'javascript:Servicio2(this.value,'.$operario->id.')']) }}<br>
-                                        <br>
-                                      </div>
-                                      <div class="form-group col-md-6">
-                                        {!! Form::label('servicio', 'Servicio', ['for' => 'servicio'] ) !!}<br>
-                                        {{Form::select('servicio2',[null=>'Seleccione'],null,['id'=>'servicio'.$operario->id,'style'=>'margin-bottom:5px','required' => 'required', 'class'=>'form-control']) }}<br>
-                                        <br>
-                                      </div>
-                                      <div class="col-md-12 form-group">
-                                        <label class="col-md-4 control-label">Imagen de perfil</label>
-                                        <br>    
-                                        <input type="file"  name="file" >
-                                      </div>
-                                      <br>
-                                      <br>
+                                        <div class=" col-md-12 form-group {{ $errors->has('email') ? ' has-error' : '' }}">
+                                            <label for="email" class="control-label">Correo electronico:</label>
+                                            <input id="email" name="email" class="form-control" type="email" value="{{$operario->getCuenta($operario->cuenta_id)->email }}" disabled>
+                                            <input id="idS" name="idS" type="hidden" value="{{$operario->getCuenta($operario->cuenta_id)->id }}" >
+                                            @if ($errors->has('email'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('email') }}</strong>
+                                                    </span>
+                                            @endif
+                                        </div>
 
+                                        <div class="form-group col-md-6 {{ $errors->has('password') ? ' has-error' : '' }}">
+                                            <label for="password" class="control-label">Contraseña: </label>
+                                            <input id="password" class="form-control" type="password" name="password" required>
+                                            @if ($errors->has('password'))
+                                                    <span class="help-block">
+                                                        <strong>{{str_replace('password','contraseña',$errors->first('password')) }}</strong>
+                                                    </span>
+                                            @endif
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="password-confirm" class="control-label">Repetir contraseña: </label>
+                                            <input id="password-confirm" class="form-control" type="password" name="password_confirmation" required>
+                                        <br>
+                                        </div>
+                                        <div class="col-md-12 form-group {{ $errors->has('name') ? ' has-error' : '' }}">
+                                        <h4>Datos Personales</h4>
+                                            <label for="name" class="control-label margin-top-15">Nombre completo: </label>
+                                            <input id="nombre" class="form-control" type="text" value="{{$operario->nombre}}" name="nombre"  required >
+                                            @if ($errors->has('name'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('name') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+
+                                        <div class="col-md-12 form-group {{ $errors->has('rut') ? ' has-error' : '' }}">
+                                            <label for="rut" class="control-label">RUT: </label>
+                                            <input id="rut" name="rut" class="form-control" type="text" value="{{$operario->rut}}" required>
+                                            @if ($errors->has('rut'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('rut') }}</strong>
+                                                    </span>
+                                            @endif
+                                        </div>
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <div class=" form-group col-md-6">
+                                          {!! Form::label('sucursal', 'Sucursal', ['for' => 'sucursal'] ) !!}<br>
+                                          {{Form::select('sucursal', $Sucursales, null,['id'=>'sucursal','style'=>'margin-bottom:5px','required' => 'required','class'=>'form-control','onchange' => 'javascript:Servicio2(this.value,'.$operario->id.')']) }}<br>
+                                          <br>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                          {!! Form::label('servicio', 'Servicio', ['for' => 'servicio'] ) !!}<br>
+                                          {{Form::select('servicio2',[null=>'Seleccione'],null,['id'=>'servicio'.$operario->id,'style'=>'margin-bottom:5px','required' => 'required', 'class'=>'form-control']) }}<br>
+                                          <br>
+                                        </div>
+                                        <div class="col-md-12 form-group">
+                                          <label class="col-md-4 control-label">Imagen de perfil</label>
+                                          <br>    
+                                          <input type="file"  name="file" required>
+                                        </div>
+                                        <br>
+                                        <br>
+
+                                      </div>
                                     </div>
-                                  </div>
-                                  <div class="modal-footer">
-                                    <button  type="submit" value="Submit" class="btn btn-success">Modificar</button>
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                                  </div>
-                                {!! Form::close() !!}  
-                            </div>
+                                    <div class="modal-footer">
+                                      <button  type="submit" value="Submit" class="btn btn-success">Modificar</button>
+                                      <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                                    </div>
+                                  {!! Form::close() !!}  
+                              </div>
 
-                        </div>
-                    
-                    </div>
-
-                    <div id="EliminarOperario_{{$operario->id}}" class="modal fade" role="dialog">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Eliminar Operario</h4>
                           </div>
-                          {!! Form::open(['route' => ['EliminarOperario',$operario->id], 'method' => 'POST','validate','name'=>'myForm','files'=>'true']) !!}
-                          <div class="modal-body">
-                            <p>¿Decea eliminar el operario {{$operario->nombre}}?.</p>
-                          </div>
-                          <div class="modal-footer">
-                            <button  type="submit" value="Submit" class="btn btn-success">Eliminar</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                          </div> 
-                           {!! Form::close() !!}
-                        </div>
-
                       </div>
-                    </div>
 
+                      <div id="EliminarOperario_{{$operario->id}}" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h4 class="modal-title">Eliminar Operario</h4>
+                            </div>
+                            {!! Form::open(['route' => ['EliminarOperario',$operario->id], 'method' => 'POST','validate','name'=>'myForm','files'=>'true']) !!}
+                            <div class="modal-body">
+                              <p>¿Decea eliminar el operario {{$operario->nombre}}?.</p>
+                            </div>
+                            <div class="modal-footer">
+                              <button  type="submit" value="Submit" class="btn btn-success">Eliminar</button>
+                              <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                            </div> 
+                             {!! Form::close() !!}
+                          </div>
+
+                        </div>
+                      </div>
+                    @endif
                     
                    @endforeach
                 @endif
