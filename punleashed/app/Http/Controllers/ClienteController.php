@@ -230,7 +230,9 @@ class ClienteController extends Controller
     {
         $cuenta = Auth::user();
         $cliente = $cuenta->usuario;
-        $tickets=Ticket::where('cliente_id', '=', $cliente->id)->where('estado', '=', Constantes::NuevoTicket())->get();
+        $tickets1=Ticket::where('cliente_id', '=', $cliente->id)->where('estado', '=', Constantes::TicketEnCurso())->get();
+        $tickets2=Ticket::where('cliente_id', '=', $cliente->id)->where('estado', '=', Constantes::NuevoTicket())->get();
+        $tickets=array_collapse($tickets1,$tickets2);
         if (count($tickets) > 0) {
             foreach($tickets as $ticket) {
                echo "<div class='col-md-4 col-sm-6 col-xs-12 column-less-padding'>

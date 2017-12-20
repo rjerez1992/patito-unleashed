@@ -79,9 +79,9 @@
                                 <div class="panel panel-warning panel-warning-ticket">
                                 <div class="panel-heading"><i class="fa fa-ticket fa-fw"></i><strong class="text-uppercase"> {{$ticket->servicio->letra}}{{$ticket->numero}}</strong><strong> - Cancelado</strong></div>
                                 <div class="panel-body body-warning-ticket">
-                            @elseif ($ticket->estado == App\Constantes::TicketInasistente())
+                            @elseif ($ticket->estado == App\Constantes::TicketInasistente() || $ticket->estado == App\Constantes::TicketAutocancelado())
                                 <div class="panel panel-danger panel-danger-ticket">
-                                <div class="panel-heading"><i class="fa fa-ticket fa-fw"></i><strong class="text-uppercase"> {{$ticket->servicio->letra}}{{$ticket->numero}}</strong><strong> - Inasistente</strong></div>
+                                <div class="panel-heading"><i class="fa fa-ticket fa-fw"></i><strong class="text-uppercase"> {{$ticket->servicio->letra}}{{$ticket->numero}}</strong><strong> - {{$ticket->estado}}</strong></div>
                                 <div class="panel-body body-danger-ticket">
                             @else
                                 <script language="javascript">alert("OJO, etiqueta estado mal hecha D:");</script>
