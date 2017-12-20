@@ -94,7 +94,12 @@
                           <input type="hidden" name="_token" value="{{ csrf_token() }}">
                           <div class=" form-group col-md-6">
                             {!! Form::label('sucursal', 'Sucursal', ['for' => 'sucursal'] ) !!}<br>
-                            {{Form::select('sucursal', $Sucursales, null,['id'=>'sucursal','style'=>'margin-bottom:5px','required' => 'required','class'=>'form-control','onchange' => 'javascript:Servicio(this.value)']) }}<br>
+                             <select class="form-control" name="sucursal" id="sucursal" onchange="javascript:Servicio(this.value)">
+                                    <option value="0">Seleccione</option>
+                                  @foreach($MisSucursales as $sucursal)
+                                    <option value="{{$sucursal->id}}">{{$sucursal->nombre}}</option>
+                                  @endforeach
+                                </select> 
                             <br>
                           </div>
                           <div class="form-group col-md-6">
@@ -239,7 +244,12 @@
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <div class=" form-group col-md-6">
                                           {!! Form::label('sucursal', 'Sucursal', ['for' => 'sucursal'] ) !!}<br>
-                                          {{Form::select('sucursal', $Sucursales, null,['id'=>'sucursal','style'=>'margin-bottom:5px','required' => 'required','class'=>'form-control','onchange' => 'javascript:Servicio2(this.value,'.$operario->id.')']) }}<br>
+                                            <select name="sucursal" class="form-control" id="sucursal" onchange="javascript:Servicio2(this.value,{{$operario->id}})">
+                                                <option value="0">Seleccione</option>
+                                              @foreach($MisSucursales as $sucursal)
+                                                <option value="{{$sucursal->id}}">{{$sucursal->nombre}}</option>
+                                              @endforeach
+                                            </select> 
                                           <br>
                                         </div>
                                         <div class="form-group col-md-6">
