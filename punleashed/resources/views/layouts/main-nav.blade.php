@@ -72,7 +72,7 @@
                                             if(msg=='NOTIFIED')
                                             {
                                                 document.getElementById("iconoNotificacion").style.display = "inline";
-                                                document.getElementById("iconoNotificacion").style.color = "red";
+                                                document.getElementById("iconoNotificacion").style.color = "orange";
                                                 document.getElementById("aviso1TicketAtencion").style.display = "block";
                                                 document.getElementById("aviso2TicketAtencion").style.display = "none";
                                             }

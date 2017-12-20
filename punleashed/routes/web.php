@@ -20,6 +20,11 @@ Route::post('/cliente/tickets/updateActivos', 'ClienteController@ticketsActivos'
 Route::get('/cliente/tickets/cancelarTicket/{id}', 'ClienteController@cancelarTicket');
 Route::post('/cliente/notificarCercanos', 'ClienteController@notificarCercanos');
 
+Route::get('/cliente/profile/edit','ClienteController@editarCliente');
+Route::get('/cliente/profile/edit/pass','ClienteController@editarCliente');
+Route::get('/cliente/profile/edit/basic','ClienteController@editarCliente');
+Route::post('/cliente/profile/edit/pass','ClienteController@editarPassCliente');
+Route::post('/cliente/profile/edit/basic','ClienteController@editarInfoCliente');
 Route::get('/cliente/profile/{id?}','ClienteController@profile');
 
 Route::get('/cliente/institucion/{id}','ClienteController@institucion');

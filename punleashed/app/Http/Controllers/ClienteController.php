@@ -146,6 +146,86 @@ class ClienteController extends Controller
 
     }
 
+    public function editarCliente()
+    {
+        if (Auth::user()!=NULL)
+        {
+            $cuenta = Auth::user();
+            $cliente = $cuenta->usuario;
+            $data = array(
+                    'cliente' => $cliente,
+                    'cuenta' => $cuenta,
+                );
+            return view('cliente/cliente-edit')->with($data); 
+        }
+        return redirect('/');
+    }
+
+    public function editarPassCliente(request $request)
+    {
+        if (Auth::user()!=NULL)
+        {
+            $cuenta = Auth::user();
+            $cliente = $cuenta->usuario;
+            $pass=$request->oldPass;
+            $newPass=$request->newPass;
+            $newPass2=$request->newPass2;
+            $this->validate($request, [
+                'oldPass' => 'nullable|string|min:6|confirmed',
+                'newPass' => 'nullable|string|min:6|confirmed',
+                'newPass2' => 'nullable|string|min:6|confirmed',
+            ]);  
+
+            $estado=false;
+            $msg="Contraseña actual errónea o nueva contraseña no cumple requisitos.";
+            if ($cuenta->password==($oldPass) && Hash::check($newPass, $newPass2))
+            {
+                $cuenta->password=bcrypt($newPass);
+                $cuenta->save();
+                $estado=true;
+                $msg="Contraseña de la cuenta actualizada exitosamente.";
+            }
+            $data = array(
+                    'cliente' => $cliente,
+                    'cuenta' => $cuenta,
+                    'status' => $estado,
+                    'msg' => $msg,
+                );
+            return view('cliente/cliente-edit')->with($data); 
+        }
+        return redirect('/');
+    }
+
+    public function editarInfoCliente(request $request)
+    {
+        if (Auth::user()!=NULL)
+        {
+            $nombre=$request->nameCliente;
+            $direccion=$request->direccionCliente;
+            $imagen=$request->imageCliente;
+
+            $cuenta = Auth::user();
+            $cliente = $cuenta->usuario;
+
+            $cliente->nombre=$nombre;
+            $cliente->direccion=$direccion;
+            $cliente->imagen=$imagen;
+            $cliente->save();
+
+            $estado=true;
+            $msg="Información básica del cliente actualizada exitosamente.";
+
+            $data = array(
+                    'cliente' => $cliente,
+                    'cuenta' => $cuenta,
+                    'status' => $estado,
+                    'msg' => $msg,
+                );
+            return view('cliente/cliente-edit')->with($data); 
+        }
+        return redirect('/');
+    }
+
     public function ticketsActivos()
     {
         $cuenta = Auth::user();
@@ -202,8 +282,15 @@ class ClienteController extends Controller
                 }
                 else
                 {
+                    $tiempoEstimado=new Carbon($ticket->servicio->tiempo_espera);
+                    $rangoTicket=$ticket->numero-$ticket->servicio->numero_actual;
+                    $horaProm=$tiempoEstimado->hour*3600;
+                    $minProm=$tiempoEstimado->minute*60;
+                    $segProm=$tiempoEstimado->second;
+                    $tiempoEstimado=(int)((($horaProm+$minProm+$segProm)*$rangoTicket)/60);
+
                     echo "<div class='col-md-12 col-sm-12 col-xs-12'><strong>N° Actual: </strong><strong>{$ticket->servicio->letra}{$ticket->servicio->numero_actual}</strong></div>
-                                            <div class='col-md-12 col-sm-12 col-xs-12'><span class='text-danger'>10 </span><span class='text-danger'> minutos restantes</span></div>
+                                            <div class='col-md-12 col-sm-12 col-xs-12'><span class='text-danger'>{$tiempoEstimado} </span><span class='text-danger'> minutos restantes</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -253,8 +340,8 @@ class ClienteController extends Controller
 
                 $ticket = new Ticket;
 
-                $ticket->fecha = '2017-11-30';
-                $ticket->hora = '21:24:47';
+                $ticket->fecha = Carbon::now()->toDateString();
+                $ticket->hora = Carbon::now()->toTimeString();
                 $ticket->numero = $servicioAux->numero_disponible;
                 $ticket->servicio_id = $idServicio;
                 $ticket->cliente_id = $cliente->id;
@@ -274,7 +361,7 @@ class ClienteController extends Controller
                         <div class='panel panel-info panel-info-ticket'>
                             <div class='panel-heading'>
                                 <div class='row'>
-                                    <div class='col-md-12 col-sm-12 col-xs-12'><i class='fa fa-ticket fa-fw'></i><strong class='text-uppercase'>{$servicioAux->letra}{$ticket->numero} </strong><strong>(<i class='fa fa-clock-o fa-fw'></i> </strong><strong>14:00:03 </strong><strong class='no-padding'>) </strong></div>
+                                    <div class='col-md-12 col-sm-12 col-xs-12'><i class='fa fa-ticket fa-fw'></i><strong class='text-uppercase'>{$servicioAux->letra}{$ticket->numero} </strong><strong>(<i class='fa fa-clock-o fa-fw'></i> </strong><strong>{$ticket->hora} </strong><strong class='no-padding'>) </strong></div>
                                 </div>
                             </div>
                             <div class='panel-body body-info-ticket'>

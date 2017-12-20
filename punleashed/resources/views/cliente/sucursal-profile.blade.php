@@ -166,58 +166,7 @@
     </div>
 
     <div class="modal fade" role="dialog" tabindex="-1" id="modal-create-ticket">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title"><i class="fa fa-ticket fa-fw"></i>Solicitud de Ticket</h4></div>
-                <div class="modal-body">
-                    <p>Acabas de solicitar un ticket al sistema, estos son los datos de tu ticket: </p>
-                    <div class="panel panel-info panel-info-ticket">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-md-12 col-sm-12 col-xs-12"><i class="fa fa-ticket fa-fw"></i><strong class="text-uppercase">A150 </strong><strong>(<i class="fa fa-clock-o fa-fw"></i> </strong><strong>14:00:03 </strong><strong class="no-padding">) </strong></div>
-                            </div>
-                        </div>
-                        <div class="panel-body body-info-ticket">
-                            <div class="row">
-                                <div class="col-md-2 col-sm-2 col-xs-3"><img class="img-circle" src="{{ $sucursal->image }}" width="55" height="55"></div>
-                                <div class="col-md-10 col-sm-10 col-xs-9">
-                                    <div class="row">
-                                        <div class="col-md-12 col-sm-12 col-xs-12"><strong>{{ $sucursal->nombre }}</strong></div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12 col-sm-12 col-xs-12"><span id="modal_nombreServicio"></span></div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12 col-sm-12 col-xs-12"><strong>N° Actual: </strong><strong id="modal_numeroTicket"></strong></div>
-                                        <div class="col-md-12 col-sm-12 col-xs-12"><span id="modal_tiempo"></span><span> minutos restantes</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary" type="button" data-dismiss="modal" onclick="actualizarPage({{$sucursal->id}})"><i class="fa fa-check fa-fw"></i>Aceptar </button>
-                </div>
-            </div>
-        </div>
-    </div>
 
-
-    <div class="modal fade" role="dialog" tabindex="-1" id="modal-fail-ticket">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title"><i class="fa fa-exclamation-circle fa-fw"></i>Error: Solicitud de Ticket fallida</h4></div>
-                <div class="modal-body">
-                    <p>Ha ocurrido un error solicitando un ticket para el servicio seleccionado. Intente solicitar un ticket en este servicio mas tarde.</p>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary" type="button" data-dismiss="modal" onclick="actualizarPage({{$sucursal->id}})"><i class="fa fa-check fa-fw"></i>Aceptar </button>
-                </div>
-            </div>
-        </div>
     </div>
     
     <meta name="_token" content="{!! csrf_token() !!}" />
