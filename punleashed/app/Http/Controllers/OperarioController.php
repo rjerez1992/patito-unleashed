@@ -226,8 +226,8 @@ class OperarioController extends Controller
 
         //Verifica si quedan mas cubiculos abierto para el servicio
         $servicio = $cubiculo->servicio;
-        if ($servicio->cubiculos->where('disponibilidad', 
-            Constantes::CubiculoOcupado())->all() <= 0){
+        if (count($servicio->cubiculos->where('disponibilidad', 
+            Constantes::CubiculoOcupado())->all()) <= 0){
             //Cierra el servicio
             $servicio->numero_actual = -1;
             $servicio->numero_disponible = -1;
@@ -237,7 +237,7 @@ class OperarioController extends Controller
             $tickets = $servicio->tickets;
             foreach($tickets as $ticket){
                 if ($ticket->estado == Constantes::NuevoTicket()){
-                    $ticket->estado = Constantes::Autocancelado();
+                    $ticket->estado = Constantes::TicketAutocancelado();
                     $ticket->numero = -1;
                     $ticket->save();
                 }                
@@ -289,7 +289,7 @@ class OperarioController extends Controller
             }
         });
         
-        if(Auth::user()->usuario->cubiculo->numero_atencion == 0){
+        if(Auth::user()->usuario->cubiculo->numero_atencion <= 0){
             Session::flash('msg', 'No hay tickets en espera');
             Session::flash('status-ok', true);        
         }
@@ -297,15 +297,29 @@ class OperarioController extends Controller
         return back();        
     }
 
+    //Funcion para el ajax (ajax for dummies eso si)
+    public function ticketsActivos(){
+        //Revisa si hay
+        $ticket = Ticket::where('servicio_id', Auth::user()->usuario->cubiculo->servicio_id)
+            ->where('estado', 'Pendiente')->get()->first();  
+
+        if ($ticket != NULL){
+            echo '1'; //hay
+        }
+        else{
+            echo '0'; //nohay;
+        }        
+    }
+
     //Debug
     public function tickets(){
         /*$ticket = new Ticket;
         $ticket->fecha = Carbon::now()->toDateString();
         $ticket->hora = Carbon::now()->toTimeString();
-        $ticket->numero = 2;
+        $ticket->numero = 15;
         $ticket->estado = Constantes::NuevoTicket();
         $ticket->servicio_id = Auth::user()->usuario->servicio->id;
-        $ticket->cliente_id = 7;
+        $ticket->cliente_id = 12;
         $ticket->save();*/
 
         //return $ticket;

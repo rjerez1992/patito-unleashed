@@ -39,10 +39,13 @@ Route::post('/operario/atencion/cerrar', 'OperarioController@cerrarCubiculo');
 Route::post('/operario/atencion/calificar/{value}', 'OperarioController@calificar');
 Route::get('/operario/atencion/{id}', 'OperarioController@atencion');
 
+
 //debug
 Route::get('/tickets', 'OperarioController@tickets');
 
 });
+
+Route::post('/operario/check', 'OperarioController@ticketsActivos');
 
 Route::get('/manager/dashboard', 'ManagerController@dashboard');
 

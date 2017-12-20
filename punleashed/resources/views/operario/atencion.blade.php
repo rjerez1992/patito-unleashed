@@ -1,6 +1,7 @@
 @extends('layouts.main')
 
 @section('styles')
+<meta name="_token" content="{{ csrf_token() }}">
 @endsection
 
 @section('scripts')
@@ -133,12 +134,34 @@
         <!-- Actualizar la disponibilidad del boton con ajax cada 3 segundos -->
         @if($usuario == NULL)
         <div class="btn-group" role="group">
-        <a href="/operario/atencion/siguiente" class="btn btn-info pull-right" type="button"><i class="fa fa-chevron-right"></i> <span class="hidden-xs">Llamar siguiente cliente</span></a>
+        <a name="linkSiguiente" id="linkSiguiente" href="/operario/atencion/siguiente" class="btn btn-info pull-right disabled" type="button"><i class="fa fa-chevron-right"></i> <span class="hidden-xs">Llamar siguiente cliente</span></a>
         </div></div>
 
         <!-- Script para activar o desactivar el boton segun hay o no hay  usando AJAX -->
         <script type="text/javascript">
-            
+            function ajax(){
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                        type:"POST",
+                        url:"/operario/check",
+                        data:"",
+                        success: function(msg){
+                            if (msg == 0){
+                                //No hay
+                                $("#linkSiguiente").addClass('disabled');
+                            }
+                            else{
+                                //Si hay
+                                $("#linkSiguiente").removeClass('disabled');
+                            }
+                        }
+                    }); 
+            }
+            setInterval(ajax, 1000);
         </script>
 
         @endif
@@ -158,7 +181,7 @@
         <!-- datos de atencion-->
         <div class="row">
             <div class="col-md-4">
-                <h3 class="text-center" style="margin-bottom: 0px;">Numero actual</h3>
+                <h3 class="text-center" style="margin-bottom: 0px;">Atendiendo a:</h3>
                 <div class="row">                   
                     <div class="col-md-12">
                     @if($operario->cubiculo->numero_atencion > 0)
@@ -187,13 +210,19 @@
                     <div class="col-md-10 col-sm-10 col-xs-8"><span>{{$operario->cubiculo->nombre}}</span></div>
                 </div>
 
-                <!-- sgte -->
+                <!-- actual servicio -->
                
-                <!-- Luego lo implemento 
+               
                 <div class="row">
-                    <div class="col-md-2 col-sm-2 col-xs-4"><span><strong>Siguiente:</strong> </span></div>
-                    <div class="col-md-10 col-sm-10 col-xs-8"><span>REVISAR ESTA WEA!</span></div>
-                </div> -->
+                    <div class="col-md-2 col-sm-2 col-xs-4"><span><strong>Fila:</strong> </span></div>
+                    <div class="col-md-10 col-sm-10 col-xs-8"><span>{{$operario->servicio->numero_actual}}</span></div>
+                </div> 
+
+
+                <div class="row">
+                    <div class="col-md-2 col-sm-2 col-xs-4"><span><strong>Disponible:</strong> </span></div>
+                    <div class="col-md-10 col-sm-10 col-xs-8"><span>{{$operario->servicio->numero_disponible}}</span></div>
+                </div> 
 
                 <hr style="margin-top: 10px; margin-bottom: 10px;">
 
@@ -267,7 +296,7 @@
                 </div>
             </div>
         @else
-        <div class="text-center"><h4>No hay ningun usuario en atención</h4></div>
+        <div class="text-center"><h5>No hay ningun usuario en atención</h5></div>
         
         @endif
         </div>
