@@ -59,7 +59,7 @@
         </div>
     </div>
     <script type="text/javascript">        
-        function EliminarInstitucion(id){        
+        function Calificar(id){        
             //Pasar id valor al input hidden del modal
             $("#hiddenId").val(id);
             //Abrir modal
@@ -87,7 +87,7 @@
                                 </tr>
                             </thead>
                             <tbody>    
-								@foreach ($instituciones as $elemento)
+								@foreach ($instituciones as $elemento)                       
                                 <tr>
                                     <!--<td>{{$elemento->id}}</td>-->
                                     <td>{{$elemento->nombre}}</td>

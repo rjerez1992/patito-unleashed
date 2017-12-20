@@ -34,7 +34,13 @@ Route::get('/operario/datos/servicio', 'OperarioController@datosServicio');
 Route::get('/operario/perfil', 'OperarioController@perfil');
 Route::get('/operario/perfil/editar', 'OperarioController@editar');
 Route::post('/operario/perfil/editarPerfil', 'OperarioController@editarPerfil');
+Route::get('/operario/atencion/siguiente', 'OperarioController@siguiente');
+Route::post('/operario/atencion/cerrar', 'OperarioController@cerrarCubiculo');
+Route::post('/operario/atencion/calificar/{value}', 'OperarioController@calificar');
 Route::get('/operario/atencion/{id}', 'OperarioController@atencion');
+
+//debug
+Route::get('/tickets', 'OperarioController@tickets');
 
 });
 

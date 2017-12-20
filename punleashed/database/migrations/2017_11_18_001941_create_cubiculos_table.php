@@ -17,7 +17,7 @@ class CreateCubiculosTable extends Migration
         Schema::create('cubiculos', function (Blueprint $table) {
             $table->increments('id');         
             $table->string('nombre')->default(Constantes::NuevoCubiculo());
-            $table->integer('numero_atencion');
+            $table->integer('numero_atencion')->default(-1);
             $table->string('disponibilidad')->default(Constantes::CubiculoVacio());
            
             $table->integer('servicio_id')->unsigned();

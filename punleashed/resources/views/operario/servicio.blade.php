@@ -85,14 +85,14 @@
 
             <!-- Panel de cubiculo -->
             <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">       
-                @if($cubiculo->operario==NULL)<a href="/operario/atencion/{{$cubiculo->id}}">@endif<div class="panel panel-default @if($cubiculo->operario!=NULL) panel-off @endif">
+                @if($cubiculo->disponibilidad == App\Constantes::CubiculoVacio())<a href="/operario/atencion/{{$cubiculo->id}}">@endif<div class="panel panel-default @if($cubiculo->disponibilidad == App\Constantes::CubiculoOcupado()) panel-off @endif">
                     <!--<div class="panel-heading">
                         <h3 class="panel-title"><i class="fa fa-cube"></i> {{$cubiculo->nombre}}</h3></div>-->
                     <div class="panel-body">
 
-                    <span style="font-weight: bold; font-size: 16px;">@if($cubiculo->operario==NULL)<i class="fa fa-unlock">@else<i class="fa fa-lock">@endif</i> {{str_limit($cubiculo->nombre, $limit = 25, $end = '...')}}</span>
+                    <span style="font-weight: bold; font-size: 16px;">@if($cubiculo->disponibilidad == App\Constantes::CubiculoVacio())<i class="fa fa-unlock">@else<i class="fa fa-lock">@endif</i> {{str_limit($cubiculo->nombre, $limit = 25, $end = '...')}}</span>
                    
-                   @if($cubiculo->operario==NULL) 
+                   @if($cubiculo->disponibilidad == App\Constantes::CubiculoVacio()) 
                     <div class="thumb" style="background-image: url('/assets/img/cubiculo_vacio.png'); height: 80px; margin-top: 10px;"></div>
                     @else
                     <div class="thumb" style="background-image: url('/assets/img/cubiculo_ocupado.png'); height: 80px;background-color: hsla(0,0%,100%,0.30); background-blend-mode: overlay;margin-top: 10px;"></div>
@@ -100,16 +100,16 @@
 
                     <div class="row">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><span><strong>Estado: </strong> </span></div>
-                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><span>@if($cubiculo->operario==NULL) Desocupado @else Ocupado @endif</span></div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><span>@if($cubiculo->disponibilidad == App\Constantes::CubiculoVacio()) Desocupado @else Ocupado @endif</span></div>
                         </div>
                         <div class="row">
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"><span><strong>Atiende: </strong></span></div>
-                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><span>@if($cubiculo->operario==NULL) - @else {{$cubiculo->operario->nombre}} @endif</span></div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"><span>@if($cubiculo->disponibilidad == App\Constantes::CubiculoVacio()) - @else {{$cubiculo->operario->nombre}} @endif</span></div>
                         </div>                    
                     </div>
 
                     <div class="panel-footer"></div>
-                </div>@if($cubiculo->operario==NULL)</a>@endif
+                </div>@if($cubiculo->disponibilidad == App\Constantes::CubiculoVacio())</a>@endif
             </div> <!-- Panel de cubiculo -->
             @endforeach
         </div>

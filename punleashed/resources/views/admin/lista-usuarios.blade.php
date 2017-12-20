@@ -87,7 +87,9 @@
                                 <tr style="background: #1485ee; color:white;">
                                     <!--<th>ID </th>-->
                                     <th>Nombre</th>
-                                    <th>Usuario </th>                                    
+                                    <th>Usuario </th>    
+                                    @if($managerActive) <th>Institucion</th>@endif
+                                    @if($operarioActive) <th>Servicio</th>@endif                               
                                     <th>Fecha de registro</th>
                                     <th><!--
                                         <button class="btn btn-info btn-block btn-xs" type="button"><i class="fa fa-filter"></i> <span class="hidden-xs">Filtrar resultados</span></button>-->
@@ -96,10 +98,17 @@
                             </thead>
                             <tbody>    
 								@foreach ($lista as $elemento)
+                                @if ($elemento->cuenta->username != \Auth::user()->username)
                                 <tr>
                                     <!--<td>{{$elemento->id}}</td>-->                                    
                                     <td>{{$elemento->nombre}}</td>
                                     <td>{{$elemento->cuenta->username}}</td>
+                                    @if($managerActive) 
+                                    <td>{{$elemento->institucion->nombre}}</td>
+                                    @endif
+                                    @if($operarioActive)
+                                    <td>{{$elemento->servicio->nombre}}</td>
+                                    @endif
                                     <td style="width: 170px;">{{$elemento->created_at->format('j/m/Y')}}</td>
                                     <td style="width: 170px;">
                                         <div class="btn-toolbar">
@@ -112,6 +121,7 @@
                                         </div>
                                     </td>
                                 </tr> 
+                                @endif
                                 @endforeach                               
                             </tbody>
                         </table>

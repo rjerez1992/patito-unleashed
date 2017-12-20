@@ -14,4 +14,8 @@ class Servicio extends Model
     public function cubiculos(){
     	return $this->hasMany('App\Cubiculo');
     }
+
+    public function tickets(){
+    	return $this->hasMany('App\Ticket');
+    }
 }
