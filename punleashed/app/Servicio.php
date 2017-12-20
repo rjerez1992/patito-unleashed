@@ -29,11 +29,7 @@ class Servicio extends Model
     	$operarios = Operario::where("servicio_id","=",$id)->get();
     	
     	return $operarios->count();
-    }
-
-    public function tickets(){
-    	return $this->hasMany('App\Ticket');
-    }
+    }  
 
     public function ticketCliente($idCliente)
     {

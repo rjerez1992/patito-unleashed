@@ -111,18 +111,18 @@ class DatabaseSeeder extends Seeder
             ]);
 
             $servicio_random = Servicio::inRandomOrder()->first();
-            $cubiculo_random = Cubiculo::where('servicio_id', $servicio_random->id)->inRandomOrder()->first();
+            /*$cubiculo_random = Cubiculo::where('servicio_id', $servicio_random->id)->inRandomOrder()->first();*/
 
             Operario::firstOrCreate([           
                 'rut' => '1597538'.$c,
                 'nombre' => 'Operario '.$c,
                 'cuenta_id' => $cuenta->id,
-                'cubiculo_id' => $cubiculo_random->id, 
+                /*'cubiculo_id' => $cubiculo_random->id, */
                 'servicio_id' => $servicio_random->id, 
             ]);
 
-            $cubiculo_random->disponibilidad = Constantes::CubiculoOcupado();
-            $cubiculo_random->save();
+            /*$cubiculo_random->disponibilidad = Constantes::CubiculoOcupado();
+            $cubiculo_random->save();*/
         }
 
 

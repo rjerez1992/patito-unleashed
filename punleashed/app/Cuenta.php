@@ -16,6 +16,7 @@ class Cuenta extends Authenticatable
      *
      * @var array
      */
+    /*
     protected $fillable = [
         'username', 'email', 'password', 'tipo',
     ];
@@ -24,10 +25,10 @@ class Cuenta extends Authenticatable
      * The attributes that should be hidden for arrays.
      *
      * @var array
-     */
+     *//*
     protected $hidden = [
         'password', 'remember_token',
-    ];
+    ];*/
 
     /* Creo que no se está utilizando
     public static function Redirigir($default){

@@ -59,7 +59,7 @@
         </div>
     </div>
     <script type="text/javascript">        
-        function Calificar(id){        
+        function EliminarInstitucion(id){        
             //Pasar id valor al input hidden del modal
             $("#hiddenId").val(id);
             //Abrir modal

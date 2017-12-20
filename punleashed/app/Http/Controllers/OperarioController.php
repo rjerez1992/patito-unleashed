@@ -109,8 +109,8 @@ class OperarioController extends Controller
 
     public function servicio(){   
     	//Buscamos el operario
-    	$cuenta = Auth::user();
-    	$usuario = $cuenta->usuario;
+    	$cuenta = Auth::user();               
+       	$usuario = $cuenta->usuario;
 
         //Redirecciona en caso que el usuario tenga un cubiculo activo
         if($usuario->cubiculo != NULL){
